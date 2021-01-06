@@ -19,17 +19,18 @@ module.exports = app => {
             existsOrError(user.name, 'Nome não informado')
             existsOrError(user.email, 'E-mail não informado')
             existsOrError(user.telefone, 'Telefone não informado')
-            existsOrError(user.cpf, 'CPF não informado')
+            // existsOrError(user.cpf, 'CPF não informado')
             existsOrError(user.password, 'Senha não informada')
             existsOrError(user.confirmPassword, 'Confirmação da senha inválida')
             equalsOrError(user.password, user.confirmPassword, 
                'Senhas não conferem')
 
                const userFromDB = await app.db('users')
-                    .where({ email: user.email }).orWhere({ cpf: user.cpf }).first()
+                    .where({ email: user.email }).orWhere({ cpf: user.cpf }).orWhere({ cnpj: user.cnpj }).first()
                 if(!user.id){
-                    notExistsOrError(userFromDB, 'E-mail ou CPF já cadastrados')
+                    notExistsOrError(userFromDB, 'E-mail, CPF ou CNPJ já cadastrados')
                 }
+
 
         }catch(msg){
             return res.status(400).send(msg)
@@ -48,22 +49,24 @@ module.exports = app => {
         }else{
             app.db('users')
                 .insert(user)
-                .then(_ => res.status(204).send())
+                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         }
     }
 
     const get = (req, res) => {
         app.db('users')
-            .select('id', 'name', 'email', 'telefone', 'cpf', 'admin')
+            .select('id', 'name', 'email', 'telefone', 'cpf', 'cnpj', 'ong', 'admin')
+            .whereNull('deletedAt')
             .then(users => res.json(users))
             .catch(err => res.status(500).send(err))
     }
 
     const getById = (req, res) => {
         app.db('users')
-            .select('id', 'name', 'email', 'telefone', 'cpf', 'admin')
+            .select('id', 'name', 'email', 'telefone', 'cpf', 'cnpj', 'ong', 'admin')
             .where({ id: req.params.id })
+            .whereNull('deletedAt')
             .first()
             .then(user => res.json(user))
             .catch(err => res.status(500).send(err))

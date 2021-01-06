@@ -6,8 +6,11 @@ exports.up = function(knex) {
         table.string('email').notNull().unique()
         table.string('telefone')
         table.string('cpf').unique()
+        table.string('cnpj').unique()
         table.string('password').notNull()
+        table.boolean('ong')
         table.boolean('admin').notNull().defaultTo(false)
+        table.timestamp('deletedAt')
     })
 };
 

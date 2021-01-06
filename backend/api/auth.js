@@ -25,6 +25,8 @@ module.exports = app => {
             email: user.email,
             telefone: user.telefone,
             cpf: user.cpf,
+            cnpj: user.cnpj,
+            ong: user.ong,
             admin: user.admin,
             iat: now,
             exp: now + (60 * 60 * 24 * 3)
