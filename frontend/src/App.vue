@@ -1,60 +1,96 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-main>
-      <HelloWorld/>
-    </v-main>
-  </v-app>
+	<div id="app" :class="{'hide-menu': !isMenuVisible || !user}">
+		<Header title="Encontre um Amigo" 
+		:hideToggle="!user"
+		:hiddeUserDropdown="!user" />
+		<Loading v-if="validatingToken" />
+		<Content v-else />
+		<Footer />
+	</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import axios from "axios"
+import { baseApiUrl, userKey } from "@/global"
+import { mapState } from 'vuex'
+import Header from "@/components/template/Header"
+import Menu from "@/components/template/Menu"
+import Content from "@/components/template/Content"
+import Footer from "@/components/template/Footer"
+import Loading from "@/components/template/Loading"
 
 export default {
-  name: 'App',
+	name: "App",
+	components: { Header, Menu, Content, Footer, Loading },
+	computed: mapState(['isMenuVisible', 'user']),
+	data: function() {
+		return {
+			validatingToken: true
+		}
+	},
+	methods: {
+		async validateToken() {
+			this.validatingToken = true
 
-  components: {
-    HelloWorld,
-  },
+			const json = localStorage.getItem(userKey)
+			const userData = JSON.parse(json)
+			this.$store.commit('setUser', null)
 
-  data: () => ({
-    //
-  }),
-};
+			if(!userData) {
+				this.validatingToken = false
+				this.$router.push({ name: 'auth' })
+				return
+			}
+
+			const res = await axios.post(`${baseApiUrl}/validateToken`, userData)
+
+			if (res.data) {
+				this.$store.commit('setUser', userData)
+				
+				if(this.$mq === 'xs' || this.$mq === 'sm') {
+					this.$store.commit('toggleMenu', false)
+				}
+			} else {
+				localStorage.removeItem(userKey)
+				this.$router.push({ name: 'auth' })
+			}
+
+			this.validatingToken = false
+		}
+	},
+	created() {
+		this.validateToken()
+	}
+}
 </script>
+
+<style>
+	* {
+		font-family: "Lato", sans-serif;
+	}
+
+	body {
+		margin: 0;
+	}
+
+	#app {
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+
+		height: 100vh;
+		display: grid;
+		grid-template-rows: 60px 1fr 40px;
+		grid-template-columns: 300px 1fr;
+		grid-template-areas: 
+			"header header"
+			"content content"
+			"footer footer";
+	}
+
+	#app.hide-menu {
+		grid-template-areas: 
+		"header header"
+		"content content"
+		"footer footer";
+	}
+</style>
