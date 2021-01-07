@@ -10,12 +10,14 @@
             <input v-if="showSignup" class="form-control" v-model="user.cpf" name="cpf" type="text" placeholder="CPF">
             <input v-if="showSignup" class="form-control" v-model="user.cnpj" name="cnpj" type="text" placeholder="CNPJ">
             <input v-if="showSignup" class="form-control" v-model="user.telefone" name="telefone" type="text" placeholder="Telefone">
+            <label v-if="showSignup" @click.prevent="showCnpj = !showCnpj" for="ong">Você é uma ONG?</label>
+            <input v-if="showSignup" class="form-control" v-model="user.ong" name="ong" type="checkbox">
             <input v-model="user.password" class="form-control" name="password" type="password" placeholder="Senha">
             <input v-if="showSignup" class="form-control" v-model="user.confirmPassword"
                 type="password" placeholder="Confirme a Senha">
 
-            <button v-if="showSignup" @click="signup">Registrar</button>
-            <button v-else @click="signin">Entrar</button>
+            <button v-if="showSignup" @click="signup" class="btn btn-success">Registrar</button>
+            <button v-else @click="signin" class="btn btn-success" >Entrar</button>
 
             <a href @click.prevent="showSignup = !showSignup">
                 <span v-if="showSignup">Já tem cadastro? Acesse o Login!</span>
@@ -34,6 +36,7 @@ export default {
     data: function() {
         return {
             showSignup: false,
+            showCnpj: false,
             user: {}
         }
     },
@@ -65,15 +68,14 @@ export default {
         height: 100%;
         display: flex;
         justify-content: center;
-        margin-top: 100px;
-        /* align-items: center; */
+        align-items: center;
     }
 
     .auth-modal {
         background-color: #FFF;
         width: 400px;
-        height: 400px;
         padding: 35px;
+        border-radius: 5px;
         box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
 
         display: flex;
@@ -98,8 +100,8 @@ export default {
 
     .auth-modal button {
         align-self: flex-end;
-        background-color: #2460ae;
-        border-color: #2460ae;
+        /* background-color: #2460ae;
+        border-color: #2460ae; */
         border-radius: 5px;
         width: 100%;
         color: #FFF;
