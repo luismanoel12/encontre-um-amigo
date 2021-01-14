@@ -59,7 +59,7 @@ module.exports = app => {
 
 
               app.db("users")
-                .insert({ name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password, ong: user.ong, admin: user.admin, enderecoSaved: user.enderecoSaved })
+                .insert({ name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password, ong: user.ong, admin: user.admin })
                 .returning('id')
                 .then(function (response) {
                     app.db('endereco')
@@ -67,22 +67,6 @@ module.exports = app => {
                     .then(_ => res.status(204).send())
                     .catch(err => res.status(500).send(err))
                   });
-                
-                // app.db('endereco')
-                //     .insert({endereco: endereco.endereco, numero: endereco.numero, complemento: endereco.complemento, bairro: endereco.bairro, estado: endereco.bairro, cidade: endereco.cidade, cep: endereco.cep, userId: 4 })
-                //     .then(_ => res.status(204).send())
-                //     .catch(err => res.status(500).send(err))
-
-            // app.db('users')
-            //     .insert(user)
-            //     .returning('id')
-            //     .then(_ => res.status(204).send())
-            //     .catch(err => res.status(500).send(err))
-
-            // app.db('endereco')
-            //     .insert({ endereco, userId: user.id })
-            //     .then(_ => res.status(204).send())
-            //     .catch(err => res.status(500).send(err))
 
         }
     }

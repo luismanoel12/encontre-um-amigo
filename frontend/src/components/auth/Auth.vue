@@ -15,13 +15,14 @@
                 <input v-model="user.password" class="form-control" name="password" type="password" placeholder="Senha">
                 <input v-if="showSignup" class="form-control" v-model="user.confirmPassword"
                     type="password" placeholder="Confirme a Senha">
-            <!-- <input v-if="showSignup" class="form-control" v-model="endereco.endereco" name="endereco" type="text" placeholder="Endereço">
-            <input v-if="showSignup" class="form-control" v-model="endereco.numero" name="numero" type="text" placeholder="Número">
-            <input v-if="showSignup" class="form-control" v-model="endereco.complemento" name="complemento" type="text" placeholder="Complemento">
-            <input v-if="showSignup" class="form-control" v-model="endereco.bairro" name="bairro" type="text" placeholder="Bairro">
-            <input v-if="showSignup" class="form-control" v-model="endereco.estado" name="estado" type="text" placeholder="Estado">
-            <input v-if="showSignup" class="form-control" v-model="endereco.cidade" name="cidade" type="text" placeholder="Cidade">
-            <input v-if="showSignup" class="form-control" v-model="endereco.cep" name="cep" type="text" placeholder="CEP"> -->
+
+                <input v-if="showSignup" class="form-control" v-model="endereco.endereco" name="endereco" type="text" placeholder="Endereço">
+                <input v-if="showSignup" class="form-control" v-model="endereco.numero" name="numero" type="text" placeholder="Número">
+                <input v-if="showSignup" class="form-control" v-model="endereco.complemento" name="complemento" type="text" placeholder="Complemento">
+                <input v-if="showSignup" class="form-control" v-model="endereco.bairro" name="bairro" type="text" placeholder="Bairro">
+                <input v-if="showSignup" class="form-control" v-model="endereco.estado" name="estado" type="text" placeholder="Estado">
+                <input v-if="showSignup" class="form-control" v-model="endereco.cidade" name="cidade" type="text" placeholder="Cidade">
+                <input v-if="showSignup" class="form-control" v-model="endereco.cep" name="cep" type="text" placeholder="CEP">
 
             <button v-if="showSignup" @click="signup" class="btn btn-success">Registrar</button>
             <button v-else @click="signin" class="btn btn-success" >Entrar</button>
@@ -59,21 +60,17 @@ export default {
                 .catch(showError)
         },
         signup() {
-            axios.post(`${baseApiUrl}/signup`, this.user)
+
+            var userInfo = Object.assign(this.user, this.endereco)
+
+            axios.post(`${baseApiUrl}/signup`, userInfo)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
                     this.user = {}
+                    this.endereco = {}
                     this.showSignup = false
                 })
                 .catch(showError)
-
-            // axios.post(`${baseApiUrl}/endereco`, this.endereco)
-            //     .then(() => {
-            //         this.$toasted.global.defaultSuccess()
-            //         this.endereco = {}
-            //         this.showSignup = false
-            //     })
-            //     .catch(showError)
         }
     }
 }
