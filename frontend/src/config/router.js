@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Home from '@/components/home/Home'
+import Perfil from '@/components/perfil/Perfil'
 import Auth from "@/components/auth/Auth"
 
 
@@ -13,12 +14,18 @@ const routes = [{
     name: 'home',
     path: '/',
     component: Home
-}, 
+},
+{
+    name: 'perfil',
+    path: '/perfil',
+    component: Perfil
+},
 {
     name: 'auth',
     path: '/auth',
     component: Auth
 }]
+
 
 const router = new VueRouter({
     mode: 'history',

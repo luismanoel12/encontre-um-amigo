@@ -10,6 +10,7 @@ module.exports = app => {
 
     const save = async (req, res) => {
         const user = { ...req.body }
+        const endereco = { ...req.body }
         if(req.params.id) user.id = req.params.id
 
         if(!req.originalUrl.startsWith('/users')) user.admin = false
@@ -24,6 +25,14 @@ module.exports = app => {
             existsOrError(user.confirmPassword, 'Confirmação da senha inválida')
             equalsOrError(user.password, user.confirmPassword, 
                'Senhas não conferem')
+
+            existsOrError(endereco.endereco, 'Endereço não informado')
+            existsOrError(endereco.numero, 'Número não informado')
+            existsOrError(endereco.complemento, 'Complemento não informado')
+            existsOrError(endereco.bairro, 'Bairro não informado')
+            existsOrError(endereco.estado, 'Estado não informado')
+            existsOrError(endereco.cidade, 'Cidade não informado')
+            existsOrError(endereco.cep, 'CEP não informado')
 
                const userFromDB = await app.db('users')
                     .where({ email: user.email }).orWhere({ cpf: user.cpf }).orWhere({ cnpj: user.cnpj }).first()
@@ -47,10 +56,34 @@ module.exports = app => {
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         }else{
-            app.db('users')
-                .insert(user)
-                 .then(_ => res.status(204).send())
-                .catch(err => res.status(500).send(err))
+
+
+              app.db("users")
+                .insert({ name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password, ong: user.ong, admin: user.admin, enderecoSaved: user.enderecoSaved })
+                .returning('id')
+                .then(function (response) {
+                    app.db('endereco')
+                    .insert({endereco: endereco.endereco, numero: endereco.numero, complemento: endereco.complemento, bairro: endereco.bairro, estado: endereco.bairro, cidade: endereco.cidade, cep: endereco.cep, userId: response[0] })
+                    .then(_ => res.status(204).send())
+                    .catch(err => res.status(500).send(err))
+                  });
+                
+                // app.db('endereco')
+                //     .insert({endereco: endereco.endereco, numero: endereco.numero, complemento: endereco.complemento, bairro: endereco.bairro, estado: endereco.bairro, cidade: endereco.cidade, cep: endereco.cep, userId: 4 })
+                //     .then(_ => res.status(204).send())
+                //     .catch(err => res.status(500).send(err))
+
+            // app.db('users')
+            //     .insert(user)
+            //     .returning('id')
+            //     .then(_ => res.status(204).send())
+            //     .catch(err => res.status(500).send(err))
+
+            // app.db('endereco')
+            //     .insert({ endereco, userId: user.id })
+            //     .then(_ => res.status(204).send())
+            //     .catch(err => res.status(500).send(err))
+
         }
     }
 
@@ -70,6 +103,7 @@ module.exports = app => {
             .first()
             .then(user => res.json(user))
             .catch(err => res.status(500).send(err))
+
     }
 
     const remove = async (req, res) => {
