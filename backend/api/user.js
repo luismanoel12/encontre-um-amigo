@@ -63,7 +63,7 @@ module.exports = app => {
                 .returning('id')
                 .then(function (response) {
                     app.db('endereco')
-                    .insert({endereco: endereco.endereco, numero: endereco.numero, complemento: endereco.complemento, bairro: endereco.bairro, estado: endereco.bairro, cidade: endereco.cidade, cep: endereco.cep, userId: response[0] })
+                    .insert({endereco: user.endereco, numero: user.numero, complemento: user.complemento, bairro: user.bairro, estado: user.bairro, cidade: user.cidade, cep: user.cep, userId: response[0] })
                     .then(_ => res.status(204).send())
                     .catch(err => res.status(500).send(err))
                   });
