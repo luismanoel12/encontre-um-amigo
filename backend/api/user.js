@@ -77,6 +77,8 @@ module.exports = app => {
             .whereNull('deletedAt')
             .then(users => res.json(users))
             .catch(err => res.status(500).send(err))
+        
+
     }
 
     const getById = (req, res) => {
