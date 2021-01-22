@@ -5,6 +5,7 @@
         <v-list-item-content>
           <div class="user-dropdown-img">
             <Gravatar :email="user.email" alt="User" />
+            <v-badge v-if="user.admin" color='blue' icon="mdi-check-bold" bottom overlap></v-badge>
           </div>
           <v-list-item-title class="title">
             <h3>Bem-vindo</h3>
@@ -35,11 +36,29 @@
 
       <v-toolbar-title>Encontre um amigo</v-toolbar-title>
 
-      <v-btn outlined color="#fffff" class="logout-button" @click.prevent="logout">
+      <v-btn
+        v-if="user"
+        outlined
+        fixed
+        color="#fffff"
+        class="logout-button"
+        @click.prevent="logout"
+      >
         <v-icon>mdi-logout</v-icon>
         Sair
       </v-btn>
-      
+
+      <v-btn
+        v-else
+        outlined
+        fixed
+        color="#fffff"
+        class="logout-button"
+        to="/auth"
+      >
+        <v-icon>mdi-logout</v-icon>
+        Login
+      </v-btn>
     </v-app-bar>
 
     <v-main class="main-body">
@@ -107,7 +126,8 @@ export default {
   background-color: #ffff;
 }
 
-.logout-button{
-
+.logout-button {
+  right: 0;
+  margin-right: 30px;
 }
 </style>

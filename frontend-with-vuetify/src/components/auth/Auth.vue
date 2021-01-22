@@ -9,20 +9,20 @@
     <v-form>
       <v-text-field label="Nome" outlined v-if="showSignup" v-model="user.name"></v-text-field>
       <v-text-field label="E-mail" outlined v-model="user.email"></v-text-field>
-      <v-text-field label="CPF" outlined v-if="showSignup" v-model="user.cpf"></v-text-field>
-      <v-text-field label="CNPJ" outlined v-if="showSignup" v-model="user.cnpj"></v-text-field>
-      <v-text-field label="Telefone" outlined v-if="showSignup" v-model="user.telefone"></v-text-field>
+      <v-text-field label="CPF" return-masked-value v-mask="'###.###.###-##'" outlined v-if="showSignup" v-model="user.cpf"></v-text-field>
       <v-checkbox v-model="checkbox" v-if="showSignup" :input-value="user.ong" :label="'Sou uma ONG'"></v-checkbox>
-
+      <v-text-field label="CNPJ" return-masked-value v-mask="'##.###.###/####-##'" outlined v-if="showSignup" v-model="user.cnpj"></v-text-field>
+      <v-text-field label="Telefone" return-masked-value v-mask="'(##) #####-####'" outlined v-if="showSignup" v-model="user.telefone"></v-text-field>
+     
       <v-text-field label="Senha" type="password" outlined v-model="user.password"></v-text-field>
       <v-text-field label="Confime sua Senha" type="password" outlined v-if="showSignup" v-model="user.confirmPassword"></v-text-field>
       <v-text-field label="Endereço" outlined v-if="showSignup" v-model="user.endereco"></v-text-field>
-      <v-text-field label="Número" outlined v-if="showSignup" v-model="user.numero"></v-text-field>
+      <v-text-field label="Número" type="number" outlined v-if="showSignup" v-model="user.numero"></v-text-field>
       <v-text-field label="Complemento" outlined v-if="showSignup" v-model="user.complemento"></v-text-field>
       <v-text-field label="Bairro" outlined v-if="showSignup" v-model="user.bairro"></v-text-field>
       <v-text-field label="Estado" outlined v-if="showSignup" v-model="user.estado"></v-text-field>
       <v-text-field label="Cidade" outlined v-if="showSignup" v-model="user.cidade"></v-text-field>
-      <v-text-field label="CEP" outlined v-if="showSignup" v-model="user.cep"></v-text-field>
+      <v-text-field label="CEP" return-masked-value v-mask="'#####-###'" outlined v-if="showSignup" v-model="user.cep"></v-text-field>
     </v-form>
 
     <v-btn tile color="success" v-if="showSignup" @click="signup">
@@ -43,6 +43,8 @@
     </div>
 </div>
 
+
+
 </template>
 
 <script>
@@ -56,6 +58,7 @@ export default {
       showSignup: false,
       showCnpj: false,
       user: {},
+      
     };
   },
   methods: {
