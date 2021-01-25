@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app color="#001D2E" v-if="user">
+    <v-navigation-drawer  v-model="drawer" app color="#001D2E" v-if="user">
       <v-list-item>
         <v-list-item-content>
           <div class="user-dropdown-img">
@@ -25,7 +25,8 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title @click="navegar(item.link)" :key="item.title">{{ item.title }}</v-list-item-title>
+            
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -79,7 +80,13 @@ export default {
   data() {
     return {
       drawer: null,
-      items: [{ title: "Home", icon: "mdi-home" }],
+      items: [
+        { title: "Home", icon: "mdi-home", link: '/' },
+        { title: "Perfil", icon: "mdi-account", link: '/' },
+        { title: "Animais para adoção", icon: "mdi-paw", link: '/' },
+        { title: "Publicações", icon: "mdi-newspaper", link: '/' },
+        { title: "Doações", icon: "mdi-cash-multiple", link: '/' }
+      ],
       right: null,
     };
   },
@@ -90,6 +97,10 @@ export default {
       this.$store.commit("setUser", null);
       this.$router.push({ name: "auth" });
     },
+
+    navegar(link){
+      this.$router.push({path: link})
+    }
   },
 };
 </script>

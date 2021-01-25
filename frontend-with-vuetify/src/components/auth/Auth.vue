@@ -7,22 +7,23 @@
     </div>
     <div class="auth-content">
     <v-form>
-      <v-text-field label="Nome" outlined v-if="showSignup" v-model="user.name"></v-text-field>
-      <v-text-field label="E-mail" outlined v-model="user.email"></v-text-field>
-      <v-text-field label="CPF" return-masked-value v-mask="'###.###.###-##'" outlined v-if="showSignup" v-model="user.cpf"></v-text-field>
-      <v-checkbox v-model="checkbox" v-if="showSignup" :input-value="user.ong" :label="'Sou uma ONG'"></v-checkbox>
-      <v-text-field label="CNPJ" return-masked-value v-mask="'##.###.###/####-##'" outlined v-if="showSignup" v-model="user.cnpj"></v-text-field>
-      <v-text-field label="Telefone" return-masked-value v-mask="'(##) #####-####'" outlined v-if="showSignup" v-model="user.telefone"></v-text-field>
+      <v-text-field label="Nome" prepend-inner-icon="mdi-account" outlined v-if="showSignup" v-model="user.name"></v-text-field>
+      
+      <v-text-field label="E-mail"  prepend-inner-icon="mdi-at" outlined v-model="user.email"></v-text-field>
+      <v-text-field label="CPF" prepend-inner-icon="mdi-card-account-details" return-masked-value v-mask="'###.###.###-##'" outlined v-if="showSignup" v-model="user.cpf"></v-text-field>
+      <v-checkbox color="green" v-model="checkbox" v-if="showSignup" :input-value="user.ong" :label="'Sou uma ONG'"></v-checkbox>
+      <v-text-field label="CNPJ" prepend-inner-icon="mdi-card-account-details" return-masked-value v-mask="'##.###.###/####-##'" outlined v-if="showSignup" v-model="user.cnpj"></v-text-field>
+      <v-text-field label="Telefone" prepend-inner-icon="mdi-phone" return-masked-value v-mask="'(##) #####-####'" outlined v-if="showSignup" v-model="user.telefone"></v-text-field>
      
-      <v-text-field label="Senha" type="password" outlined v-model="user.password"></v-text-field>
-      <v-text-field label="Confime sua Senha" type="password" outlined v-if="showSignup" v-model="user.confirmPassword"></v-text-field>
-      <v-text-field label="Endereço" outlined v-if="showSignup" v-model="user.endereco"></v-text-field>
-      <v-text-field label="Número" type="number" outlined v-if="showSignup" v-model="user.numero"></v-text-field>
-      <v-text-field label="Complemento" outlined v-if="showSignup" v-model="user.complemento"></v-text-field>
-      <v-text-field label="Bairro" outlined v-if="showSignup" v-model="user.bairro"></v-text-field>
-      <v-text-field label="Estado" outlined v-if="showSignup" v-model="user.estado"></v-text-field>
-      <v-text-field label="Cidade" outlined v-if="showSignup" v-model="user.cidade"></v-text-field>
-      <v-text-field label="CEP" return-masked-value v-mask="'#####-###'" outlined v-if="showSignup" v-model="user.cep"></v-text-field>
+      <v-text-field label="Senha" prepend-inner-icon="mdi-lock" type="password" outlined v-model="user.password"></v-text-field>
+      <v-text-field label="Confime sua Senha" prepend-inner-icon="mdi-lock" type="password" outlined v-if="showSignup" v-model="user.confirmPassword"></v-text-field>
+      <v-text-field label="Endereço" prepend-inner-icon="mdi-map-marker" outlined v-if="showSignup" v-model="user.endereco"></v-text-field>
+      <v-text-field label="Número" prepend-inner-icon="mdi-numeric" type="number" outlined v-if="showSignup" v-model="user.numero"></v-text-field>
+      <v-text-field label="Complemento" prepend-inner-icon="mdi-home" outlined v-if="showSignup" v-model="user.complemento"></v-text-field>
+      <v-text-field label="Bairro" prepend-inner-icon="mdi-map-marker" outlined v-if="showSignup" v-model="user.bairro"></v-text-field>
+      <v-text-field label="Estado" prepend-inner-icon="mdi-sign-real-estate" outlined v-if="showSignup" v-model="user.estado"></v-text-field>
+      <v-text-field label="Cidade" prepend-inner-icon="mdi-city" outlined v-if="showSignup" v-model="user.cidade"></v-text-field>
+      <v-text-field label="CEP" prepend-inner-icon="mdi-numeric" return-masked-value v-mask="'#####-###'" outlined v-if="showSignup" v-model="user.cep"></v-text-field>
     </v-form>
 
     <v-btn tile color="success" v-if="showSignup" @click="signup">

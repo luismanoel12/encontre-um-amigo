@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 
 import Home from '@/components/home/Home'
 import Auth from "@/components/auth/Auth"
+import Error404 from "@/components/template/Error404"
 
 
 import { userKey } from "@/global"
@@ -18,7 +19,13 @@ const routes = [{
 {
     name: 'auth',
     path: '/auth',
-    component: Auth
+    component: Auth,
+    meta: { requiresOff: true }
+},
+{
+    name: 'error404',
+    path: '/*',
+    component: Error404
 }]
 
 
@@ -33,6 +40,13 @@ router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresAdmin)){
         const user = JSON.parse(json)
         user && user.admin ? next() : next({ path: '/' })
+    } else {
+        next()
+    }
+
+    if(to.matched.some(record => record.meta.requiresOff)){
+        const user = JSON.parse(json)
+        !user ? next() : next({ path: '/' })
     } else {
         next()
     }
