@@ -83,6 +83,7 @@ export default {
       items: [
         { title: "Home", icon: "mdi-home", link: '/' },
         { title: "Perfil", icon: "mdi-account", link: '/' },
+        { title: "Carousel", icon: "mdi-image", link: '/carousel' },
         { title: "Animais para adoção", icon: "mdi-paw", link: '/' },
         { title: "Publicações", icon: "mdi-newspaper", link: '/' },
         { title: "Doações", icon: "mdi-cash-multiple", link: '/' }

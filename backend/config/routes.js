@@ -15,4 +15,15 @@ module.exports = app => {
         .put(admin(app.api.user.save))
         .get(admin(app.api.user.getById))
         .delete(admin(app.api.user.remove)) 
+
+    app.route('/carousel')
+        .all(app.config.passport.authenticate())
+        .post(admin(app.api.carousel.save))
+        .get(admin(app.api.carousel.get))
+
+    app.route('/carousel/:id')
+        .all(app.config.passport.authenticate())
+        .put(admin(app.api.carousel.save))
+        .get(admin(app.api.carousel.getById))
+        .delete(admin(app.api.carousel.remove)) 
 }

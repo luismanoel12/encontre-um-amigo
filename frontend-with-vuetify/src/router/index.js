@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 
 import Home from '@/components/home/Home'
 import Auth from "@/components/auth/Auth"
+import Carousel from "@/components/carousel/Carousel"
 import Error404 from "@/components/template/Error404"
 
 
@@ -21,6 +22,12 @@ const routes = [{
     path: '/auth',
     component: Auth,
     meta: { requiresOff: true }
+},
+{
+    name: 'carousel',
+    path: '/carousel',
+    component: Carousel,
+    meta: { requiresAdmin: true }
 },
 {
     name: 'error404',
