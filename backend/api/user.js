@@ -73,8 +73,10 @@ module.exports = app => {
 
     const get = (req, res) => {
         app.db('users')
-            .select('id', 'name', 'email', 'telefone', 'cpf', 'cnpj', 'ong', 'admin')
-            .whereNull('deletedAt')
+            .join('endereco', 'users.id', 'endereco.userId')
+            .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.cpf', 'users.cnpj', 'users.ong', 'users.admin',
+                    'endereco.endereco', 'endereco.numero', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
+            .whereNull('users.deletedAt')
             .then(users => res.json(users))
             .catch(err => res.status(500).send(err))
         
@@ -83,9 +85,11 @@ module.exports = app => {
 
     const getById = (req, res) => {
         app.db('users')
-            .select('id', 'name', 'email', 'telefone', 'cpf', 'cnpj', 'ong', 'admin')
-            .where({ id: req.params.id })
-            .whereNull('deletedAt')
+        .join('endereco', 'users.id', 'endereco.userId')
+        .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.cpf', 'users.cnpj', 'users.ong', 'users.admin',
+                'endereco.endereco', 'endereco.numero', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
+            .where({ 'users.id': req.params.id })
+            .whereNull('users.deletedAt')
             .first()
             .then(user => res.json(user))
             .catch(err => res.status(500).send(err))

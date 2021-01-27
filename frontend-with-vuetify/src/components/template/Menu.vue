@@ -39,8 +39,8 @@
 
       <v-btn
         v-if="user"
-        outlined
         fixed
+        outlined
         color="#fffff"
         class="logout-button"
         @click.prevent="logout"

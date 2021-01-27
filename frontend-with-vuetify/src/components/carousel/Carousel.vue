@@ -45,6 +45,7 @@
         :items="carousels"
         :headers="headers"
         class="elevation-10"
+        
       >
         <template v-slot:[`item.actions`]="{ item }">
            <v-btn
