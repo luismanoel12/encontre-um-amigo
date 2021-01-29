@@ -6,6 +6,7 @@ import Home from '@/components/home/Home'
 import Auth from "@/components/auth/Auth"
 import Carousel from "@/components/carousel/Carousel"
 import Error404 from "@/components/template/Error404"
+import Perfil from "@/components/perfil/Perfil"
 
 
 import { userKey } from "@/global"
@@ -28,6 +29,12 @@ const routes = [{
     path: '/carousel',
     component: Carousel,
     meta: { requiresAdmin: true }
+},
+{
+    name: 'perfil',
+    path: '/perfil',
+    component: Perfil,
+    meta: { requiresOff: false }
 },
 {
     name: 'error404',

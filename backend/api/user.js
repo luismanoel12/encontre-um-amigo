@@ -50,14 +50,17 @@ module.exports = app => {
 
         if(user.id){
             app.db('users')
-                .update(user)
+                .update({ name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password })
                 .where({ id: user.id })
                 .whereNull('deletedAt')
-                .then(_ => res.status(204).send())
-                .catch(err => res.status(500).send(err))
+                .then(function (response) {
+                    app.db('endereco')
+                    .update({endereco: user.endereco, numero: user.numero, complemento: user.complemento, bairro: user.bairro, estado: user.bairro, cidade: user.cidade, cep: user.cep, userId: response[0] })
+                    .where({ userId: user.id })
+                    .then(_ => res.status(204).send())
+                    .catch(err => res.status(500).send(err))
+                  });
         }else{
-
-
               app.db("users")
                 .insert({ name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password, ong: user.ong, admin: user.admin })
                 .returning('id')
@@ -87,7 +90,7 @@ module.exports = app => {
         app.db('users')
         .join('endereco', 'users.id', 'endereco.userId')
         .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.cpf', 'users.cnpj', 'users.ong', 'users.admin',
-                'endereco.endereco', 'endereco.numero', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
+                'endereco.endereco', 'endereco.numero', 'endereco.complemento', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
             .where({ 'users.id': req.params.id })
             .whereNull('users.deletedAt')
             .first()
