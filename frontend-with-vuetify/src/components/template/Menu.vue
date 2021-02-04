@@ -11,7 +11,7 @@
             <h3>Bem-vindo</h3>
           </v-list-item-title>
           <v-list-item-subtitle>
-            <h3 class="subtext">{{ user.name }}</h3>
+            <h3 class="subtext">{{ userData.name }}</h3>
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -19,13 +19,13 @@
       <v-divider class="divider-menu"></v-divider>
 
       <v-list dense nav dark>
-        <v-list-item v-for="item in items" :key="item.title" link>
+        <v-list-item v-for="item in items" :key="item.title" link @click="navegar(item.link)">
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title @click="navegar(item.link)" :key="item.title">{{ item.title }}</v-list-item-title>
+            <v-list-item-title >{{ item.title }}</v-list-item-title>
             
           </v-list-item-content>
         </v-list-item>
@@ -72,6 +72,7 @@
 import { userKey } from "@/global";
 import { mapState } from "vuex";
 import Gravatar from "vue-gravatar";
+import api from "../../config/api";
 
 export default {
   name: "Menu",
@@ -80,6 +81,7 @@ export default {
   data() {
     return {
       drawer: null,
+      userData: {},
       items: [
         { title: "Home", icon: "mdi-home", link: '/' },
         { title: "Perfil", icon: "mdi-account", link: '/perfil' },
@@ -91,14 +93,26 @@ export default {
       right: null,
     };
   },
-
+  mounted() {
+    this.loadUsers()
+    this.$root.$once('user-updated', () => {
+            this.loadUsers()
+        })
+  },
   methods: {
     logout() {
       localStorage.removeItem(userKey);
       this.$store.commit("setUser", null);
       this.$router.push({ name: "auth" });
     },
-
+    async loadUsers() {
+      const url = `/users/${this.user.id}`;
+      await api.get(url).then((res) => {
+        this.userData = res.data
+        this.loading = false
+      }).catch(erro => {
+      });
+    },
     navegar(link){
       this.$router.push({path: link})
     }

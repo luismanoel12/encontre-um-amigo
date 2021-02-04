@@ -77,8 +77,8 @@
 </template>
 
 <script>
-import { baseApiUrl, showError } from "@/global";
-import axios from "axios";
+import { showError } from "@/global";
+import api from "../../config/api";
 
 export default {
   name: "Carousel",
@@ -106,8 +106,8 @@ export default {
   },
   methods: {
     loadCarousels() {
-      const url = `${baseApiUrl}/carousel?page=${this.page}`;
-      axios.get(url).then((res) => {
+      const url = `/carousel?page=${this.page}`;
+      api.get(url).then((res) => {
         this.carousels = res.data.data;
         this.count = res.data.count;
         this.limit = res.data.limit;
@@ -121,7 +121,7 @@ export default {
     save() {
       const method = this.carousel.id ? "put" : "post";
       const id = this.carousel.id ? `/${this.carousel.id}` : "";
-      axios[method](`${baseApiUrl}/carousel${id}`, this.carousel)
+      api[method](`/carousel${id}`, this.carousel)
         .then(() => {
           this.$toasted.global.defaultSuccess();
           this.reset();
@@ -130,8 +130,8 @@ export default {
     },
     remove() {
       const id = this.carousel.id;
-      axios
-        .delete(`${baseApiUrl}/carousel/${id}`)
+      api
+        .delete(`/carousel/${id}`)
         .then(() => {
           this.$toasted.global.defaultSuccess();
           this.reset();
@@ -140,8 +140,8 @@ export default {
     },
     loadCarousel(carousel, mode = "save") {
       this.mode = mode;
-      axios
-        .get(`${baseApiUrl}/carousel/${carousel.id}`)
+      api
+        .get(`/carousel/${carousel.id}`)
         .then((res) => (this.carousel = res.data));
     },
   },

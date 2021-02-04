@@ -47,6 +47,7 @@ export default {
 
 			if (res.data) {
 				this.$store.commit('setUser', userData)
+				this.$root.$emit('user-updated')
 				
 			} else {
 				localStorage.removeItem(userKey)

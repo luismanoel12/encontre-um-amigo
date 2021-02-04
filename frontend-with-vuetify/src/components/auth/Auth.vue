@@ -9,13 +9,13 @@
     <v-form>
       <v-text-field label="Nome" prepend-inner-icon="mdi-account" outlined v-if="showSignup" v-model="user.name"></v-text-field>
       
-      <v-text-field label="E-mail"  prepend-inner-icon="mdi-at" outlined v-model="user.email"></v-text-field>
+      <v-text-field label="E-mail"  prepend-inner-icon="mdi-at" outlined v-model="user.email" autocomplete="email"></v-text-field>
       <v-text-field label="CPF" prepend-inner-icon="mdi-card-account-details" return-masked-value v-mask="'###.###.###-##'" outlined v-if="showSignup" v-model="user.cpf"></v-text-field>
       <v-checkbox color="green" v-model="checkbox" v-if="showSignup" :input-value="user.ong" :label="'Sou uma ONG'"></v-checkbox>
       <v-text-field label="CNPJ" prepend-inner-icon="mdi-card-account-details" return-masked-value v-mask="'##.###.###/####-##'" outlined v-if="showSignup" v-model="user.cnpj"></v-text-field>
       <v-text-field label="Telefone" prepend-inner-icon="mdi-phone" return-masked-value v-mask="'(##) #####-####'" outlined v-if="showSignup" v-model="user.telefone"></v-text-field>
      
-      <v-text-field label="Senha" prepend-inner-icon="mdi-lock" type="password" outlined v-model="user.password"></v-text-field>
+      <v-text-field label="Senha" prepend-inner-icon="mdi-lock" type="password" outlined v-model="user.password" autocomplete="current-password"></v-text-field>
       <v-text-field label="Confime sua Senha" prepend-inner-icon="mdi-lock" type="password" outlined v-if="showSignup" v-model="user.confirmPassword"></v-text-field>
       <v-text-field label="Endereço" prepend-inner-icon="mdi-map-marker" outlined v-if="showSignup" v-model="user.endereco"></v-text-field>
       <v-text-field label="Número" prepend-inner-icon="mdi-numeric" type="number" outlined v-if="showSignup" v-model="user.numero"></v-text-field>
@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import { baseApiUrl, showError, userKey } from "@/global";
-import axios from "axios";
+import { showError, userKey } from "@/global";
+import api from "../../config/api";
 
 export default {
   name: "Auth",
@@ -62,8 +62,8 @@ export default {
   },
   methods: {
     signin() {
-      axios
-        .post(`${baseApiUrl}/signin`, this.user)
+      api
+        .post(`/signin`, this.user)
         .then((res) => {
           this.$store.commit("setUser", res.data);
           localStorage.setItem(userKey, JSON.stringify(res.data));
@@ -72,8 +72,8 @@ export default {
         .catch(showError);
     },
     signup() {
-      axios
-        .post(`${baseApiUrl}/signup`, this.user)
+      api
+        .post(`/signup`, this.user)
         .then(() => {
           this.$toasted.global.defaultSuccess();
           this.user = {};
