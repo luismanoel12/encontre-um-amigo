@@ -45,17 +45,9 @@ module.exports = app => {
         }
     }
 
-    const limit = 10 //usado para paginação
     const get = async (req, res) => {
-        const page = req.query.page || 1
-
-        const result = await app.db('carousel').count('id').first()
-        const count = parseInt(result.count)
-
         app.db('carousel')
-            .select('id', 'author', 'link')
-            .limit(limit).offset(page * limit - limit)
-            .then(carousel => res.json({ data: carousel, count, limit }))
+            .then(users => res.json(users))
             .catch(err => res.status(500).send(err))
     }
 

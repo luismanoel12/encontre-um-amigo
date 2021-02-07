@@ -43,12 +43,14 @@
               v-if="userData.ong"
               v-model="userData.cnpj"
               label="CNPJ"
+              v-mask="'##.###.###/####-##'"
               outlined
             ></v-text-field>
             <v-text-field
               v-else
               label="CPF"
               v-model="userData.cpf"
+              v-mask="'###.###.###-##'"
               outlined
             ></v-text-field>
           </v-col>
@@ -56,6 +58,7 @@
             <v-text-field
               label="Telefone"
               v-model="userData.telefone"
+              v-mask="'(##) #####-####'"
               outlined
             ></v-text-field>
           </v-col>
@@ -101,6 +104,7 @@
             <v-text-field
               label="Número"
               v-model="userData.numero"
+              type="number"
               outlined
             ></v-text-field>
           </v-col>
@@ -132,6 +136,7 @@
             <v-text-field
               label="CEP"
               v-model="userData.cep"
+              v-mask="'#####-###'"
               outlined
             ></v-text-field>
           </v-col>

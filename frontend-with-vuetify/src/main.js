@@ -6,10 +6,10 @@ import vuetify from './plugins/vuetify';
 import './config/axios'
 import './config/msgs'
 import 'font-awesome/css/font-awesome.css'
-import { VueMaskDirective } from 'v-mask'
+import VueTheMask from 'vue-the-mask'
 
 Vue.config.productionTip = false
-Vue.directive('mask', VueMaskDirective);
+Vue.use(VueTheMask)
 
 new Vue({
   router,

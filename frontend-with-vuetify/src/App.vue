@@ -48,6 +48,7 @@ export default {
 			if (res.data) {
 				this.$store.commit('setUser', userData)
 				this.$root.$emit('user-updated')
+				this.$root.$emit('carousel-get')
 				
 			} else {
 				localStorage.removeItem(userKey)

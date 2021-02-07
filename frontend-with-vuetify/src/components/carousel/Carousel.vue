@@ -87,9 +87,6 @@ export default {
       mode: "save",
       carousel: {},
       carousels: [],
-      page: 1,
-      limit: 0,
-      count: 0,
       headers: [
         {
           text: "Carousel",
@@ -106,11 +103,9 @@ export default {
   },
   methods: {
     loadCarousels() {
-      const url = `/carousel?page=${this.page}`;
+      const url = `/carousel`;
       api.get(url).then((res) => {
-        this.carousels = res.data.data;
-        this.count = res.data.count;
-        this.limit = res.data.limit;
+        this.carousels = res.data;
       });
     },
     reset() {
