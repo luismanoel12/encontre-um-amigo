@@ -52,6 +52,7 @@
               class="bt-actions"
               color="primary"
               fab
+              
               small
               @click="loadCarousel(item)"
               dark

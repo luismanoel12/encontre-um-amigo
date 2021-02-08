@@ -25,7 +25,7 @@ export default {
     };
   },
   mounted() {
-    this.loadCarousel();
+    // this.loadCarousel();
     this.$root.$once("carousel-get", () => {
       this.loadCarousel();
     });
