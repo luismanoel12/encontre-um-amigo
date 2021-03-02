@@ -8,15 +8,17 @@
     <div class="auth-content">
     <v-form>
       <v-text-field label="Nome" prepend-inner-icon="mdi-account" outlined v-if="showSignup" v-model="user.name"></v-text-field>
-      
       <v-text-field label="E-mail"  prepend-inner-icon="mdi-at" outlined v-model="user.email" autocomplete="email"></v-text-field>
-      <v-text-field label="CPF" prepend-inner-icon="mdi-card-account-details" v-mask="'###.###.###-##'" outlined v-if="showSignup" v-model="user.cpf"></v-text-field>
+
       <v-checkbox color="green" v-model="checkbox" v-if="showSignup" :input-value="user.ong" :label="'Sou uma ONG'"></v-checkbox>
+      <v-text-field label="CPF" prepend-inner-icon="mdi-card-account-details" v-mask="'###.###.###-##'" outlined v-if="showSignup" v-model="user.cpf"></v-text-field>
       <v-text-field label="CNPJ" prepend-inner-icon="mdi-card-account-details"  v-mask="'##.###.###/####-##'" outlined v-if="showSignup" v-model="user.cnpj"></v-text-field>
-      <v-text-field label="Telefone" prepend-inner-icon="mdi-phone" type="tel" v-mask="'(##) #####-####'" outlined v-if="showSignup" v-model="user.telefone"></v-text-field>
-     
+
+      <v-text-field label="Telefone" prepend-inner-icon="mdi-phone" type="tel" v-mask="'(##) #####-####'" outlined v-if="showSignup" v-model="user.telefone"></v-text-field>    
       <v-text-field label="Senha" prepend-inner-icon="mdi-lock" type="password" outlined v-model="user.password" autocomplete="current-password"></v-text-field>
       <v-text-field label="Confime sua Senha" prepend-inner-icon="mdi-lock" type="password" outlined v-if="showSignup" v-model="user.confirmPassword"></v-text-field>
+      <v-divider color="black" class="hr-signup" v-if="showSignup"></v-divider>
+
       <v-text-field label="Endereço" prepend-inner-icon="mdi-map-marker" outlined v-if="showSignup" v-model="user.endereco"></v-text-field>
       <v-text-field label="Número" prepend-inner-icon="mdi-numeric" type="number" outlined v-if="showSignup" v-model="user.numero"></v-text-field>
       <v-text-field label="Complemento" prepend-inner-icon="mdi-home" outlined v-if="showSignup" v-model="user.complemento"></v-text-field>
@@ -112,6 +114,9 @@ export default {
         })
         .catch(showError);
     },
+    // shecked() {
+    //   this.checked = this.checked
+    // }
   },
 };
 </script>
@@ -160,6 +165,10 @@ export default {
 
   color: #FF5757;
 
+}
+
+.hr-signup{
+  margin-bottom: 20px;
 }
 
 </style>

@@ -52,6 +52,7 @@
               class="bt-actions"
               color="primary"
               fab
+              elevation="0"
               small
               @click="loadCarousel(item)"
               dark
@@ -63,6 +64,7 @@
               class="bt-actions"
               color="error"
               fab
+              elevation="0"
               small
               @click="loadCarousel(item, 'remove')"
               dark
@@ -89,7 +91,6 @@ export default {
       carousels: [],
       headers: [
         {
-          text: "Carousel",
           align: "start",
           sortable: false,
           value: "name",

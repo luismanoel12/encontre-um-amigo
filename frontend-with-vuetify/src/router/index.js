@@ -2,11 +2,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 
-import Home from '@/components/home/Home'
-import Auth from "@/components/auth/Auth"
+import Home from '@/views/home/Home'
+import Auth from "@/views/auth/Auth"
 import Carousel from "@/components/carousel/Carousel"
 import Error404 from "@/components/template/Error404"
-import Perfil from "@/components/perfil/Perfil"
+import Perfil from "@/views/perfil/Perfil"
 
 
 import { userKey } from "@/global"

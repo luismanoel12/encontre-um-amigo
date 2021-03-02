@@ -1,11 +1,17 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer  v-model="drawer" app color="#001D2E" v-if="user">
+    <v-navigation-drawer v-model="drawer" app color="#001D2E" v-if="user">
       <v-list-item>
         <v-list-item-content>
           <div class="user-dropdown-img">
             <Gravatar :email="user.email" alt="User" />
-            <v-badge v-if="user.admin" color='blue' icon="mdi-check-bold" bottom overlap></v-badge>
+            <v-badge
+              v-if="user.admin"
+              color="blue"
+              icon="mdi-check-bold"
+              bottom
+              overlap
+            ></v-badge>
           </div>
           <v-list-item-title class="title">
             <h3>Bem-vindo</h3>
@@ -19,14 +25,63 @@
       <v-divider class="divider-menu"></v-divider>
 
       <v-list dense nav dark>
-        <v-list-item v-for="item in items" :key="item.title" link @click="navegar(item.link)">
+        <v-list-item to="/">
           <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon> mdi-home </v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title >{{ item.title }}</v-list-item-title>
-            
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item to="/perfil">
+          <v-list-item-icon>
+            <v-icon> mdi-account </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Perfil</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item to="/carousel" v-if="userData.admin">
+          <v-list-item-icon>
+            <v-icon> mdi-image </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Carousel</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item to="/adocao">
+          <v-list-item-icon>
+            <v-icon> mdi-paw </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Animais para adoção</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item to="/publicacoes">
+          <v-list-item-icon>
+            <v-icon> mdi-newspaper </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Publicações</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item to="/doacoes">
+          <v-list-item-icon>
+            <v-icon> mdi-cash-multiple </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Doações</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -82,22 +137,22 @@ export default {
     return {
       drawer: null,
       userData: {},
-      items: [
-        { title: "Home", icon: "mdi-home", link: '/' },
-        { title: "Perfil", icon: "mdi-account", link: '/perfil' },
-        { title: "Carousel", icon: "mdi-image", link: '/carousel' },
-        { title: "Animais para adoção", icon: "mdi-paw", link: '/' },
-        { title: "Publicações", icon: "mdi-newspaper", link: '/' },
-        { title: "Doações", icon: "mdi-cash-multiple", link: '/' }
-      ],
+      // items: [
+      //   { title: "Home", icon: "mdi-home", link: "/" },
+      //   { title: "Perfil", icon: "mdi-account", link: "/perfil" },
+      //   { title: "Carousel", icon: "mdi-image", link: "/carousel" },
+      //   { title: "Animais para adoção", icon: "mdi-paw", link: "/" },
+      //   { title: "Publicações", icon: "mdi-newspaper", link: "/" },
+      //   { title: "Doações", icon: "mdi-cash-multiple", link: "/" },
+      // ],
       right: null,
     };
   },
   mounted() {
-    this.loadUsers()
-    this.$root.$once('user-updated', () => {
-            this.loadUsers()
-        })
+    this.loadUsers();
+    this.$root.$once("user-updated", () => {
+      this.loadUsers();
+    });
   },
   methods: {
     logout() {
@@ -107,15 +162,17 @@ export default {
     },
     async loadUsers() {
       const url = `/users/${this.user.id}`;
-      await api.get(url).then((res) => {
-        this.userData = res.data
-        this.loading = false
-      }).catch(erro => {
-      });
+      await api
+        .get(url)
+        .then((res) => {
+          this.userData = res.data;
+          this.loading = false;
+        })
+        .catch((erro) => {});
     },
-    navegar(link){
-      this.$router.push({path: link})
-    }
+    navegar(link) {
+      this.$router.push({ path: link });
+    },
   },
 };
 </script>

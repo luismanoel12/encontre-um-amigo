@@ -25,10 +25,10 @@ export default {
     };
   },
   mounted() {
-    this.loadCarousel();
     this.$root.$once("carousel-get", () => {
       this.loadCarousel();
     });
+
   },
   methods: {
     async loadCarousel() {
