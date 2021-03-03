@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 export const userKey = '__amigo_user'
-export const baseApiUrl = 'http://192.168.0.107:3000'
+export const baseApiUrl = 'http://192.168.10.168:3000'
 
 export function showError(e) {
     if(e && e.response && e.response.data){
