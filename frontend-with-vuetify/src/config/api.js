@@ -11,6 +11,6 @@ function error(err) {
 }
 
 axios.interceptors.response.use(success, error)
-axios.defaults.baseURL = 'http://192.168.10.168:3000';
+axios.defaults.baseURL = 'http://localhost:3000';
 
 export default axios
