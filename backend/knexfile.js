@@ -5,8 +5,10 @@ module.exports = {
   client: 'postgresql',
   connection: {
     database: 'encontre_um_amigo',
+    host : '127.0.0.1',
+    port:   5433,
     user:     'postgres',
-    password: 'root'
+    password: '123456'
   },
   pool: {
     min: 2,
