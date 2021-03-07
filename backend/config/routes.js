@@ -31,4 +31,16 @@ module.exports = app => {
         .put(admin(app.api.carousel.save))
         .get(admin(app.api.carousel.getById))
         .delete(admin(app.api.carousel.remove)) 
+
+    // Doações com metas
+    app.route('/metas')
+        .all(app.config.passport.authenticate())
+        .post(admin(app.api.metas.save))
+        .get(app.api.metas.get)
+
+    app.route('/metas/:id')
+        .all(app.config.passport.authenticate())
+        .put(admin(app.api.metas.save))
+        .get(admin(app.api.metas.getById))
+        .delete(admin(app.api.metas.remove)) 
 }

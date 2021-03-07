@@ -2,6 +2,7 @@
   <div class="carousel-page">
     <v-container>
       <v-form class="form elevation-10">
+        <h2 class="atencao">ATENÇÃO: O tamanho da imagem deve ser 1440 x 500</h2>
         <v-row>
           <v-col cols="12" sm="6">
             <v-text-field
@@ -171,5 +172,11 @@ export default {
 
 .btn-cancel{
     margin-left: 10px;
+}
+
+.atencao{
+  text-align: center;
+  color: #FF1D23;
+  margin-bottom: 20px;
 }
 </style>
