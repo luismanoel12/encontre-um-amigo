@@ -46,9 +46,24 @@ module.exports = app => {
         }
     }
 
-    const get = async (req, res) => {
+    const getPorUsuario = async (req, res) => {
+
         app.db('doacoes_com_metas')
-            .then(users => res.json(users))
+        .where({ userId: req.user.id })
+            .then(metas => res.json(metas))
+            .catch(err => res.status(500).send(err))
+    }
+
+    const limit = 10 // usado para paginação
+    const get = async (req, res) => {
+        const page = req.query.page || 1
+        const result = await app.db('doacoes_com_metas').count('id').first()
+        const count = parseInt(result.count)
+
+        app.db('doacoes_com_metas')
+            .select('id', 'titulo', 'descricao', 'valorEsperado', 'valorAtual', 'userId')
+            .limit(limit).offset(page * limit - limit)
+            .then(metas => res.json({ data: metas, count, limit }))
             .catch(err => res.status(500).send(err))
     }
 
@@ -61,5 +76,5 @@ module.exports = app => {
     }
 
 
-    return { save, remove, get, getById }
+    return { save, remove, get, getById, getPorUsuario }
 }

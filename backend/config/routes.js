@@ -37,6 +37,11 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .post(admin(app.api.metas.save))
         .get(app.api.metas.get)
+        
+
+    app.route('/metasUsuario')
+        .all(app.config.passport.authenticate())
+        .get(app.api.metas.getPorUsuario)
 
     app.route('/metas/:id')
         .all(app.config.passport.authenticate())

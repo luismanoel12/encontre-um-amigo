@@ -55,13 +55,23 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item to="/adocao">
+        <v-list-item to="/metas">
           <v-list-item-icon>
-            <v-icon> mdi-paw </v-icon>
+            <v-icon> mdi-bullseye-arrow </v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>Animais para adoção</v-list-item-title>
+            <v-list-item-title>Minhas Metas</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item to="/metas-list">
+          <v-list-item-icon>
+            <v-icon> mdi-bullseye </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Doações com Metas</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
