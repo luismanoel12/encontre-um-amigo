@@ -23,8 +23,10 @@
       <v-text-field label="Número" prepend-inner-icon="mdi-numeric" type="number" outlined v-if="showSignup" v-model="user.numero"></v-text-field>
       <v-text-field label="Complemento" prepend-inner-icon="mdi-home" outlined v-if="showSignup" v-model="user.complemento"></v-text-field>
       <v-text-field label="Bairro" prepend-inner-icon="mdi-map-marker" outlined v-if="showSignup" v-model="user.bairro"></v-text-field>
+      <v-select :items="" label="Estado" />
       <v-text-field label="Estado" prepend-inner-icon="mdi-sign-real-estate" outlined v-if="showSignup" v-model="user.estado"></v-text-field>
       <v-text-field label="Cidade" prepend-inner-icon="mdi-city" outlined v-if="showSignup" v-model="user.cidade"></v-text-field>
+
       <v-text-field label="CEP" prepend-inner-icon="mdi-numeric"  v-mask="'#####-###'" outlined v-if="showSignup" v-model="user.cep"></v-text-field>
     </v-form>
 

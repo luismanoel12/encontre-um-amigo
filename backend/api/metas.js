@@ -4,26 +4,26 @@ module.exports = app => {
 
     const save = (req, res) => {
         const metas = { ...req.body }
-        if(req.params.id) metas.id = req.params.id
+        if (req.params.id) metas.id = req.params.id
 
-        try{
+        try {
             existsOrError(metas.titulo, 'Título não informado')
             existsOrError(metas.valorEsperado, 'Valor esperado não informado')
 
-        } catch(msg){
+        } catch (msg) {
             res.status(400).send(msg)
         }
 
 
-        if(metas.id){
+        if (metas.id) {
             app.db('doacoes_com_metas')
-                .update({ titulo: metas.titulo, descricao: metas.descricao, imageUrl: metas.imageUrl, valorEsperado: metas.valorEsperado, valorAtual: metas.valorAtual  })
+                .update({ titulo: metas.titulo, descricao: metas.descricao, imageUrl: metas.imageUrl, valorEsperado: metas.valorEsperado, valorAtual: metas.valorAtual })
                 .where({ id: metas.id })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         } else {
             app.db('doacoes_com_metas')
-                .insert({ titulo: metas.titulo, descricao: metas.descricao, imageUrl: metas.imageUrl, valorEsperado: metas.valorEsperado, valorAtual: 0, userId: req.user.id  })
+                .insert({ titulo: metas.titulo, descricao: metas.descricao, imageUrl: metas.imageUrl, valorEsperado: metas.valorEsperado, valorAtual: 0, userId: req.user.id })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         }
@@ -33,15 +33,15 @@ module.exports = app => {
         try {
             const rowsDeleted = await app.db('doacoes_com_metas')
                 .where({ id: req.params.id }).del()
-            
+
             try {
                 existsOrError(rowsDeleted, 'Carousel não encontrado.')
-            } catch(msg) {
-                return res.status(400).send(msg)    
+            } catch (msg) {
+                return res.status(400).send(msg)
             }
 
             res.status(204).send()
-        } catch(msg) {
+        } catch (msg) {
             res.status(500).send(msg)
         }
     }
@@ -49,21 +49,14 @@ module.exports = app => {
     const getPorUsuario = async (req, res) => {
 
         app.db('doacoes_com_metas')
-        .where({ userId: req.user.id })
+            .where({ userId: req.user.id })
             .then(metas => res.json(metas))
             .catch(err => res.status(500).send(err))
     }
 
-    const limit = 10 // usado para paginação
     const get = async (req, res) => {
-        const page = req.query.page || 1
-        const result = await app.db('doacoes_com_metas').count('id').first()
-        const count = parseInt(result.count)
-
         app.db('doacoes_com_metas')
-            .select('id', 'titulo', 'descricao', 'valorEsperado', 'valorAtual', 'userId')
-            .limit(limit).offset(page * limit - limit)
-            .then(metas => res.json({ data: metas, count, limit }))
+            .then(users => res.json(users))
             .catch(err => res.status(500).send(err))
     }
 
