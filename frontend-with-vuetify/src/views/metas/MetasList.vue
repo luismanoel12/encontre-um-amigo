@@ -2,7 +2,7 @@
   <v-container>
     <div class="metas-page">
       <v-row>
-        <v-col cols="12" sm="4" v-for="meta in metas" :key="meta.id">
+        <v-col cols="12" sm="4" v-for="meta in metas" :key="meta.data.id">
           <div class="metas-card">
             <div class="metas-header">
               <img
@@ -25,8 +25,18 @@
               <h3>Valor esperado: R$ {{ meta.valorEsperado }}</h3>
               <h3>Valor Atual: R$ {{ meta.valorAtual }}</h3>
 
-              <v-progress-linear v-model="meta.valorAtual" height="25">
-                <strong>{{ Math.ceil(meta.valorAtual * 100 / meta.valorEsperado) }}%</strong>
+              <v-progress-linear
+                :value="valor"
+                rounded
+                background-color="green"
+                color="green"
+                height="25"
+              >
+                <strong
+                  >{{
+                    Math.ceil((meta.valorAtual * 100) / meta.valorEsperado)
+                  }}%</strong
+                >
               </v-progress-linear>
             </div>
 
@@ -38,6 +48,10 @@
           </div>
         </v-col>
       </v-row>
+    </div>
+
+    <div class="text-center pagination">
+      <v-btn depressed color="primary" v-if="loadMore" @click="getMetas"> Carregar Mais </v-btn>
     </div>
   </v-container>
 </template>
@@ -58,19 +72,30 @@ export default {
 
   methods: {
     getMetas() {
-      api(`/metas`).then((res) => {
-        this.metas = this.metas.concat(res.data);
-      });
+      api(`/metas?page=${this.page}`).then(res => {
+        this.metas = this.metas.concat(res.data)
+        this.page++
+
+        if(res.data.length === 0) this.loadMore = false
+      })
     },
 
-    valorBarra(){
-        this.valor = meta.valorAtual;
-    }
+    // valorBarra() {
+    //   this.valor = (meta.valorAtual * 100) / meta.valorEsperado;
+    // },
   },
+    watch: {
+        $route(to) {
+            this.metas = []
+            this.page = 1
+            this.loadMore = true
 
+            this.getMetas()
+        }
+    },
   mounted() {
     this.getMetas();
-    this.valorBarra();
+    // this.valorBarra();
   },
 };
 </script>
@@ -96,5 +121,9 @@ export default {
 
 .btn-verMais {
   margin-bottom: 20px;
+}
+
+.pagination {
+  margin-top: 50px;
 }
 </style>

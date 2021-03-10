@@ -54,17 +54,29 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
+    const limit = 2; //paginação 
     const get = async (req, res) => {
+        const page = req.query.page || 1 
+ 
+        const result = await app.db('doacoes_com_metas').count('id').first()
+        const count = parseInt(result.count)
+
         app.db('doacoes_com_metas')
-            .then(users => res.json(users))
+            .select('titulo', 'imageUrl', 'valorEsperado', 'valorAtual')
+            .limit(limit).offset(page * limit - limit )
+            .then(metas => res.json({ data: metas, count, limit }))
             .catch(err => res.status(500).send(err))
+            
     }
 
     const getById = (req, res) => {
         app.db('doacoes_com_metas')
             .where({ id: req.params.id })
             .first()
-            .then(metas => res.json(metas))
+            .then(metas => {
+                metas.descricao = metas.descricao.toString()
+                return res.json(metas)
+            })
             .catch(err => res.status(500).send(err))
     }
 
