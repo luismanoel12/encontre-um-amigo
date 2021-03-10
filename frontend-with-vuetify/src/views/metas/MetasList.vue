@@ -2,7 +2,7 @@
   <v-container>
     <div class="metas-page">
       <v-row>
-        <v-col cols="12" sm="4" v-for="meta in metas" :key="meta.data.id">
+        <v-col cols="12" sm="4" v-for="meta in metas" :key="meta.id">
           <div class="metas-card">
             <div class="metas-header">
               <img
@@ -51,7 +51,9 @@
     </div>
 
     <div class="text-center pagination">
-      <v-btn depressed color="primary" v-if="loadMore" @click="getMetas"> Carregar Mais </v-btn>
+      <v-btn depressed color="primary" v-if="loadMore" @click="getMetas">
+        Carregar Mais
+      </v-btn>
     </div>
   </v-container>
 </template>
@@ -72,27 +74,28 @@ export default {
 
   methods: {
     getMetas() {
-      api(`/metas?page=${this.page}`).then(res => {
-        this.metas = this.metas.concat(res.data)
-        this.page++
+      api(`/metas?page=${this.page}`)
+        .then((res) => {
+          this.metas = this.metas.concat(res.data.data);
+          this.page++;
 
-        if(res.data.length === 0) this.loadMore = false
-      })
+          if (res.data.length === 0) this.loadMore = false;
+        })
     },
 
     // valorBarra() {
     //   this.valor = (meta.valorAtual * 100) / meta.valorEsperado;
     // },
   },
-    watch: {
-        $route(to) {
-            this.metas = []
-            this.page = 1
-            this.loadMore = true
+  watch: {
+    $route(to) {
+      this.metas = [];
+      this.page = 1;
+      this.loadMore = true;
 
-            this.getMetas()
-        }
+      this.getMetas();
     },
+  },
   mounted() {
     this.getMetas();
     // this.valorBarra();
