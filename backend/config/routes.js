@@ -46,6 +46,6 @@ module.exports = app => {
     app.route('/metas/:id')
         .all(app.config.passport.authenticate())
         .put(admin(app.api.metas.save))
-        .get(admin(app.api.metas.getById))
+        .get(app.api.metas.getById)
         .delete(admin(app.api.metas.remove)) 
 }

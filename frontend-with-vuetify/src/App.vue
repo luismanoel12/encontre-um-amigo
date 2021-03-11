@@ -49,6 +49,7 @@ export default {
         this.$store.commit("setUser", userData);
         this.$root.$emit("user-updated");
         this.$root.$emit("carousel-get");
+        this.$root.$emit("metas-by-id");
       } else {
         localStorage.removeItem(userKey);
         this.$router.push({ name: "auth" });

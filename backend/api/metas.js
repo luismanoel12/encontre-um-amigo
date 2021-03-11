@@ -54,7 +54,7 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    const limit = 10; //paginação 
+    const limit = 12; // limite de itens por página 
     const get = async (req, res) => {
         const page = req.query.page || 1 
  

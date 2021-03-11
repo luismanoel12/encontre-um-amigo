@@ -2,29 +2,38 @@
   <v-container>
     <div class="metas-page">
       <v-row>
-        <v-col cols="12" sm="4" v-for="meta in metas" :key="meta.id">
-          <div class="metas-card">
-            <div class="metas-header">
+        <v-col cols="12" sm="3" v-for="meta in metas" :key="meta.id">
+
+          <v-card class="mx-auto my-12" max-width="374" elevation="10">
+            <div class="img-card">
               <img
                 v-if="meta.imageUrl"
                 :src="meta.imageUrl"
-                height="150"
-                width="150"
+                height="100%"
                 alt="Article"
               />
               <img
                 v-else
                 src="@/assets/article.png"
-                height="150"
-                width="150"
+                height="100%"
                 alt="Article"
               />
-              <h3>{{ meta.titulo }}</h3>
             </div>
-            <div class="metas-content">
-              <h3>Valor esperado: R$ {{ meta.valorEsperado }}</h3>
-              <h3>Valor Atual: R$ {{ meta.valorAtual }}</h3>
 
+            <v-card-title> {{ meta.titulo }}</v-card-title>
+
+            <v-card-text class="text-center">
+              <h3>
+                Valor esperado: <strong>R$ {{ meta.valorEsperado }}</strong>
+              </h3>
+              <h3>
+                Valor Atual: <strong>R$ {{ meta.valorAtual }}</strong>
+              </h3>
+            </v-card-text>
+
+            <v-divider class="mx-4"></v-divider>
+
+            <div class="progress-bar">
               <v-progress-linear
                 :value="valor"
                 rounded
@@ -41,11 +50,17 @@
             </div>
 
             <div class="button-aciton">
-              <v-btn depressed color="primary" class="btn-verMais">
-                Ver Mais <v-icon dark> mdi-arrow-right-bold </v-icon>
+              <v-btn
+                depressed
+                color="primary"
+                :to="{ name: 'metasById', params: { id: meta.id } }"
+                 rounded
+                class="btn-verMais"
+              >
+                Ver Mais
               </v-btn>
             </div>
-          </div>
+          </v-card>
         </v-col>
       </v-row>
     </div>
@@ -74,18 +89,13 @@ export default {
 
   methods: {
     getMetas() {
-      api(`/metas?page=${this.page}`)
-        .then((res) => {
-          this.metas = this.metas.concat(res.data.data);
-          this.page++;
+      api(`/metas?page=${this.page}`).then((res) => {
+        this.metas = this.metas.concat(res.data.data);
+        this.page++;
 
-          if (res.data.length === 0) this.loadMore = false;
-        })
+        if (res.data.length === 0) this.loadMore = false;
+      });
     },
-
-    // valorBarra() {
-    //   this.valor = (meta.valorAtual * 100) / meta.valorEsperado;
-    // },
   },
   watch: {
     $route(to) {
@@ -98,12 +108,17 @@ export default {
   },
   mounted() {
     this.getMetas();
-    // this.valorBarra();
   },
 };
 </script>
 
 <style>
+.metas-page{
+  background-color: #fff;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
 .metas-card {
   background-color: #fff;
 }
@@ -128,5 +143,23 @@ export default {
 
 .pagination {
   margin-top: 50px;
+}
+
+.progress-bar {
+  padding: 10px;
+}
+
+.v-card__title {
+  text-align: center !important;
+  display: block !important;
+}
+
+.img-card {
+  height: 300px;
+}
+
+.img-card img {
+  width: 100%;
+  object-fit: cover;
 }
 </style>
