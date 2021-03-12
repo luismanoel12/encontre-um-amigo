@@ -50,6 +50,7 @@ export default {
         this.$root.$emit("user-updated");
         this.$root.$emit("carousel-get");
         this.$root.$emit("metas-by-id");
+        this.$root.$emit("metas-objetivos");
       } else {
         localStorage.removeItem(userKey);
         this.$router.push({ name: "auth" });
