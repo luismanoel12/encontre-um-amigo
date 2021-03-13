@@ -60,7 +60,7 @@ module.exports = app => {
  
         const result = await app.db('doacoes_com_metas').count('id').first()
         const count = parseInt(result.count)
-
+                    
         app.db('doacoes_com_metas')
             .select('titulo', 'imageUrl', 'valorEsperado', 'valorAtual')
             .limit(limit).offset(page * limit - limit )

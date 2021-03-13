@@ -3,7 +3,7 @@ const owner = require('./owner')
 
 module.exports = app => {
     app.post('/signup', app.api.user.save)
-    app.post('/signin', app.api.auth.signin)        
+    app.post('/signin', app.api.auth.signin)
     app.post('/validateToken', app.api.auth.validateToken)
 
     // User routes
@@ -17,7 +17,7 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .put(owner(app.api.user.save))
         .get(owner(app.api.user.getById))
-        .delete(admin(app.api.user.remove)) 
+        .delete(admin(app.api.user.remove))
 
     // Carousel routes
 
@@ -30,14 +30,14 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .put(admin(app.api.carousel.save))
         .get(admin(app.api.carousel.getById))
-        .delete(admin(app.api.carousel.remove)) 
+        .delete(admin(app.api.carousel.remove))
 
     // Doações com metas
     app.route('/metas')
         .all(app.config.passport.authenticate())
         .post(admin(app.api.metas.save))
         .get(app.api.metas.get)
-        
+
 
     app.route('/metasUsuario')
         .all(app.config.passport.authenticate())
@@ -47,5 +47,24 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .put(admin(app.api.metas.save))
         .get(app.api.metas.getById)
-        .delete(admin(app.api.metas.remove)) 
+        .delete(admin(app.api.metas.remove))
+
+    // Doações com metas - Objetivos 
+
+    // Doações com metas
+
+    app.route('/objetivos')
+        .all(app.config.passport.authenticate())
+        .post(admin(app.api.objetivos.save))
+
+    app.route('/objetivos/:id')
+        .all(app.config.passport.authenticate())
+        .post(admin(app.api.objetivos.save))
+        .get(app.api.objetivos.get)
+
+    app.route('/objetivos/:id')
+        .all(app.config.passport.authenticate())
+        .put(admin(app.api.objetivos.save))
+        .get(app.api.objetivos.getById)
+        .delete(admin(app.api.objetivos.remove))
 }
