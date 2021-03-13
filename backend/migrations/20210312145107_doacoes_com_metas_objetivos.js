@@ -7,6 +7,8 @@ exports.up = function(knex) {
         table.decimal('valor').notNull()
         table.integer('metasId').references('id')
         .inTable('doacoes_com_metas').notNull()
+        table.integer('userId').references('id')
+        .inTable('users').notNull()
     })
 };
 

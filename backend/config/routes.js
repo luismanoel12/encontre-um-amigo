@@ -62,7 +62,12 @@ module.exports = app => {
         .post(admin(app.api.objetivos.save))
         .get(app.api.objetivos.get)
 
-    app.route('/objetivos/:id')
+    app.route('/objetivosUsuario/:id')
+        .all(app.config.passport.authenticate())
+        .post(admin(app.api.objetivos.save))
+        .get(app.api.objetivos.getPorUsuario)
+
+    app.route('/objetivosid/:id')
         .all(app.config.passport.authenticate())
         .put(admin(app.api.objetivos.save))
         .get(app.api.objetivos.getById)

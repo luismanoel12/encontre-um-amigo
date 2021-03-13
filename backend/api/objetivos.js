@@ -24,7 +24,7 @@ module.exports = app => {
                 .catch(err => res.status(500).send(err))
         } else {
             app.db('doacoes_com_metas_objetivos')
-                .insert({ titulo: objetivos.titulo, descricao: objetivos.descricao, valor: objetivos.valor, metasId: objetivos.metasId })
+                .insert({ titulo: objetivos.titulo, descricao: objetivos.descricao, valor: objetivos.valor, metasId: objetivos.metasId, userId: req.user.id })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         }
@@ -47,6 +47,15 @@ module.exports = app => {
         }
     }
 
+    
+    const getPorUsuario = async (req, res) => {
+
+        app.db('doacoes_com_metas_objetivos')
+            .where({ userId: req.user.id })
+            .then(objetivos => res.json(objetivos))
+            .catch(err => res.status(500).send(err))
+    }
+
 
     const get = async (req, res) => {
 
@@ -60,6 +69,7 @@ module.exports = app => {
 
     const getById = (req, res) => {
         app.db('doacoes_com_metas_objetivos')
+            .select('titulo', 'valor', 'descricao', 'metasId', 'userId')
             .where({ id: req.params.id })
             .first()
             .then(objetivos => res.json(objetivos))
@@ -67,5 +77,5 @@ module.exports = app => {
     }
 
 
-    return { save, remove, get, getById }
+    return { save, remove, get, getById, getPorUsuario }
 }

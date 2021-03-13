@@ -1,7 +1,7 @@
 <template>
-  <div class="metas-page">
     <v-container>
-      <v-card color="basil">
+    <div class="metas-page">
+      <v-card color="#1BB351">
         <v-card-title class="text-center justify-center py-6">
           <h1 class="font-weight-bold display-3 basil--text">Metas</h1>
         </v-card-title>
@@ -14,7 +14,7 @@
 
         <v-tabs-items v-model="tab">
           <v-tab-item>
-            <v-card color="basil" flat>
+            <v-card color="#fff" flat>
               <v-form class="form elevation-10">
                 <v-row>
                   <v-col cols="12" sm="3">
@@ -133,6 +133,7 @@
           </v-tab-item>
 
           <!-- Objetivos -->
+
           <v-tab-item>
             <v-card color="basil" flat>
               <v-form class="form elevation-10">
@@ -160,7 +161,7 @@
                   <v-col cols="12" sm="4">
                     <v-select
                       :items="metasSelect"
-                      v-model="objetivos.metasId"
+                      v-model="objetivo.metasId"
                       label="Selecione a Meta"
                       outlined
                     ></v-select>
@@ -243,18 +244,20 @@
           </v-tab-item>
         </v-tabs-items>
       </v-card>
-    </v-container>
   </div>
+    </v-container>
 </template>
 
 <script>
 import { showError } from "@/global";
 import api from "../../config/api";
 import { VueEditor } from "vue2-editor";
+import { mapState } from "vuex";
 
 export default {
   name: "Metas",
   components: { VueEditor },
+  computed: mapState(["user"]),
   data: function () {
     return {
       mode: "save",
@@ -285,7 +288,6 @@ export default {
         { text: "Código", value: "id" },
         { text: "Título", value: "titulo" },
         { text: "Valor", value: "valor" },
-        { text: "Descrição", value: "descricao" },
         { text: "Ações", value: "actions" },
       ],
     };
@@ -329,11 +331,11 @@ export default {
 
     //objetivos
 
-    loadObjetivos() {
-      const url = `/objetivos/${this.$route.params.id}`;
-      api.get(url).then((res) => {
-        this.objetivos = res.data;
-      });
+    async loadObjetivos() {
+      const url = `/objetivosUsuario/${this.user.id}`;
+      await api.get(url).then((res) => {
+         this.objetivos = res.data
+      })
     },
 
     saveObjetivos() {
@@ -346,6 +348,7 @@ export default {
         })
         .catch(showError);
     },
+
     removeObjetivos() {
       const id = this.objetivo.id;
       api
@@ -356,11 +359,13 @@ export default {
         })
         .catch(showError);
     },
+
     resetObjetivos() {
       this.mode = "save";
       this.objetivo = {};
       this.loadObjetivos();
     },
+
     loadMetasList() {
       const url = `/metasUsuario`;
       api.get(url).then((res) => {
@@ -378,6 +383,7 @@ export default {
   mounted() {
     this.loadMetasList();
     this.loadMetas();
+    this.loadObjetivos();
   },
 };
 </script>
@@ -418,5 +424,9 @@ export default {
 }
 .basil--text {
   color: #356859 !important;
+}
+
+.v-card > *:last-child:not(.v-btn):not(.v-chip){
+  padding: 20px;
 }
 </style>

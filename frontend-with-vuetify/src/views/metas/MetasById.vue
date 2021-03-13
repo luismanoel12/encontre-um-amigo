@@ -54,7 +54,7 @@
             </div>
 
             <p v-for="objetivo in objetivos" :key="objetivo.id">
-              <v-card color="#4DA545" dark v-if=" objetivo.valor <= meta.valorAtual">
+              <v-card color="#4DA545" dark v-if=" objetivo.valor >= meta.valorAtual">
                 <v-card-title class="headline">
                   {{ objetivo.titulo }}
                 </v-card-title>
@@ -121,7 +121,7 @@ export default {
 
     this.loadObjetivos();
     this.$root.$once("metas-objetivos", () => {
-      this.loadMeta();
+    this.loadMeta();
     });
   },
   updated() {
