@@ -2,6 +2,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable('animais', table => {
         table.increments('id').primary()
+        table.string('tipo').notNull()
         table.string('nome').notNull()
         table.string('sexo').notNull()
         table.string('porte').notNull()

@@ -6,6 +6,7 @@ module.exports = app => {
         if(req.params.id) animais.id = req.params.id
 
         try {
+            existsOrError(animais.tipo, 'Tipo do animal não informado')
             existsOrError(animais.nome, 'Nome do animal não informado')
             existsOrError(animais.sexo, 'Sexo do animal não informado')
             existsOrError(animais.porte, 'Porte do animal não informado')
@@ -27,7 +28,7 @@ module.exports = app => {
         } else {
             app.db('animais')
                 .insert(animais)
-                .then(_ => res.tatus(204).send())
+                .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         }
     }
