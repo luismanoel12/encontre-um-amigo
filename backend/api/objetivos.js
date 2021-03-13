@@ -12,21 +12,9 @@ module.exports = app => {
             existsOrError(objetivos.valor, 'Valor não informado')
             existsOrError(objetivos.metasId, 'Metas não informado')
 
-
-            // const qtdObjetivos = await app.db('doacoes_com_metas_objetivos')
-            //     .where({ metasId: objetivos.metasId }).count('metasId')
-            // const count = parseInt(qtdObjetivos[0].count)
-
-            // console.log(count)
-
-            // if (count >= 5) {
-            //     notExistsOrError(qtdObjetivos, 'Você só pode cadastrar 5 objetivos por barra de doações!')
-            // }
-
         } catch (msg) {
             res.status(400).send(msg)
         }
-
 
         if (objetivos.id) {
             app.db('doacoes_com_metas_objetivos')
