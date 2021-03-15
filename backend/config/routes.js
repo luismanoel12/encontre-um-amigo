@@ -51,8 +51,6 @@ module.exports = app => {
 
     // Doações com metas - Objetivos 
 
-    // Doações com metas
-
     app.route('/objetivos')
         .all(app.config.passport.authenticate())
         .post(admin(app.api.objetivos.save))

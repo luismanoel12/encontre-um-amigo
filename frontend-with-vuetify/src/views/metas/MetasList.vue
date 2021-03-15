@@ -53,7 +53,7 @@
               <v-btn
                 depressed
                 color="primary"
-                :to="{ name: 'metasById', params: { id: meta.id } }"
+                :to="{ path: 'metasById', params: { id: meta.id } }"
                  rounded
                 class="btn-verMais"
               >
