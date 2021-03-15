@@ -65,8 +65,9 @@ export default {
     return {
       showSignup: false,
       showCnpj: false,
-      data: null,
+      data: {},
       user: {},
+      checkbox: false,
       
     };
   },
@@ -87,7 +88,6 @@ export default {
         .then(() => {
           this.$toasted.global.defaultSuccess();
           this.user = {};
-          this.endereco = {};
           this.showSignup = false;
         })
         .catch(showError);
@@ -98,8 +98,9 @@ export default {
       .then( res => this.data = res.data )
 			.catch( error => console.log(error) )
 
+      console.log(this.user)
       // this.user.estado = this.res.uf;
-      this.user.cidade = this.res.localidade;
+      // this.user.cidade = this.data.localidade;
     }
 
   },

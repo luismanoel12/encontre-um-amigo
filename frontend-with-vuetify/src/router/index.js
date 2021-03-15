@@ -35,7 +35,7 @@ const routes = [{
 },
 {
     name: 'perfil',
-    path: '/perfil',
+    path: '/perfil/:id',
     component: Perfil,
     meta: { requiresOff: false }
 },
