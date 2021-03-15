@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+  <v-container>
     <div class="metas-page">
       <v-card color="#1BB351">
         <v-card-title class="text-center justify-center py-6">
@@ -170,12 +170,13 @@
 
                 <v-row>
                   <v-col cols="12" sm="12">
-                    <v-text-field
-                      label="Descrição"
-                      v-model="objetivo.descricao"
-                      :readonly="mode === 'remove'"
+                    <v-textarea
                       outlined
-                    ></v-text-field>
+                       v-model="objetivo.descricao"
+                       :readonly="mode === 'remove'"
+                      name="input-7-4"
+                      label="Descrição"
+                    ></v-textarea>
                   </v-col>
                 </v-row>
 
@@ -221,7 +222,7 @@
                     fab
                     elevation="0"
                     small
-                    @click="loadObjetivos(item)"
+                    @click="loadObjetivo(item)"
                     dark
                   >
                     <v-icon>mdi-pencil</v-icon>
@@ -233,7 +234,7 @@
                     fab
                     elevation="0"
                     small
-                    @click="loadObjetivos(item, 'remove')"
+                    @click="loadObjetivo(item, 'remove')"
                     dark
                   >
                     <v-icon>mdi-delete</v-icon>
@@ -244,8 +245,8 @@
           </v-tab-item>
         </v-tabs-items>
       </v-card>
-  </div>
-    </v-container>
+    </div>
+  </v-container>
 </template>
 
 <script>
@@ -329,13 +330,13 @@ export default {
       api.get(`/metas/${meta.id}`).then((res) => (this.meta = res.data));
     },
 
-    //objetivos
+    // ################ objetivos ################
 
     async loadObjetivos() {
       const url = `/objetivosUsuario/${this.user.id}`;
       await api.get(url).then((res) => {
-         this.objetivos = res.data
-      })
+        this.objetivos = res.data;
+      });
     },
 
     saveObjetivos() {
@@ -355,7 +356,7 @@ export default {
         .delete(`/objetivos/${id}`)
         .then(() => {
           this.$toasted.global.defaultSuccess();
-          this.reset();
+          this.resetObjetivos();
         })
         .catch(showError);
     },
@@ -364,6 +365,13 @@ export default {
       this.mode = "save";
       this.objetivo = {};
       this.loadObjetivos();
+    },
+
+    loadObjetivo(objetivo, mode = "save") {
+      this.mode = mode;
+      api
+        .get(`/objetivos/${objetivo.id}`)
+        .then((res) => (this.objetivo = res.data));
     },
 
     loadMetasList() {
@@ -426,7 +434,7 @@ export default {
   color: #356859 !important;
 }
 
-.v-card > *:last-child:not(.v-btn):not(.v-chip){
+.v-card > *:last-child:not(.v-btn):not(.v-chip) {
   padding: 20px;
 }
 </style>

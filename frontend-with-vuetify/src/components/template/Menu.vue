@@ -55,7 +55,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item to="/metas">
+        <v-list-item to="/minhas-metas">
           <v-list-item-icon>
             <v-icon> mdi-bullseye-arrow </v-icon>
           </v-list-item-icon>
@@ -65,7 +65,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item to="/metas-list">
+        <v-list-item to="/metas">
           <v-list-item-icon>
             <v-icon> mdi-bullseye </v-icon>
           </v-list-item-icon>
@@ -163,7 +163,8 @@ export default {
       this.$router.push({ name: "auth" });
     },
     async loadUsers() {
-      const url = `/users/${this.user.id}`;
+      const id = this.user.id;
+      const url = `/users/${id}`;
       await api
         .get(url)
         .then((res) => {

@@ -1,5 +1,5 @@
 <template>
-  <v-main class="grey lighten-3">
+  <v-main class="grey lighten-3" style="padding: 0px">
     <v-container>
       <v-row>
         <v-col cols="12" sm="8">
@@ -16,12 +16,11 @@
                   <img
                     v-else
                     src="@/assets/article.png"
-                    height="800"
+                    height="400"
                     alt="Article"
                   />
-                  <h1>{{ meta.titulo }}</h1>
+                  <h1 class="meta-title">{{ meta.titulo }}</h1>
                 </div>
-                <v-divider></v-divider>
 
                 <div class="view-content">
                   <div class="meta-content" v-html="meta.descricao"></div>
@@ -52,9 +51,9 @@
                 >
               </v-progress-linear>
             </div>
-
+            <v-divider style="padding-bottom: 10px;" ></v-divider>
             <p v-for="objetivo in objetivos" :key="objetivo.id">
-              <v-card color="#4DA545" dark v-if=" objetivo.valor >= meta.valorAtual">
+              <v-card color="#4DA545" dark v-if="objetivo.valor <= meta.valorAtual">
                 <v-card-title class="headline">
                   {{ objetivo.titulo }}
                 </v-card-title>
@@ -109,7 +108,7 @@ export default {
     },
 
     async loadObjetivos() {
-      const url = `/objetivos/${this.$route.params.id}`;
+      const url = `/objetivosMeta/${this.$route.params.id}`;
       await api.get(url).then((res) => (this.objetivos = res.data));
     },
   },
@@ -187,6 +186,11 @@ export default {
 
 .side-content-h1 {
   font-size: 35pt;
+}
+
+.meta-title{
+  padding-top: 30px;
+  color: #1e1e1e;
 }
 
 @media only screen and (max-width: 600px) {

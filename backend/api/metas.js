@@ -62,7 +62,7 @@ module.exports = app => {
         const count = parseInt(result.count)
                     
         app.db('doacoes_com_metas')
-            .select('titulo', 'imageUrl', 'valorEsperado', 'valorAtual')
+            .select('id', 'titulo', 'imageUrl', 'valorEsperado', 'valorAtual')
             .limit(limit).offset(page * limit - limit )
             .then(metas => res.json({ data: metas, count, limit }))
             .catch(err => res.status(500).send(err))

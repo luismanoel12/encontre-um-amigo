@@ -60,7 +60,7 @@ module.exports = app => {
     const get = async (req, res) => {
 
         app.db('doacoes_com_metas_objetivos')
-            .select('titulo', 'valor', 'descricao', 'metasId')
+            .select('id', 'titulo', 'valor', 'descricao', 'metasId')
             .where({ metasId: req.params.id })
             .then(objetivos => res.json(objetivos))
             .catch(err => res.status(500).send(err))
@@ -69,7 +69,7 @@ module.exports = app => {
 
     const getById = (req, res) => {
         app.db('doacoes_com_metas_objetivos')
-            .select('titulo', 'valor', 'descricao', 'metasId', 'userId')
+            .select('id', 'titulo', 'valor', 'descricao', 'metasId', 'userId')
             .where({ id: req.params.id })
             .first()
             .then(objetivos => res.json(objetivos))

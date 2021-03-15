@@ -11,7 +11,7 @@ module.exports = app => {
     app.route('/users')
         .all(app.config.passport.authenticate())
         .post(admin(app.api.user.save))
-        .get(admin(app.api.user.get))
+        .get(owner(app.api.user.get))
 
     app.route('/users/:id')
         .all(app.config.passport.authenticate())
@@ -54,20 +54,25 @@ module.exports = app => {
     app.route('/objetivos')
         .all(app.config.passport.authenticate())
         .post(admin(app.api.objetivos.save))
+        .put(admin(app.api.objetivos.save))
+    
+    app.route('/objetivosMeta/:id')
+        .all(app.config.passport.authenticate())
+        .get(app.api.objetivos.get)
 
     app.route('/objetivos/:id')
         .all(app.config.passport.authenticate())
-        .post(admin(app.api.objetivos.save))
-        .get(app.api.objetivos.get)
+        .put(admin(app.api.objetivos.save))
+        .get(app.api.objetivos.getById)
+        .delete(admin(app.api.objetivos.remove))
 
     app.route('/objetivosUsuario/:id')
         .all(app.config.passport.authenticate())
         .post(admin(app.api.objetivos.save))
         .get(app.api.objetivos.getPorUsuario)
 
-    app.route('/objetivosid/:id')
-        .all(app.config.passport.authenticate())
-        .put(admin(app.api.objetivos.save))
-        .get(app.api.objetivos.getById)
-        .delete(admin(app.api.objetivos.remove))
+
+
+
+ 
 }

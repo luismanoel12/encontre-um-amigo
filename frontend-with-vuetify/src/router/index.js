@@ -41,13 +41,13 @@ const routes = [{
 },
 {
     name: 'metas',
-    path: '/metas',
+    path: '/minhas-metas',
     component: Metas,
     meta: { requiresOff: false }
 },
 {
     name: 'metasList',
-    path: '/metas-list',
+    path: '/metas',
     component: MetasList,
     meta: { requiresOff: false }
 },
