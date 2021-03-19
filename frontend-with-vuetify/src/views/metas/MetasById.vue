@@ -89,7 +89,7 @@
                 </v-card-title>
 
                 <v-card-subtitle>
-                  <h1 class="text-center valores">R$ {{ objetivo.valor }}</h1>
+                  <h1 class="text-center valores"> {{ objetivo.valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }}</h1>
                 </v-card-subtitle>
 
                 <v-card-text class="text-center">

@@ -10,9 +10,9 @@
       <v-text-field label="Nome" prepend-inner-icon="mdi-account" outlined v-if="showSignup" v-model="user.name"></v-text-field>
       <v-text-field label="E-mail"  prepend-inner-icon="mdi-at" outlined v-model="user.email" autocomplete="email"></v-text-field>
 
-      <v-checkbox color="green" v-model="checkbox" v-if="showSignup" :input-value="user.ong" :label="'Sou uma ONG'"></v-checkbox>
-      <v-text-field label="CPF" prepend-inner-icon="mdi-card-account-details" v-mask="'###.###.###-##'" outlined v-if="showSignup" v-model="user.cpf"></v-text-field>
-      <v-text-field label="CNPJ" prepend-inner-icon="mdi-card-account-details"  v-mask="'##.###.###/####-##'" outlined v-if="showSignup" v-model="user.cnpj"></v-text-field>
+      <v-checkbox color="green" v-model="isOng" v-if="showSignup" :label="'Sou uma ONG'"></v-checkbox>
+      <v-text-field label="CPF" prepend-inner-icon="mdi-card-account-details" v-mask="'###########'" outlined v-if="showSignup && !isOng" v-model="user.cpf"></v-text-field>
+      <v-text-field label="CNPJ" prepend-inner-icon="mdi-card-account-details"  v-mask="'##############'" outlined v-if="isOng" v-model="user.cnpj"></v-text-field>
 
       <v-text-field label="Telefone" prepend-inner-icon="mdi-phone" type="tel" v-mask="'(##) #####-####'" outlined v-if="showSignup" v-model="user.telefone"></v-text-field>    
       <v-text-field label="Senha" prepend-inner-icon="mdi-lock" type="password" outlined v-model="user.password" autocomplete="current-password"></v-text-field>
@@ -21,10 +21,6 @@
       <v-divider color="black" class="hr-signup" v-if="showSignup"></v-divider>
       <h1 class="endereco-title" v-if="showSignup">Endereço</h1>
       <v-text-field label="CEP" prepend-inner-icon="mdi-numeric"  v-mask="'#####-###'" outlined v-if="showSignup" v-model="user.cep"></v-text-field>
-      <v-btn tile color="primary" class="btn-cep" v-if="showSignup" @click="buscarCep">
-        <v-icon left> mdi-magnify </v-icon>
-          Buscar CEP
-    </v-btn>
 
       <v-text-field label="Endereço" prepend-inner-icon="mdi-map-marker" outlined v-if="showSignup" v-model="user.endereco"></v-text-field>
       <v-text-field label="Número" prepend-inner-icon="mdi-numeric" type="number" outlined v-if="showSignup" v-model="user.numero"></v-text-field>
@@ -64,7 +60,7 @@ export default {
   data: function () {
     return {
       showSignup: false,
-      showCnpj: false,
+      isOng: false,
       data: {},
       user: {},
       checkbox: false,
@@ -92,16 +88,6 @@ export default {
         })
         .catch(showError);
     },
-
-    buscarCep(){
-      api.get(`https://viacep.com.br/ws/${this.user.cep}/json/`)
-      .then( res => this.data = res.data )
-			.catch( error => console.log(error) )
-
-      console.log(this.user)
-      // this.user.estado = this.res.uf;
-      // this.user.cidade = this.data.localidade;
-    }
 
   },
 

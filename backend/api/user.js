@@ -34,11 +34,19 @@ module.exports = app => {
             existsOrError(endereco.cidade, 'Cidade não informado')
             existsOrError(endereco.cep, 'CEP não informado')
 
+           if(user.cpf == null){
             const userFromDB = await app.db('users')
-                .where({ email: user.email }).orWhere({ cpf: user.cpf }).orWhere({ cnpj: user.cnpj }).first()
-            if (!user.id) {
-                notExistsOrError(userFromDB, 'E-mail, CPF ou CNPJ já cadastrados')
-            }
+            .where({ email: user.email }).orWhere({ cnpj: user.cnpj }).first()
+        if (!user.id) {
+            notExistsOrError(userFromDB, 'E-mail, CPF ou CNPJ já cadastrados')
+        }
+           }else{
+            const userFromDB = await app.db('users')
+            .where({ email: user.email }).orWhere({ cpf: user.cpf }).first()
+        if (!user.id) {
+            notExistsOrError(userFromDB, 'E-mail, CPF ou CNPJ já cadastrados')
+        }
+           }
 
 
         } catch (msg) {
@@ -47,6 +55,14 @@ module.exports = app => {
 
         user.password = ecryptPassword(user.password)
         delete user.confirmPassword
+
+        if(user.cpf == null){
+            user.ong = true;
+            user.cpf = user.cnpj;
+        }else if(user.cnpj == null ){
+            user.ong = false;
+            user.cnpj = user.cpf;
+        }
 
         if (user.id) {
             app.db('users')
