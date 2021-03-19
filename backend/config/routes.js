@@ -55,7 +55,7 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .post(admin(app.api.objetivos.save))
         .put(admin(app.api.objetivos.save))
-    
+
     app.route('/objetivosMeta/:id')
         .all(app.config.passport.authenticate())
         .get(app.api.objetivos.get)
@@ -72,7 +72,20 @@ module.exports = app => {
         .get(app.api.objetivos.getPorUsuario)
 
 
+    // Cadastro de animais e listagem
+
+    app.route('/animais-adocao')
+        .all(app.config.passport.authenticate())
+        .post(app.api.animais.save)
+        .get(app.api.animais.get)
+
+    app.route('/carousel/:id')
+        .all(app.config.passport.authenticate())
+        .put(admin(app.api.animais.save))
+        .get(admin(app.api.animais.getById))
+        .delete(admin(app.api.animais.remove))
 
 
- 
+
+
 }

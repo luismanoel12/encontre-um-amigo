@@ -151,7 +151,6 @@ export default {
     };
   },
   mounted() {
-    this.loadUsers();
     this.$root.$once("user-updated", () => {
       this.loadUsers();
     });

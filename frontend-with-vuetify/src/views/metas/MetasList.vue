@@ -3,64 +3,53 @@
     <div class="metas-page">
       <v-row>
         <v-col cols="12" sm="3" v-for="meta in metas" :key="meta.id">
+          <router-link class="router-link" :to="{ name: 'metasById', params: { id: meta.id } }">
+            <v-card class="mx-auto my-12 meta-card" max-width="374" elevation="10">
+              <div class="img-card">
+                <img
+                  v-if="meta.imageUrl"
+                  :src="meta.imageUrl"
+                  height="100%"
+                  alt="Article"
+                />
+                <img
+                  v-else
+                  src="@/assets/article.png"
+                  height="100%"
+                  alt="Article"
+                />
+              </div>
 
-          <v-card class="mx-auto my-12" max-width="374" elevation="10">
-            <div class="img-card">
-              <img
-                v-if="meta.imageUrl"
-                :src="meta.imageUrl"
-                height="100%"
-                alt="Article"
-              />
-              <img
-                v-else
-                src="@/assets/article.png"
-                height="100%"
-                alt="Article"
-              />
-            </div>
+              <v-card-title> {{ meta.titulo }}</v-card-title>
 
-            <v-card-title> {{ meta.titulo }}</v-card-title>
+              <v-card-text class="text-center">
+                <h3>
+                  Valor esperado: <strong> {{ meta.valorEsperado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }}</strong>
+                </h3>
+                <h3>
+                  Valor Atual: <strong> {{ meta.valorAtual.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }}</strong>
+                </h3>
+              </v-card-text>
 
-            <v-card-text class="text-center">
-              <h3>
-                Valor esperado: <strong>R$ {{ meta.valorEsperado }}</strong>
-              </h3>
-              <h3>
-                Valor Atual: <strong>R$ {{ meta.valorAtual }}</strong>
-              </h3>
-            </v-card-text>
+              <v-divider class="mx-4"></v-divider>
 
-            <v-divider class="mx-4"></v-divider>
-
-            <div class="progress-bar">
-              <v-progress-linear
-                :value="valor"
-                rounded
-                background-color="green"
-                color="green"
-                height="25"
-              >
-                <strong
-                  >{{
-                    Math.ceil((meta.valorAtual * 100) / meta.valorEsperado)
-                  }}%</strong
+              <div class="progress-bar">
+                <v-progress-linear
+                  :value="valor"
+                  rounded
+                  background-color="green"
+                  color="green"
+                  height="25"
                 >
-              </v-progress-linear>
-            </div>
-
-            <div class="button-aciton">
-              <v-btn
-                depressed
-                color="primary"
-                :to="{ name: 'metasById', params: { id: meta.id }}"
-                rounded
-                class="btn-verMais"
-              >
-                Ver Mais
-              </v-btn>
-            </div>
-          </v-card>
+                  <strong
+                    >{{
+                      Math.ceil((meta.valorAtual * 100) / meta.valorEsperado)
+                    }}%</strong
+                  >
+                </v-progress-linear>
+              </div>
+            </v-card>
+          </router-link>
         </v-col>
       </v-row>
     </div>
@@ -113,10 +102,11 @@ export default {
 </script>
 
 <style>
-.metas-page{
+.metas-page {
   background-color: #fff;
   border-radius: 10px;
   margin-top: 20px;
+  padding: 20px;
 }
 
 .metas-card {
@@ -155,11 +145,27 @@ export default {
 }
 
 .img-card {
-  height: 300px;
+  height: 200px;
 }
 
 .img-card img {
   width: 100%;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
   object-fit: cover;
+}
+
+.router-link{
+  text-decoration: none;
+}
+
+.meta-card{
+  transition: 0.5s;
+}
+
+.meta-card:hover{
+  transform: scale(1.04);
+  transition: 0.5s;
+  border-radius: 8px;
 }
 </style>
