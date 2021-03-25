@@ -34,19 +34,19 @@ module.exports = app => {
             existsOrError(endereco.cidade, 'Cidade não informado')
             existsOrError(endereco.cep, 'CEP não informado')
 
-           if(user.cpf == null){
-            const userFromDB = await app.db('users')
-            .where({ email: user.email }).orWhere({ cnpj: user.cnpj }).first()
-        if (!user.id) {
-            notExistsOrError(userFromDB, 'E-mail, CPF ou CNPJ já cadastrados')
-        }
-           }else{
-            const userFromDB = await app.db('users')
-            .where({ email: user.email }).orWhere({ cpf: user.cpf }).first()
-        if (!user.id) {
-            notExistsOrError(userFromDB, 'E-mail, CPF ou CNPJ já cadastrados')
-        }
-           }
+            if (user.cpf == null) {
+                const userFromDB = await app.db('users')
+                    .where({ email: user.email }).orWhere({ cnpj: user.cnpj }).first()
+                if (!user.id) {
+                    notExistsOrError(userFromDB, 'E-mail, CPF ou CNPJ já cadastrados')
+                }
+            } else {
+                const userFromDB = await app.db('users')
+                    .where({ email: user.email }).orWhere({ cpf: user.cpf }).first()
+                if (!user.id) {
+                    notExistsOrError(userFromDB, 'E-mail, CPF ou CNPJ já cadastrados')
+                }
+            }
 
 
         } catch (msg) {
@@ -56,10 +56,10 @@ module.exports = app => {
         user.password = ecryptPassword(user.password)
         delete user.confirmPassword
 
-        if(user.cpf == null){
+        if (user.cpf == null) {
             user.ong = true;
             user.cpf = user.cnpj;
-        }else if(user.cnpj == null ){
+        } else if (user.cnpj == null) {
             user.ong = false;
             user.cnpj = user.cpf;
         }
@@ -82,7 +82,7 @@ module.exports = app => {
                 .returning('id')
                 .then(function (response) {
                     app.db('endereco')
-                        .insert({ endereco: user.endereco, numero: user.numero, complemento: user.complemento, bairro: user.bairro, estado: user.bairro, cidade: user.cidade, cep: user.cep, userId: response[0] })
+                        .insert({ endereco: user.endereco, numero: user.numero, complemento: user.complemento, bairro: user.bairro, estado: user.estado, cidade: user.cidade, cep: user.cep, userId: response[0] })
                         .then(_ => res.status(204).send())
                         .catch(err => res.status(500).send(err))
                 });
@@ -116,6 +116,44 @@ module.exports = app => {
 
     }
 
+    const limit = 12; // limite de itens por página 
+    const getOngs = async (req, res) => {
+        const page = req.query.page || 1
+
+        const result = await app.db('users').count('id').first()
+        const count = parseInt(result.count)
+
+        app.db('users')
+            .join('endereco', 'users.id', 'endereco.userId')
+            .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.cnpj', 'users.ong',
+                'endereco.endereco', 'endereco.numero', 'endereco.complemento', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
+            .limit(limit).offset(page * limit - limit)
+            .where({ 'users.ong': true })
+            .then(user => res.json({ data: user, count, limit }))
+            .catch(err => res.status(500).send(err))
+    }
+
+    const getOngById = (req, res) => {
+        app.db('users')
+            .join('endereco', 'users.id', 'endereco.userId')
+            .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.cnpj', 'users.ong',
+                'endereco.endereco', 'endereco.numero', 'endereco.complemento', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
+            .where({ id: req.params.id })
+            .first()
+            .then(user => res.json(user))
+            .catch(err => res.status(500).send(err))
+    }
+
+
+    const getName = (req, res) => {
+        app.db('users')
+            .select('name')
+            .where({ 'id': req.params.id })
+            .first()
+            .then(user => res.json(user))
+            .catch(err => res.status(500).send(err))
+    }
+
     const remove = async (req, res) => {
         try {
             const rowsUpdated = await app.db('users')
@@ -129,5 +167,5 @@ module.exports = app => {
         }
     }
 
-    return { save, get, getById, remove }
+    return { save, get, getById, remove, getName, getOngs, getOngById  }
 }

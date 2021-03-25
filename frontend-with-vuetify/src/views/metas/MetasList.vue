@@ -3,8 +3,15 @@
     <div class="metas-page">
       <v-row>
         <v-col cols="12" sm="3" v-for="meta in metas" :key="meta.id">
-          <router-link class="router-link" :to="{ name: 'metasById', params: { id: meta.id } }">
-            <v-card class="mx-auto my-12 meta-card" max-width="374" elevation="10">
+          <router-link
+            class="router-link"
+            :to="{ name: 'metasById', params: { id: meta.id } }"
+          >
+            <v-card
+              class="mx-auto my-12 meta-card"
+              max-width="374"
+              elevation="10"
+            >
               <div class="img-card">
                 <img
                   v-if="meta.imageUrl"
@@ -24,11 +31,29 @@
 
               <v-card-text class="text-center">
                 <h3>
-                  Valor esperado: <strong> {{ meta.valorEsperado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }}</strong>
+                  Valor esperado:
+                  <strong>
+                    {{
+                      meta.valorEsperado.toLocaleString("pt-br", {
+                        style: "currency",
+                        currency: "BRL",
+                      })
+                    }}</strong
+                  >
                 </h3>
                 <h3>
-                  Valor Atual: <strong> {{ meta.valorAtual.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }}</strong>
+                  Valor Atual:
+                  <strong>
+                    {{
+                      meta.valorAtual.toLocaleString("pt-br", {
+                        style: "currency",
+                        currency: "BRL",
+                      })
+                    }}</strong
+                  >
                 </h3>
+
+                <span>Criado por: {{ metaUser.name }} </span>
               </v-card-text>
 
               <v-divider class="mx-4"></v-divider>
@@ -70,6 +95,7 @@ export default {
   data: function () {
     return {
       metas: [],
+      metaUser: {},
       page: 1,
       valor: 0,
       loadMore: true,
@@ -85,6 +111,11 @@ export default {
         if (res.data.length === 0) this.loadMore = false;
       });
     },
+
+    async getMetaUser() {
+      const url = `/user-name/${this.meta.userId}`;
+      await api.get(url).then((res) => (this.metaUser = res.data));
+    },
   },
   watch: {
     $route(to) {
@@ -93,6 +124,7 @@ export default {
       this.loadMore = true;
 
       this.getMetas();
+      this.getMetaUser();
     },
   },
   mounted() {
@@ -155,15 +187,15 @@ export default {
   object-fit: cover;
 }
 
-.router-link{
+.router-link {
   text-decoration: none;
 }
 
-.meta-card{
+.meta-card {
   transition: 0.5s;
 }
 
-.meta-card:hover{
+.meta-card:hover {
   transform: scale(1.04);
   transition: 0.5s;
   border-radius: 8px;

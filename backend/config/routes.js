@@ -13,11 +13,26 @@ module.exports = app => {
         .post(admin(app.api.user.save))
         .get(owner(app.api.user.get))
 
+    app.route('/user-name/:id')
+        .all(app.config.passport.authenticate())
+        .get(app.api.user.getName)
+
     app.route('/users/:id')
         .all(app.config.passport.authenticate())
         .put(owner(app.api.user.save))
         .get(owner(app.api.user.getById))
         .delete(admin(app.api.user.remove))
+
+    // Rota das Ongs
+
+    app.route('/ongs')
+        .all(app.config.passport.authenticate())
+        .get(app.api.user.getOngs)
+
+    app.route('/ongs/:id')
+        .all(app.config.passport.authenticate())
+        .get(app.api.user.getOngById)
+
 
     // Carousel routes
 

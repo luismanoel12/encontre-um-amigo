@@ -35,7 +35,7 @@ module.exports = app => {
                 .where({ id: req.params.id }).del()
 
             try {
-                existsOrError(rowsDeleted, 'Carousel não encontrado.')
+                existsOrError(rowsDeleted, 'Meta não encontrada.')
             } catch (msg) {
                 return res.status(400).send(msg)
             }
@@ -62,7 +62,7 @@ module.exports = app => {
         const count = parseInt(result.count)
                     
         app.db('doacoes_com_metas')
-            .select('id', 'titulo', 'imageUrl', 'valorEsperado', 'valorAtual')
+            .select('id', 'titulo', 'imageUrl', 'valorEsperado', 'valorAtual', 'userId')
             .limit(limit).offset(page * limit - limit )
             .then(metas => res.json({ data: metas, count, limit }))
             .catch(err => res.status(500).send(err))

@@ -7,7 +7,8 @@
     </div>
     <div class="auth-content">
     <v-form>
-      <v-text-field label="Nome" prepend-inner-icon="mdi-account" outlined v-if="showSignup" v-model="user.name"></v-text-field>
+      <v-text-field label="Nome" prepend-inner-icon="mdi-account" outlined v-if="showSignup && !isOng" v-model="user.name"></v-text-field>
+      <v-text-field label="Nome da Ong" prepend-inner-icon="mdi-account" outlined v-else v-show="showSignup" v-model="user.name"></v-text-field>
       <v-text-field label="E-mail"  prepend-inner-icon="mdi-at" outlined v-model="user.email" autocomplete="email"></v-text-field>
 
       <v-checkbox color="green" v-model="isOng" v-if="showSignup" :label="'Sou uma ONG'"></v-checkbox>

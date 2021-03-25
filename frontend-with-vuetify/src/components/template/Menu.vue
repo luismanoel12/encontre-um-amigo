@@ -35,7 +35,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item :to="{ name: 'perfil', params: { id: user.id }}">
+        <v-list-item :to="{ name: 'perfil', params: { id: user.id } }">
           <v-list-item-icon>
             <v-icon> mdi-account </v-icon>
           </v-list-item-icon>
@@ -52,6 +52,16 @@
 
           <v-list-item-content>
             <v-list-item-title>Carousel</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item to="/ongs">
+          <v-list-item-icon>
+            <v-icon> mdi-account-group </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>ONGs</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 

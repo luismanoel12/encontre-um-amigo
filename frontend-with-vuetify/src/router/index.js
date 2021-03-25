@@ -4,12 +4,13 @@ import VueRouter from 'vue-router'
 
 import Home from '@/views/home/Home'
 import Auth from "@/views/auth/Auth"
-import Carousel from "@/components/carousel/Carousel"
+import Carousel from "@/views/carousel/Carousel"
 import Error404 from "@/components/template/Error404"
 import Perfil from "@/views/perfil/Perfil"
 import Metas from "@/views/metas/Metas"
 import MetasList from "@/views/metas/MetasList"
 import MetasById from "@/views/metas/MetasById"
+import Ongs from "@/views/ongs/Ongs"
 
 
 import { userKey } from "@/global"
@@ -55,6 +56,12 @@ const routes = [{
     name: 'metasById',
     path: '/metas/:id',
     component: MetasById,
+    meta: { requiresOff: false }
+},
+{
+    name: 'ongs',
+    path: '/ongs',
+    component: Ongs,
     meta: { requiresOff: false }
 },
 {
