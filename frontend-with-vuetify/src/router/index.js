@@ -11,6 +11,7 @@ import Metas from "@/views/metas/Metas"
 import MetasList from "@/views/metas/MetasList"
 import MetasById from "@/views/metas/MetasById"
 import Ongs from "@/views/ongs/Ongs"
+import OngById from "@/views/ongs/OngById"
 
 
 import { userKey } from "@/global"
@@ -62,6 +63,12 @@ const routes = [{
     name: 'ongs',
     path: '/ongs',
     component: Ongs,
+    meta: { requiresOff: false }
+},
+{
+    name: 'ongById',
+    path: '/ongs/:id',
+    component: OngById,
     meta: { requiresOff: false }
 },
 {

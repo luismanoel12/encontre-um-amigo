@@ -108,7 +108,7 @@ export default {
         this.metas = this.metas.concat(res.data.data);
         this.page++;
 
-        if (res.data.length === 0) this.loadMore = false;
+        if (res.data.data.length === 0) this.loadMore = false;
       });
     },
 

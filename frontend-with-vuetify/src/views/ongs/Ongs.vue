@@ -6,9 +6,9 @@
         <v-col cols="12" sm="4" v-for="ong in ongs" :key="ong.id">
           <router-link
             class="router-link"
-            :to="{ name: 'ongs', params: { id: ong.id } }"
+            :to="{ name: 'ongById', params: { id: ong.id } }"
           >
-            <v-card color="#34a0a4" elevation="10" dark>
+            <v-card class="ong-card" color="#34a0a4" elevation="10" dark>
               <div class="d-flex flex-no-wrap">
                 <v-avatar class="ma-2 avatar-img" size="100" tile>
                   <Gravatar :email="ong.email" :alt="ong.name" />
@@ -63,7 +63,7 @@ export default {
         this.ongs = this.ongs.concat(res.data.data);
         this.page++;
 
-        if (res.data.length === 0) this.loadMore = false;
+        if (res.data.data.length === 0) this.loadMore = false;
       });
     },
   },
@@ -112,5 +112,14 @@ export default {
 
 .card-content {
   padding: 10px;
+}
+
+.ong-card{
+  transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+}
+
+.ong-card:hover{
+  transform: scale(1.03);
+  background-color: #52b69a!important;
 }
 </style>

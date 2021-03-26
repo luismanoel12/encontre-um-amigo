@@ -138,7 +138,7 @@ module.exports = app => {
             .join('endereco', 'users.id', 'endereco.userId')
             .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.cnpj', 'users.ong',
                 'endereco.endereco', 'endereco.numero', 'endereco.complemento', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
-            .where({ id: req.params.id })
+            .where({ 'users.id': req.params.id })
             .first()
             .then(user => res.json(user))
             .catch(err => res.status(500).send(err))
