@@ -13,11 +13,26 @@ module.exports = app => {
         .post(admin(app.api.user.save))
         .get(owner(app.api.user.get))
 
+    app.route('/user-name/:id')
+        .all(app.config.passport.authenticate())
+        .get(app.api.user.getName)
+
     app.route('/users/:id')
         .all(app.config.passport.authenticate())
         .put(owner(app.api.user.save))
         .get(owner(app.api.user.getById))
         .delete(admin(app.api.user.remove))
+
+    // Rota das Ongs
+
+    app.route('/ongs')
+        .all(app.config.passport.authenticate())
+        .get(app.api.user.getOngs)
+
+    app.route('/ongs/:id')
+        .all(app.config.passport.authenticate())
+        .get(app.api.user.getOngById)
+
 
     // Carousel routes
 
@@ -55,7 +70,7 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .post(admin(app.api.objetivos.save))
         .put(admin(app.api.objetivos.save))
-    
+
     app.route('/objetivosMeta/:id')
         .all(app.config.passport.authenticate())
         .get(app.api.objetivos.get)
@@ -72,7 +87,20 @@ module.exports = app => {
         .get(app.api.objetivos.getPorUsuario)
 
 
+    // Cadastro de animais e listagem
+
+    app.route('/animais-adocao')
+        .all(app.config.passport.authenticate())
+        .post(app.api.animais.save)
+        .get(app.api.animais.get)
+
+    app.route('/carousel/:id')
+        .all(app.config.passport.authenticate())
+        .put(admin(app.api.animais.save))
+        .get(admin(app.api.animais.getById))
+        .delete(admin(app.api.animais.remove))
 
 
- 
+
+
 }

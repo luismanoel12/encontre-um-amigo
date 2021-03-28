@@ -24,6 +24,18 @@
 
                 <div class="view-content">
                   <div class="meta-content" v-html="meta.descricao"></div>
+
+                  <v-timeline class="timeline-metas">
+                    <v-timeline-item right large icon="mdi-check-bold" color="green">0%</v-timeline-item>
+                    <v-timeline-item v-if="Math.ceil((meta.valorAtual * 100) / meta.valorEsperado) >= 25" right large color="green" icon="mdi-check-bold">25%</v-timeline-item>
+                    <v-timeline-item v-else right large color="grey" icon="mdi-close-thick">25%</v-timeline-item>
+                    <v-timeline-item v-if="Math.ceil((meta.valorAtual * 100) / meta.valorEsperado) >= 50" right large color="green" icon="mdi-check-bold">50%</v-timeline-item>
+                     <v-timeline-item v-else right large color="grey" icon="mdi-close-thick">50%</v-timeline-item>
+                    <v-timeline-item v-if="Math.ceil((meta.valorAtual * 100) / meta.valorEsperado) >= 75" right large color="green" icon="mdi-check-bold">75%</v-timeline-item>
+                     <v-timeline-item v-else right large color="grey" icon="mdi-close-thick">75%</v-timeline-item>
+                    <v-timeline-item v-if="Math.ceil((meta.valorAtual * 100) / meta.valorEsperado) >= 100" right large color="green" icon="mdi-check-decagram">100%</v-timeline-item>
+                     <v-timeline-item v-else right large color="grey" icon="mdi-close-thick">100%</v-timeline-item>
+                  </v-timeline>
                 </div>
               </div>
             </div>
@@ -33,8 +45,8 @@
         <v-col cols="12" sm="4">
           <v-sheet rounded="lg" min-height="268" class="side-content">
             <div class="text-center">
-              <h1 class="side-content-h1">R$ {{ meta.valorAtual }}</h1>
-              <span> Valor Esperado R$ {{ meta.valorEsperado }} </span>
+              <h1 class="side-content-h1">{{ meta.valorAtual.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }}</h1>
+              <span> Valor Esperado {{ meta.valorEsperado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }} </span>
             </div>
 
             <div class="pb">
@@ -51,15 +63,19 @@
                 >
               </v-progress-linear>
             </div>
-            <v-divider style="padding-bottom: 10px;" ></v-divider>
+            <v-divider style="padding-bottom: 10px"></v-divider>
             <p v-for="objetivo in objetivos" :key="objetivo.id">
-              <v-card color="#4DA545" dark v-if="objetivo.valor <= meta.valorAtual">
+              <v-card
+                color="#4DA545"
+                dark
+                v-if="Math.ceil(objetivo.valor <= meta.valorAtual)"
+              >
                 <v-card-title class="headline">
                   {{ objetivo.titulo }}
                 </v-card-title>
 
                 <v-card-subtitle>
-                  <h1 class="text-center valores">R$ {{ objetivo.valor }}</h1>
+                  <h1 class="text-center valores">R$ {{ objetivo.valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }}</h1>
                 </v-card-subtitle>
 
                 <v-card-text class="text-center">
@@ -73,7 +89,7 @@
                 </v-card-title>
 
                 <v-card-subtitle>
-                  <h1 class="text-center valores">R$ {{ objetivo.valor }}</h1>
+                  <h1 class="text-center valores"> {{ objetivo.valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }}</h1>
                 </v-card-subtitle>
 
                 <v-card-text class="text-center">
@@ -120,9 +136,11 @@ export default {
 
     this.loadObjetivos();
     this.$root.$once("metas-objetivos", () => {
-    this.loadMeta();
+      this.loadMeta();
     });
+
   },
+
   updated() {
     document.querySelectorAll(".meta-content pre.ql-syntax").forEach((e) => {
       hljs.highlightBlock(e);
@@ -188,7 +206,7 @@ export default {
   font-size: 35pt;
 }
 
-.meta-title{
+.meta-title {
   padding-top: 30px;
   color: #1e1e1e;
 }
