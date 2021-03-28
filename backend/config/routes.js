@@ -89,18 +89,16 @@ module.exports = app => {
 
     // Cadastro de animais e listagem
 
-    app.route('/animais-adocao')
+    app.route('/animais')
         .all(app.config.passport.authenticate())
-        .post(app.api.animais.save)
+        .post(admin(app.api.animais.save))
         .get(app.api.animais.get)
+        .put(admin(app.api.animais.save))
 
-    app.route('/carousel/:id')
+    app.route('/animais/:id')
         .all(app.config.passport.authenticate())
         .put(admin(app.api.animais.save))
-        .get(admin(app.api.animais.getById))
+        .get(app.api.animais.getById)
         .delete(admin(app.api.animais.remove))
-
-
-
 
 }
