@@ -10,10 +10,6 @@ module.exports = app => {
             existsOrError(animais.nome, 'Nome do animal não informado')
             existsOrError(animais.sexo, 'Sexo do animal não informado')
             existsOrError(animais.porte, 'Porte do animal não informado')
-            existsOrError(animais.deficiente, 'Deficiencia do animal não informada')
-            existsOrError(animais.vermifugado, 'Vermifugação do animal não informada')
-            existsOrError(animais.vacinado, 'Vacinação do animal não informada')
-            existsOrError(animais.castrado, 'Castração do animal não informada')
             existsOrError(animais.imagem, 'Imagem não informada')
         } catch(msg) {
             res.status(400).send(msg)
@@ -52,7 +48,6 @@ module.exports = app => {
         const count = parseInt(result.count)
 
         app.db('animais')
-            .select('id', 'name', 'description')
             .limit(limit).offset(page * limit - limit)
             .then(animais => res.json({ data: animais, count, limit}))
             .catch(err => res.status(500).send(err))
@@ -60,13 +55,10 @@ module.exports = app => {
 
     const getById = (req, res) => {
         app.db('animais')
-        .where({ id: req.params.ed })
+        .where({ id: req.params.id })
         .first()
-        .then(animais => {
-            animais.content = animais.content.toString()
-            return res.json(animais)
-        })
-        .cathc(err => res.status(500).send(err))
+        .then(animais => res.json(animais))
+        .catch(err => res.status(500).send(err))
     }
 
     return { save, remove, get, getById }
