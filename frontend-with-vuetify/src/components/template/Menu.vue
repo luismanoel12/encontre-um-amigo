@@ -107,7 +107,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app dark color="#00A879">
+    <v-app-bar app dark color="#82549c">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Encontre um amigo</v-toolbar-title>

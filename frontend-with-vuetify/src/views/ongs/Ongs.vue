@@ -35,7 +35,7 @@
     </div>
 
     <div class="text-center pagination">
-      <v-btn depressed color="primary" v-if="loadMore" @click="getOngs">
+      <v-btn depressed color="#00bfad" dark v-if="loadMore" @click="getOngs">
         Carregar Mais
       </v-btn>
     </div>

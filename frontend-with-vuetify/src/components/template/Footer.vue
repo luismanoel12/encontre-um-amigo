@@ -1,5 +1,5 @@
 <template>
-    <v-footer dark padless>
+    <v-footer  dark padless>
       <v-card flat tile class="indigo lighten-1 white--text text-center">
         <v-card-text>
           <v-btn
@@ -44,4 +44,9 @@ export default {
 </script>
 
 <style>
+
+.v-application .indigo.lighten-1{
+  background-color: #82549c!important;
+  border-color: #82549c!important;
+}
 </style>
