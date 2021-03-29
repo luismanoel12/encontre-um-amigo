@@ -27,7 +27,7 @@
       <v-text-field label="Número" prepend-inner-icon="mdi-numeric" type="number" outlined v-if="showSignup" v-model="user.numero"></v-text-field>
       <v-text-field label="Complemento" prepend-inner-icon="mdi-home" outlined v-if="showSignup" v-model="user.complemento"></v-text-field>
       <v-text-field label="Bairro" prepend-inner-icon="mdi-map-marker" outlined v-if="showSignup" v-model="user.bairro"></v-text-field>
-      <v-text-field label="Estado" prepend-inner-icon="mdi-sign-real-estate" outlined v-if="showSignup" v-model="user.estado"></v-text-field>
+      <v-select :items="estado" prepend-inner-icon="mdi-sign-real-estate" v-model="user.estado" v-if="showSignup" label="Estado" outlined></v-select>
       <v-text-field label="Cidade" prepend-inner-icon="mdi-city" outlined v-if="showSignup" v-model="user.cidade"></v-text-field>
 
     </v-form>
@@ -65,6 +65,35 @@ export default {
       data: {},
       user: {},
       checkbox: false,
+      estado: [
+        { text: "Acre", value: "AC"},
+        { text: "Alagoas", value: "AL"},
+        { text: "Amapá", value: "AP"},
+        { text: "Amazonas", value: "AM"},
+        { text: "Bahia", value: "BA"},
+        { text: "Ceará", value: "CE"},
+        { text: "Distrito Federal", value: "DF"},
+        { text: "Espírito Santo", value: "ES"},
+        { text: "Goiás", value: "GO"},
+        { text: "Maranhão", value: "MA"},
+        { text: "Mato Grosso", value: "MT"},
+        { text: "Mato Grosso do Sul", value: "MS"},
+        { text: "Minas Gerais", value: "MG"},
+        { text: "Pará", value: "PA"},
+        { text: "Paraíba", value: "PB"},
+        { text: "Paraná", value: "PR"},
+        { text: "Pernambuco", value: "PE"},
+        { text: "Piauí", value: "PI"},
+        { text: "Rio de Janeiro", value: "RJ"},
+        { text: "Rio Grande do Norte", value: "RN"},
+        { text: "Rio Grande do Sul", value: "RS"},
+        { text: "Rondônia", value: "RO"},
+        { text: "Roraima", value: "RR"},
+        { text: "Santa Catarina", value: "SC"},
+        { text: "São Paulo", value: "SP"},
+        { text: "Sergipe", value: "SE"},
+        { text: "Tocantins", value: "TO"}
+      ],
       
     };
   },

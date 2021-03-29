@@ -65,6 +65,16 @@
           </v-list-item-content>
         </v-list-item>
 
+        <v-list-item to="/animais/cadastrar">
+          <v-list-item-icon>
+            <v-icon> mdi-paw </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Cadastrar Animais</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
         <v-list-item to="/minhas-metas">
           <v-list-item-icon>
             <v-icon> mdi-bullseye-arrow </v-icon>

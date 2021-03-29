@@ -95,6 +95,11 @@ module.exports = app => {
         .get(app.api.animais.get)
         .put(admin(app.api.animais.save))
 
+    app.route('/animaisUsuario')
+        .all(app.config.passport.authenticate())
+        .post(admin(app.api.animais.save))
+        .get(app.api.animais.getPorUsuario)
+
     app.route('/animais/:id')
         .all(app.config.passport.authenticate())
         .put(admin(app.api.animais.save))
