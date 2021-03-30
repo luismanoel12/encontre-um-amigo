@@ -65,7 +65,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item to="/animais/cadastrar">
+        <v-list-item to="/animais/cadastrar" v-if="userData.ong || userData.admin">
           <v-list-item-icon>
             <v-icon> mdi-paw </v-icon>
           </v-list-item-icon>
@@ -75,7 +75,17 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item to="/minhas-metas">
+        <v-list-item to="/animais/adocao">
+          <v-list-item-icon>
+            <v-icon> mdi-dog-side </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Animais Para Adoção</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item to="/minhas-metas" v-if="userData.ong || userData.admin">
           <v-list-item-icon>
             <v-icon> mdi-bullseye-arrow </v-icon>
           </v-list-item-icon>

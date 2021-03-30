@@ -1,13 +1,9 @@
 <template>
+  <v-container v-if="loading">
+    <v-progress-circular indeterminate color="primary"></v-progress-circular>
+  </v-container>
 
-<v-container v-if="loading">
- <v-progress-circular
-      indeterminate
-      color="primary"
-    ></v-progress-circular>
-</v-container>
-
-  <v-container v-else >
+  <v-container v-else>
     <div class="perfil-main elevation-15">
       <div class="perfil-header">
         <div class="gravatar-img">
@@ -119,11 +115,13 @@
 
         <v-row>
           <v-col cols="12" md="4" sm="12">
-            <v-text-field
-              label="Estado"
+            <v-select
+              :items="estados"
+              prepend-inner-icon="mdi-sign-real-estate"
               v-model="userData.estado"
+              label="Estado"
               outlined
-            ></v-text-field>
+            ></v-select>
           </v-col>
           <v-col cols="12" md="4" sm="12">
             <v-text-field
@@ -166,23 +164,54 @@ export default {
     return {
       userData: {},
       loading: true,
+      estados: [
+        { text: "Acre", value: "AC"},
+        { text: "Alagoas", value: "AL"},
+        { text: "Amapá", value: "AP"},
+        { text: "Amazonas", value: "AM"},
+        { text: "Bahia", value: "BA"},
+        { text: "Ceará", value: "CE"},
+        { text: "Distrito Federal", value: "DF"},
+        { text: "Espírito Santo", value: "ES"},
+        { text: "Goiás", value: "GO"},
+        { text: "Maranhão", value: "MA"},
+        { text: "Mato Grosso", value: "MT"},
+        { text: "Mato Grosso do Sul", value: "MS"},
+        { text: "Minas Gerais", value: "MG"},
+        { text: "Pará", value: "PA"},
+        { text: "Paraíba", value: "PB"},
+        { text: "Paraná", value: "PR"},
+        { text: "Pernambuco", value: "PE"},
+        { text: "Piauí", value: "PI"},
+        { text: "Rio de Janeiro", value: "RJ"},
+        { text: "Rio Grande do Norte", value: "RN"},
+        { text: "Rio Grande do Sul", value: "RS"},
+        { text: "Rondônia", value: "RO"},
+        { text: "Roraima", value: "RR"},
+        { text: "Santa Catarina", value: "SC"},
+        { text: "São Paulo", value: "SP"},
+        { text: "Sergipe", value: "SE"},
+        { text: "Tocantins", value: "TO"}
+      ],
     };
   },
 
   mounted() {
-    this.loadUsers()
-    this.$root.$once('user-updated', () => {
-            this.loadUsers()
-        })
+    this.loadUsers();
+    this.$root.$once("user-updated", () => {
+      this.loadUsers();
+    });
   },
   methods: {
     async loadUsers() {
       const url = `/users/${this.user.id}`;
-      await api.get(url).then((res) => {
-        this.userData = res.data
-        this.loading = false
-      }).catch(erro => {
-      });
+      await api
+        .get(url)
+        .then((res) => {
+          this.userData = res.data;
+          this.loading = false;
+        })
+        .catch((erro) => {});
     },
     update() {
       api

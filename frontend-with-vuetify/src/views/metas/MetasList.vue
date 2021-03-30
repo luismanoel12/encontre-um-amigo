@@ -134,6 +134,7 @@ export default {
 </script>
 
 <style>
+
 .metas-page {
   background-color: #fff;
   border-radius: 10px;

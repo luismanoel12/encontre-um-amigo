@@ -27,6 +27,7 @@
         <div class="buttons">
           <v-btn depressed v-if="mode === 'save'" @click="save"  color="success">
             Salvar
+            <v-icon dark right> mdi-content-save </v-icon>
           </v-btn>
           <v-divider vertical></v-divider>
           <v-btn
@@ -36,9 +37,13 @@
             color="error"
           >
             Excluir
+             <v-icon dark right> mdi-delete </v-icon>
           </v-btn>
           <v-divider vertical></v-divider>
-          <v-btn depressed @click="reset" class="btn-cancel" color="primary"> Cancelar </v-btn>
+          <v-btn depressed @click="reset" class="btn-cancel" color="primary"> 
+            Cancelar 
+            <v-icon dark right> mdi-close-thick </v-icon>
+            </v-btn>
         </div>
       </v-form>
 

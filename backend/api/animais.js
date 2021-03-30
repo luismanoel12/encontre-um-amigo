@@ -11,6 +11,9 @@ module.exports = app => {
             existsOrError(animais.sexo, 'Sexo do animal não informado')
             existsOrError(animais.porte, 'Porte do animal não informado')
             existsOrError(animais.imagem, 'Imagem não informada')
+            existsOrError(animais.cep, 'CEP não informado')
+            existsOrError(animais.estado, 'Estado não informado')
+            existsOrError(animais.cidade, 'Cidade não informada')
         } catch (msg) {
             res.status(400).send(msg)
         }

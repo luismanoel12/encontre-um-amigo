@@ -27,7 +27,7 @@
       <v-text-field label="Número" prepend-inner-icon="mdi-numeric" type="number" outlined v-if="showSignup" v-model="user.numero"></v-text-field>
       <v-text-field label="Complemento" prepend-inner-icon="mdi-home" outlined v-if="showSignup" v-model="user.complemento"></v-text-field>
       <v-text-field label="Bairro" prepend-inner-icon="mdi-map-marker" outlined v-if="showSignup" v-model="user.bairro"></v-text-field>
-      <v-select :items="estado" prepend-inner-icon="mdi-sign-real-estate" v-model="user.estado" v-if="showSignup" label="Estado" outlined></v-select>
+      <v-select :items="estados" prepend-inner-icon="mdi-sign-real-estate" v-model="user.estado" v-if="showSignup" label="Estado" outlined></v-select>
       <v-text-field label="Cidade" prepend-inner-icon="mdi-city" outlined v-if="showSignup" v-model="user.cidade"></v-text-field>
 
     </v-form>
@@ -65,7 +65,7 @@ export default {
       data: {},
       user: {},
       checkbox: false,
-      estado: [
+      estados: [
         { text: "Acre", value: "AC"},
         { text: "Alagoas", value: "AL"},
         { text: "Amapá", value: "AP"},

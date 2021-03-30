@@ -13,6 +13,8 @@ import MetasById from "@/views/metas/MetasById"
 import Ongs from "@/views/ongs/Ongs"
 import OngById from "@/views/ongs/OngById"
 import Animais from "@/views/animais-adocao/Animais"
+import ListaAnimais from "@/views/animais-adocao/ListaAnimais"
+import AnimaisById from "@/views/animais-adocao/AnimaisById"
 
 
 import { userKey } from "@/global"
@@ -76,6 +78,18 @@ const routes = [{
     name: 'animais',
     path: '/animais/cadastrar',
     component: Animais,
+    meta: { requiresOff: false }
+},
+{
+    name: 'listaAnimais',
+    path: '/animais/adocao',
+    component: ListaAnimais,
+    meta: { requiresOff: false }
+},
+{
+    name: 'animaisById',
+    path: '/animais/:id',
+    component: AnimaisById,
     meta: { requiresOff: false }
 },
 {
