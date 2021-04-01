@@ -13,7 +13,14 @@ module.exports = app => {
             res.status(400).send(msg)
         }
 
+
         publicacao.userId = req.user.id;
+
+        const userName = app.db('users').select('name').where({ id: req.user.id })
+        publicacao.userName = userName;
+
+        publicacao.createdAt = new Date();
+
 
         if (publicacao.id) {
             app.db('publicacao')
@@ -54,14 +61,14 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    const limit = 10
+    const limit = 6
     const get = async (req, res) => {
         const page = req.query.page || 1
-        const result = await app.db('publicacao').count('id').first
+        const result = await app.db('publicacao').count('id').first()
         const count = parseInt(result.count)
 
         app.db('publicacao')
-            .select('id', 'titulo', 'descricao')
+            .select('id', 'titulo', 'descricao', 'chamada', 'imageUrl', 'userName', 'createdAt', 'userId')
             .limit(limit).offset(page * limit - limit)
             .then(publicacao => res.json({ data: publicacao, count, limit }))
             .catch(err => res.status(500).send(err))

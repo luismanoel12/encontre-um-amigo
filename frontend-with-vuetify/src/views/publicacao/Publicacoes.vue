@@ -25,6 +25,23 @@
 
         <v-row>
           <v-col cols="12" sm="12">
+            <v-textarea
+              outlined
+              name="input-7-4"
+              v-model="publicacao.chamada"
+              :readonly="mode === 'remove'"
+              label="Chamada"
+              maxlength="500"
+              counter="500"
+              hint="Máximo de 500 caracteres"
+              required
+              placeholder="Digite a chamada para sua publicação."
+            ></v-textarea>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="12" sm="12">
             <VueEditor
               v-model="publicacao.descricao"
               placeholder="Informe o conteúdo da publicação"
@@ -55,7 +72,11 @@
         </div>
       </v-form>
 
-      <v-data-table :items="publicacoes" :headers="headers" class="elevation-10">
+      <v-data-table
+        :items="publicacoes"
+        :headers="headers"
+        class="elevation-10"
+      >
         <template v-slot:[`item.actions`]="{ item }">
           <v-btn
             class="bt-actions"
@@ -125,7 +146,6 @@ export default {
       this.loadPublicacoes();
     },
     save() {
-      console.log(this.publicacao);
       const method = this.publicacao.id ? "put" : "post";
       const id = this.publicacao.id ? `/${this.publicacao.id}` : "";
       api[method](`/publicacao${id}`, this.publicacao)
@@ -147,7 +167,9 @@ export default {
     },
     loadPublicacao(publicacao, mode = "save") {
       this.mode = mode;
-      api.get(`/publicacao/${publicacao.id}`).then((res) => (this.publicacao = res.data));
+      api
+        .get(`/publicacao/${publicacao.id}`)
+        .then((res) => (this.publicacao = res.data));
     },
   },
   watch: {
@@ -170,7 +192,7 @@ export default {
   margin-bottom: 20px;
 }
 
-.buttons{
+.buttons {
   margin-top: 20px;
 }
 </style>

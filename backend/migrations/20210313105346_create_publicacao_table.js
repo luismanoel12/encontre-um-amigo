@@ -5,8 +5,12 @@ exports.up = function(knex) {
         table.string('titulo').notNull()
         table.string('imageUrl', 1000)
         table.binary('descricao').notNull()
+        table.string('userName')
+        table.string('chamada', 500)
         table.integer('userId').references('id')
-        .inTable('users').notNull()
+            .inTable('users').notNull()
+        table.timestamp('createdAt')
+
     })
 };
 

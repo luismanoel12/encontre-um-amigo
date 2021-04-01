@@ -16,6 +16,7 @@ import Animais from "@/views/animais-adocao/Animais"
 import ListaAnimais from "@/views/animais-adocao/ListaAnimais"
 import AnimaisById from "@/views/animais-adocao/AnimaisById"
 import Publicacoes from "@/views/publicacao/Publicacoes"
+import ListaPublicacoes from "@/views/publicacao/ListaPublicacoes"
 
 
 import { userKey } from "@/global"
@@ -98,6 +99,12 @@ const routes = [{
     path: '/publicacao/cadastrar',
     component: Publicacoes,
     meta: { requiresAuthorization: true }
+},
+{
+    name: 'listaPublicacoes',
+    path: '/publicacoes',
+    component: ListaPublicacoes,
+    meta: { requiresAuthorization: false }
 },
 {
     name: 'error404',
