@@ -7,7 +7,6 @@ module.exports = app => {
 
         try {
             existsOrError(publicacao.titulo, 'Titulo não foi informado')
-            existsOrError(publicacao.imageUrl, 'A URL da imagem não foi informado')
             existsOrError(publicacao.descricao, 'Descrição não informada')
 
         } catch (msg) {
@@ -34,10 +33,14 @@ module.exports = app => {
         try {
             const rowsDeleted = await app.db('publicacao')
                 .where({ id: req.params.id }).del()
-            notExistsOrError(rowsDeleted, "A sua Publicação não foi encontrada")
+
+            try {
+                existsOrError(rowsDeleted, 'Essa publicação não foi encontrado')
+            } catch (msg) {
+                return res.status(400).send(msg)
+            }
 
             res.status(204).send()
-
         } catch (msg) {
             res.status(500).send(msg)
         }

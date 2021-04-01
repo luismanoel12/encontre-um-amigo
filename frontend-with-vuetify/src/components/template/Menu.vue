@@ -124,7 +124,7 @@
           </template>
 
           <v-list-item
-            to="/minhas-publicacoes"
+            to="/publicacao/cadastrar"
             v-if="user.admin || user.ong"
           >
             <v-list-item-icon>
