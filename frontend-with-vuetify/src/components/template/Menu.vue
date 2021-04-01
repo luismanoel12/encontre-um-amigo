@@ -17,7 +17,7 @@
             <h3>Bem-vindo</h3>
           </v-list-item-title>
           <v-list-item-subtitle>
-            <h3 class="subtext">{{ userData.name }}</h3>
+            <h3 class="subtext">{{ user.name }}</h3>
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -62,7 +62,10 @@
             </v-list-item-content>
           </template>
 
-          <v-list-item to="/animais/cadastrar" v-if="userData.ong == true || userData.admin == true">
+          <v-list-item
+            to="/animais/cadastrar"
+            v-if="user.ong == true || user.admin == true"
+          >
             <v-list-item-icon>
               <v-icon> mdi-paw </v-icon>
             </v-list-item-icon>
@@ -89,7 +92,10 @@
             </v-list-item-content>
           </template>
 
-          <v-list-item to="/minhas-metas" v-if="userData.ong == true || userData.admin == true">
+          <v-list-item
+            to="/minhas-metas"
+            v-if="user.ong == true || user.admin == true"
+          >
             <v-list-item-icon>
               <v-icon> mdi-bullseye </v-icon>
             </v-list-item-icon>
@@ -117,9 +123,12 @@
             </v-list-item-content>
           </template>
 
-          <v-list-item to="/minhas-publicacoes" v-if="userData.admin || userData.ong">
+          <v-list-item
+            to="/minhas-publicacoes"
+            v-if="user.admin || user.ong"
+          >
             <v-list-item-icon>
-              <v-icon> mdi-bullseye </v-icon>
+              <v-icon> mdi-newspaper-plus </v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
@@ -129,7 +138,7 @@
 
           <v-list-item to="/publicacoes">
             <v-list-item-icon>
-              <v-icon> mdi-bullseye </v-icon>
+              <v-icon> mdi-newspaper-variant-multiple-outline </v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
@@ -148,9 +157,13 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-divider color="#fff" v-if="userData.admin"></v-divider>
+        <v-divider color="#fff" v-if="user.admin"></v-divider>
 
-        <v-list-group no-action prepend-icon="mdi-account-lock" v-if="userData.admin">
+        <v-list-group
+          no-action
+          prepend-icon="mdi-account-lock"
+          v-if="user.admin"
+        >
           <template v-slot:activator>
             <v-list-item-content>
               <v-list-item-title>Admin</v-list-item-title>
@@ -179,7 +192,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app dark color="#82549c">
+    <v-app-bar app dark color="#232F34">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Encontre um amigo</v-toolbar-title>
@@ -219,40 +232,23 @@
 import { userKey } from "@/global";
 import { mapState } from "vuex";
 import Gravatar from "vue-gravatar";
-import api from "../../config/api";
 
 export default {
   name: "Menu",
   components: { Gravatar },
-  computed: mapState(["user"]),
+  computed: {...mapState(["user"])},
   data() {
     return {
       drawer: null,
-      userData: {},
       right: null,
     };
   },
-  mounted() {
-    this.$root.$once("user-updated", () => {
-      this.loadUsers();
-    });
-  },
+
   methods: {
     logout() {
       localStorage.removeItem(userKey);
       this.$store.commit("setUser", null);
       this.$router.push({ name: "auth" });
-    },
-    async loadUsers() {
-      const id = this.user.id;
-      const url = `/users/${id}`;
-      await api
-        .get(url)
-        .then((res) => {
-          this.userData = res.data;
-          this.loading = false;
-        })
-        .catch((erro) => {});
     },
     navegar(link) {
       this.$router.push({ path: link });
@@ -304,5 +300,12 @@ export default {
   > .v-list-group__items
   > .v-list-item {
   padding-left: 25px !important;
+}
+
+.v-list-item__title, .v-list-item__subtitle {
+    flex: 1 1 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: none!important;
 }
 </style>

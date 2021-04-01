@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from "../config/api";
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -12,9 +12,9 @@ export default new Vuex.Store({
         setUser(state, user) {
             state.user = user
             if(user) {
-                axios.defaults.headers.common['Authorization'] = `bearer ${user.token}`
+                api.defaults.headers.common['Authorization'] = `bearer ${user.token}`
             } else {
-                delete axios.defaults.headers.common['Authorization']
+                delete api.defaults.headers.common['Authorization']
             }
         }
     }
