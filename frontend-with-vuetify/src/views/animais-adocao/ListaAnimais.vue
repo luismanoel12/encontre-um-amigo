@@ -32,7 +32,7 @@
               <v-card-text class="text-center">
                 <v-row>
                   <v-col cols="12" sm="12">
-                    <h4> {{ animal.cidade }} - {{ animal.estado }} </h4>
+                    <h4>{{ animal.cidade }} - {{ animal.estado }}</h4>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -47,7 +47,7 @@
                   <v-col cols="12" sm="6">
                     Porte:
                     <div class="span-animal-card">
-                      <span>{{animal.porte}}</span>
+                      <span>{{ animal.porte }}</span>
                     </div>
                   </v-col>
                 </v-row>
@@ -106,7 +106,7 @@ export default {
 
 <style scoped>
 .lista-animais-page {
-  background-color: #fff;
+  /* background-color: #fff; */
   border-radius: 10px;
   margin-top: 20px;
   padding: 20px;
@@ -129,10 +129,6 @@ export default {
   margin-top: 50px;
 }
 
-.progress-bar {
-  padding: 10px;
-}
-
 .v-card__title {
   text-align: center !important;
   display: block !important;
@@ -144,8 +140,8 @@ export default {
 
 .img-card img {
   width: 100%;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
   object-fit: cover;
 }
 
@@ -170,5 +166,11 @@ export default {
   color: #fff;
   border-radius: 5px;
   margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+  .animal-card {
+    width: 90%;
+  }
 }
 </style>

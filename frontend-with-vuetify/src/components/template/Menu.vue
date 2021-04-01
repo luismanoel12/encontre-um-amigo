@@ -45,16 +45,6 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item to="/carousel" v-if="userData.admin">
-          <v-list-item-icon>
-            <v-icon> mdi-image </v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>Carousel</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
         <v-list-item to="/ongs">
           <v-list-item-icon>
             <v-icon> mdi-account-group </v-icon>
@@ -65,55 +55,88 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item to="/animais/cadastrar" v-if="userData.ong || userData.admin">
-          <v-list-item-icon>
-            <v-icon> mdi-paw </v-icon>
-          </v-list-item-icon>
+        <v-list-group no-action prepend-icon="mdi-dog-side">
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>Animais</v-list-item-title>
+            </v-list-item-content>
+          </template>
 
-          <v-list-item-content>
-            <v-list-item-title>Cadastrar Animais</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <v-list-item to="/animais/cadastrar" v-if="userData.ong == true || userData.admin == true">
+            <v-list-item-icon>
+              <v-icon> mdi-paw </v-icon>
+            </v-list-item-icon>
 
-        <v-list-item to="/animais/adocao">
-          <v-list-item-icon>
-            <v-icon> mdi-dog-side </v-icon>
-          </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Cadastrar Animais</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item to="/animais/adocao">
+            <v-list-item-icon>
+              <v-icon> mdi-paw </v-icon>
+            </v-list-item-icon>
 
-          <v-list-item-content>
-            <v-list-item-title>Animais Para Adoção</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Animais Para Adoção</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
 
-        <v-list-item to="/minhas-metas" v-if="userData.ong || userData.admin">
-          <v-list-item-icon>
-            <v-icon> mdi-bullseye-arrow </v-icon>
-          </v-list-item-icon>
+        <v-list-group no-action prepend-icon="mdi-bullseye-arrow">
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>Metas</v-list-item-title>
+            </v-list-item-content>
+          </template>
 
-          <v-list-item-content>
-            <v-list-item-title>Minhas Metas</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <v-list-item to="/minhas-metas" v-if="userData.ong == true || userData.admin == true">
+            <v-list-item-icon>
+              <v-icon> mdi-bullseye </v-icon>
+            </v-list-item-icon>
 
-        <v-list-item to="/metas">
-          <v-list-item-icon>
-            <v-icon> mdi-bullseye </v-icon>
-          </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Minhas Metas</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
-          <v-list-item-content>
-            <v-list-item-title>Doações com Metas</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <v-list-item to="/metas">
+            <v-list-item-icon>
+              <v-icon> mdi-bullseye </v-icon>
+            </v-list-item-icon>
 
-        <v-list-item to="/publicacoes">
-          <v-list-item-icon>
-            <v-icon> mdi-newspaper </v-icon>
-          </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Doações com Metas</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
 
-          <v-list-item-content>
-            <v-list-item-title>Publicações</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+        <v-list-group no-action prepend-icon="mdi-newspaper">
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>Publicações</v-list-item-title>
+            </v-list-item-content>
+          </template>
+
+          <v-list-item to="/minhas-publicacoes" v-if="userData.admin || userData.ong">
+            <v-list-item-icon>
+              <v-icon> mdi-bullseye </v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>Minhas Publicações</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item to="/publicacoes">
+            <v-list-item-icon>
+              <v-icon> mdi-bullseye </v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>Publicações</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
 
         <v-list-item to="/doacoes">
           <v-list-item-icon>
@@ -124,6 +147,35 @@
             <v-list-item-title>Doações</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
+        <v-divider color="#fff" v-if="userData.admin"></v-divider>
+
+        <v-list-group no-action prepend-icon="mdi-account-lock" v-if="userData.admin">
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>Admin</v-list-item-title>
+            </v-list-item-content>
+          </template>
+
+          <v-list-item to="/users">
+            <v-list-item-icon>
+              <v-icon> mdi-account-multiple </v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>Usuários</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item to="/carousel">
+            <v-list-item-icon>
+              <v-icon> mdi-image </v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>Carousel</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
       </v-list>
     </v-navigation-drawer>
 
@@ -244,5 +296,13 @@ export default {
 .logout-button {
   right: 0;
   margin-right: 30px;
+}
+
+.v-application--is-ltr
+  .v-list--dense.v-list--nav
+  .v-list-group--no-action
+  > .v-list-group__items
+  > .v-list-item {
+  padding-left: 25px !important;
 }
 </style>

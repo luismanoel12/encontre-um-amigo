@@ -106,4 +106,24 @@ module.exports = app => {
         .get(app.api.animais.getById)
         .delete(admin(app.api.animais.remove))
 
+
+    // Cadastro de publicações e listagem
+
+    app.route('/publicacao')
+        .all(app.config.passport.authenticate())
+        .post(admin(app.api.publicacao.save))
+        .get(app.api.publicacao.get)
+        .put(admin(app.api.publicacao.save))
+
+    app.route('/publicacaoUsuario')
+        .all(app.config.passport.authenticate())
+        .post(admin(app.api.publicacao.save))
+        // .get(app.api.publicacao.getPorUsuario)
+
+    app.route('/publicacao/:id')
+        .all(app.config.passport.authenticate())
+        .put(admin(app.api.publicacao.save))
+        .get(app.api.publicacao.getById)
+        .delete(admin(app.api.publicacao.remove))
+
 }

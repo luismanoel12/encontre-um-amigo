@@ -48,7 +48,7 @@ const routes = [{
     name: 'metas',
     path: '/minhas-metas',
     component: Metas,
-    meta: { requiresOff: false }
+    meta: { requiresAuthorization: true }
 },
 {
     name: 'metasList',
@@ -78,7 +78,7 @@ const routes = [{
     name: 'animais',
     path: '/animais/cadastrar',
     component: Animais,
-    meta: { requiresOff: false }
+    meta: { requiresAuthorization: true }
 },
 {
     name: 'listaAnimais',
@@ -113,6 +113,21 @@ router.beforeEach((to, from, next) => {
     } else {
         next()
     }
+})
+
+router.beforeEach((to, from, next) => {
+    const json = localStorage.getItem(userKey)
+
+    if(to.matched.some(record => record.meta.requiresAuthorization)){
+        const user = JSON.parse(json)
+        user && user.admin || user.ong ? next() : next({ path: '/' })
+    } else {
+        next()
+    }
+})
+
+router.beforeEach((to, from, next) => {
+    const json = localStorage.getItem(userKey)
 
     if(to.matched.some(record => record.meta.requiresOff)){
         const user = JSON.parse(json)
