@@ -35,8 +35,8 @@
             </div>
             <v-divider></v-divider>
             <div class="animal-page-content">
+              <h4>Descrição:</h4>
               <p>
-                Descrição:
                 {{ animal.descricao }}
               </p>
 
@@ -106,6 +106,10 @@ export default {
 .animal-right-card,
 .animal-left-card {
   padding: 20px;
+}
+
+.animal-page-content > p {
+  word-break: break-all;
 }
 
 .animal-left-card-header {

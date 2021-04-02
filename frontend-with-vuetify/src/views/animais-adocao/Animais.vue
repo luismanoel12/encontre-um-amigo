@@ -265,7 +265,6 @@ export default {
       this.loadAnimais();
     },
     save() {
-      console.log(this.animal);
       const method = this.animal.id ? "put" : "post";
       const id = this.animal.id ? `/${this.animal.id}` : "";
       api[method](`/animais${id}`, this.animal)

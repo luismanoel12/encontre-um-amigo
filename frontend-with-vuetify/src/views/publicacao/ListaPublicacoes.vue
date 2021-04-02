@@ -10,7 +10,7 @@
         >
           <router-link
             class="router-link"
-            :to="{ name: 'animaisById', params: { id: publicacao.id } }"
+            :to="{ name: 'publicacoesById', params: { id: publicacao.id } }"
           >
             <div class="card-publicacao">
               <div class="card-publicacao-header">
@@ -25,7 +25,7 @@
                   />
                   <img
                     v-else
-                    src="@/assets/article.png"
+                    src="@/assets/publicacao.jpg"
                     height="100%"
                     alt="Article"
                   />

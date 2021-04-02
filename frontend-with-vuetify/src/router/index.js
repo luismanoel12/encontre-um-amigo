@@ -17,6 +17,7 @@ import ListaAnimais from "@/views/animais-adocao/ListaAnimais"
 import AnimaisById from "@/views/animais-adocao/AnimaisById"
 import Publicacoes from "@/views/publicacao/Publicacoes"
 import ListaPublicacoes from "@/views/publicacao/ListaPublicacoes"
+import PublicacoesById from "@/views/publicacao/PublicacoesById"
 
 
 import { userKey } from "@/global"
@@ -105,6 +106,12 @@ const routes = [{
     path: '/publicacoes',
     component: ListaPublicacoes,
     meta: { requiresAuthorization: false }
+},
+{
+    name: 'publicacoesById',
+    path: '/publicacao/:id',
+    component: PublicacoesById,
+    meta: { requiresOff: false }
 },
 {
     name: 'error404',
