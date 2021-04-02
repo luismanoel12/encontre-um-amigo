@@ -61,6 +61,17 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
+    const getUltimasPublicacoes = async (req, res) => {
+
+        app.db('publicacao')
+            .select('id', 'titulo', 'imageUrl', 'userId')
+            .limit(3)
+            .orderBy('id', 'desc')
+            .where({ userId: req.params.id })
+            .then(publicacao => res.json(publicacao))
+            .catch(err => res.status(500).send(err))
+    }
+
     const limit = 6
     const get = async (req, res) => {
         const page = req.query.page || 1
@@ -87,5 +98,5 @@ module.exports = app => {
     }
 
 
-    return { save, remove, get, getById, getPorUsuario }
+    return { save, remove, get, getById, getPorUsuario, getUltimasPublicacoes }
 }

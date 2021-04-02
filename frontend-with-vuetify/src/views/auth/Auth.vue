@@ -13,7 +13,7 @@
 
       <v-checkbox color="green" v-model="isOng" v-if="showSignup" :label="'Sou uma ONG'"></v-checkbox>
       <v-text-field label="CPF" prepend-inner-icon="mdi-card-account-details" v-mask="'###########'" outlined v-if="showSignup && !isOng" v-model="user.cpf"></v-text-field>
-      <v-text-field label="CNPJ" prepend-inner-icon="mdi-card-account-details"  v-mask="'##############'" outlined v-if="isOng" v-model="user.cnpj"></v-text-field>
+      <v-text-field label="CNPJ" prepend-inner-icon="mdi-card-account-details"  v-mask="'##############'" outlined v-if="isOng && showSignup" v-model="user.cnpj"></v-text-field>
 
       <v-text-field label="Telefone" prepend-inner-icon="mdi-phone" type="tel" v-mask="'(##) #####-####'" outlined v-if="showSignup" v-model="user.telefone"></v-text-field>    
       <v-text-field label="Senha" prepend-inner-icon="mdi-lock" type="password" outlined v-model="user.password" autocomplete="current-password"></v-text-field>

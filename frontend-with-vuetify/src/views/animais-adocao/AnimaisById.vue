@@ -52,6 +52,27 @@
           <v-sheet rounded="lg" min-height="268" elevation="10">
             <div class="animal-right-card">
               <h4 class="text-center">ÚLTIMAS PUBLICAÇÕES</h4>
+              <v-divider class="publicacao-divider"></v-divider>
+              <v-row>
+                <v-col
+                  cols="12"
+                  sm="12"
+                  v-for="publicacao in publicacoes"
+                  :key="publicacao.id"
+                >
+                  <router-link
+                    class="router-link"
+                    :to="{
+                      name: 'publicacoesById',
+                      params: { id: publicacao.id },
+                    }"
+                  >
+                    <div class="ultimas-publicacoes">
+                      <span>{{ publicacao.titulo }}</span>
+                    </div>
+                  </router-link>
+                </v-col>
+              </v-row>
             </div>
           </v-sheet>
         </v-col>
@@ -68,19 +89,23 @@ export default {
   data: function () {
     return {
       animal: {},
+      publicacoes: [],
     };
   },
   methods: {
-    async loadAnimal() {
+     loadAnimal() {
       const url = `/animais/${this.$route.params.id}`;
-      await api.get(url).then((res) => (this.animal = res.data));
+       api.get(url).then((res) => (this.animal = res.data));
+    },
+
+     loadPublicacoes() {
+      const url = `/ultimasPublicacoes/${this.animal.userId}`;
+       api.get(url).then((res) => (this.publicacoes = res.data));
     },
   },
   mounted() {
     this.loadAnimal();
-    this.$root.$once("animal-by-id", () => {
-      this.loadAnimal();
-    });
+    this.loadPublicacoes();
   },
 };
 </script>
@@ -114,5 +139,27 @@ export default {
 
 .animal-left-card-header {
   padding-bottom: 10px;
+}
+
+.ultimas-publicacoes{
+  background-color: #212121;
+  padding: 5px;
+  border-radius: 5px;
+  color: #fff;
+  text-align: center;
+  word-break: break-all;
+  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+  transition: ease 0.5s;
+}
+
+
+.ultimas-publicacoes:hover{
+  background-color: #232F34;
+  transform: scale(1.03);
+}
+
+.publicacao-divider{
+  margin-bottom: 10px;
+  background-color: #212121;
 }
 </style>

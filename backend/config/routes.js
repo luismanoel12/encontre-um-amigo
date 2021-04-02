@@ -120,6 +120,10 @@ module.exports = app => {
         .post(admin(app.api.publicacao.save))
         .get(app.api.publicacao.getPorUsuario)
 
+    app.route('/ultimasPublicacoes/:id')
+        .all(app.config.passport.authenticate())
+        .get(app.api.publicacao.getUltimasPublicacoes)
+
     app.route('/publicacao/:id')
         .all(app.config.passport.authenticate())
         .put(admin(app.api.publicacao.save))

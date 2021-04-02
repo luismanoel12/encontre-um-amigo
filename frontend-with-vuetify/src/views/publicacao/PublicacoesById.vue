@@ -84,7 +84,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style >
 .publicacao-page {
   margin-top: 20px;
 }
@@ -118,6 +118,7 @@ export default {
 .publicacao-content {
   padding: 25px;
   margin-bottom: 30px;
+  word-break: break-all;
 }
 
 .publicacao-content pre {
@@ -128,8 +129,9 @@ export default {
   color: #fff;
 }
 
+
 .publicacao-content img {
-  max-width: 100%;
+    max-width: 100%;
 }
 
 .publicacao-content :last-child {
