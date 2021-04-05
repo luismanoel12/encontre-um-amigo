@@ -100,6 +100,11 @@ export default {
   margin-top: 20px;
 }
 
+.img-card{
+  width: 100%;
+  height: auto;
+}
+
 .publicacao-page-header {
   padding: 20px;
   display: flex;

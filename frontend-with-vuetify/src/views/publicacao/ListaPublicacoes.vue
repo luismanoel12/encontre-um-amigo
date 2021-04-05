@@ -8,13 +8,14 @@
           v-for="publicacao in publicacoes"
           :key="publicacao.id"
         >
-          <router-link
-            class="router-link"
-            :to="{ name: 'publicacoesById', params: { id: publicacao.id } }"
-          >
-            <div class="card-publicacao">
-              <div class="card-publicacao-header">
-                <h2>{{ publicacao.titulo }}</h2>
+          <div class="card-publicacao">
+            <div class="card-publicacao-header">
+              <router-link
+                class="router-link"
+                :to="{ name: 'publicacoesById', params: { id: publicacao.id } }"
+              >
+                <h2 class="pub-titulo">{{ publicacao.titulo }}</h2>
+
                 <h5>{{ publicacao.createdAt }}</h5>
                 <div class="img-publicacao" style="height: 200px">
                   <img
@@ -30,13 +31,15 @@
                     alt="Article"
                   />
                 </div>
-                <p>Publicado por: {{ publicacao.userName }}</p>
-              </div>
-              <div class="card-publicacao-content">
-                <p>{{ publicacao.chamada }}</p>
-              </div>
+              </router-link>
+              <p>Publicado por: {{ publicacao.userName }}</p>
             </div>
-          </router-link>
+            <div class="card-publicacao-content">
+              <p>{{ publicacao.chamada }}</p>
+
+              <h3>Acessar</h3>
+            </div>
+          </div>
         </v-col>
       </v-row>
     </div>
@@ -117,6 +120,14 @@ export default {
 
 .card-publicacao-content {
   word-break: break-all;
+}
+
+.pub-titulo {
+  color: #212121;
+}
+
+.pub-titulo:hover {
+  color: #0899ba;
 }
 
 .router-link {
