@@ -18,6 +18,7 @@ import AnimaisById from "@/views/animais-adocao/AnimaisById"
 import Publicacoes from "@/views/publicacao/Publicacoes"
 import ListaPublicacoes from "@/views/publicacao/ListaPublicacoes"
 import PublicacoesById from "@/views/publicacao/PublicacoesById"
+import Users from "@/views/users/Users"
 
 
 import { userKey } from "@/global"
@@ -34,6 +35,12 @@ const routes = [{
     path: '/auth',
     component: Auth,
     meta: { requiresOff: true }
+},
+{
+    name: 'users',
+    path: '/users',
+    component: Users,
+    meta: { requiresAdmin: true }
 },
 {
     name: 'carousel',
@@ -134,10 +141,6 @@ router.beforeEach((to, from, next) => {
     } else {
         next()
     }
-})
-
-router.beforeEach((to, from, next) => {
-    const json = localStorage.getItem(userKey)
 
     if(to.matched.some(record => record.meta.requiresAuthorization)){
         const user = JSON.parse(json)
@@ -145,10 +148,6 @@ router.beforeEach((to, from, next) => {
     } else {
         next()
     }
-})
-
-router.beforeEach((to, from, next) => {
-    const json = localStorage.getItem(userKey)
 
     if(to.matched.some(record => record.meta.requiresOff)){
         const user = JSON.parse(json)

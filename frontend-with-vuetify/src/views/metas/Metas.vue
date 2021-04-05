@@ -175,8 +175,11 @@
                   <v-col cols="12" sm="12">
                     <v-textarea
                       outlined
-                       v-model="objetivo.descricao"
-                       :readonly="mode === 'remove'"
+                      v-model="objetivo.descricao"
+                      :readonly="mode === 'remove'"
+                      maxlength="250"
+                      counter="250"
+                      hint="Máximo de 250 caracteres"
                       name="input-7-4"
                       label="Descrição"
                     ></v-textarea>
@@ -201,7 +204,7 @@
                     color="error"
                   >
                     Excluir
-                     <v-icon dark right> mdi-delete </v-icon>
+                    <v-icon dark right> mdi-delete </v-icon>
                   </v-btn>
                   <v-divider vertical></v-divider>
                   <v-btn

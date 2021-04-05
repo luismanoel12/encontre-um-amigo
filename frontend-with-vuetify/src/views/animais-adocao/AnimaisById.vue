@@ -45,6 +45,38 @@
               <h2>{{ animal.sexo }}</h2>
               <h2>{{ animal.porte }}</h2>
             </div>
+
+            <div class="share-button">
+              <div class="overflow-hidden">
+                <div class="text-center mb-8">
+                  <v-btn color="deep-purple" outlined @click="active = !active">
+                    compartilhar
+                  </v-btn>
+                </div>
+
+                <v-bottom-navigation
+                  v-model="value"
+                  :input-value="active"
+                  color="indigo"
+                >
+                  <v-btn>
+                    <v-icon x-large color="#3B5998">mdi-facebook</v-icon>
+                  </v-btn>
+
+                  <v-btn>
+                    <v-icon x-large color="#8134AF">mdi-instagram</v-icon>
+                  </v-btn>
+
+                  <v-btn>
+                    <v-icon x-large color="#08a0e9">mdi-twitter</v-icon>
+                  </v-btn>
+
+                  <v-btn>
+                    <v-icon x-large color="#25D366">mdi-whatsapp</v-icon>
+                  </v-btn>
+                </v-bottom-navigation>
+              </div>
+            </div>
           </v-sheet>
         </v-col>
 
@@ -90,20 +122,34 @@ export default {
     return {
       animal: {},
       publicacoes: [],
+      value: 1,
+      active: true,
+      fbUrl: null,
+      wpUrl: '',
+      ttUrl: '',
+      igUrl: '',
     };
   },
   methods: {
-     loadAnimal() {
+    loadAnimal() {
       const url = `/animais/${this.$route.params.id}`;
-       api.get(url).then((res) => (this.animal = res.data));
+      api.get(url).then((res) => (this.animal = res.data));
     },
 
-     loadPublicacoes() {
+    loadPublicacoes() {
       const url = `/ultimasPublicacoes/${this.animal.userId}`;
-       api.get(url).then((res) => (this.publicacoes = res.data));
+      api.get(url).then((res) => (this.publicacoes = res.data));
     },
+
+    loadSharingUrls(){
+      const atualUrl = document.location.href;
+
+      this.fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${atualUrl}`
+      
+    }
   },
   mounted() {
+    this.loadSharingUrls();
     this.loadAnimal();
     this.loadPublicacoes();
   },
@@ -141,25 +187,29 @@ export default {
   padding-bottom: 10px;
 }
 
-.ultimas-publicacoes{
+.ultimas-publicacoes {
   background-color: #212121;
   padding: 5px;
   border-radius: 5px;
   color: #fff;
   text-align: center;
   word-break: break-all;
-  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%),
+    0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
   transition: ease 0.5s;
 }
 
-
-.ultimas-publicacoes:hover{
-  background-color: #232F34;
+.ultimas-publicacoes:hover {
+  background-color: #232f34;
   transform: scale(1.03);
 }
 
-.publicacao-divider{
+.publicacao-divider {
   margin-bottom: 10px;
   background-color: #212121;
+}
+
+.share-button {
+  margin-top: 50px;
 }
 </style>

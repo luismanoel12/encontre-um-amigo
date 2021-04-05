@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app color="#001D2E" v-if="user">
+    <v-navigation-drawer v-model="drawer" app color="#00171f" v-if="user">
       <v-list-item>
         <v-list-item-content>
           <div class="user-dropdown-img">
