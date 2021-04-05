@@ -111,7 +111,7 @@ module.exports = app => {
 
     app.route('/publicacao')
         .all(app.config.passport.authenticate())
-        .post(admin(app.api.publicacao.save))
+        .post(app.api.publicacao.save)
         .get(app.api.publicacao.get)
         .put(admin(app.api.publicacao.save))
 

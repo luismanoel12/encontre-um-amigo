@@ -63,6 +63,27 @@
           <v-sheet rounded="lg" min-height="268" elevation="10">
             <div class="ong-right-card">
               <h4 class="text-center">ÚLTIMAS PUBLICAÇÕES</h4>
+              <v-divider class="publicacao-divider"></v-divider>
+              <v-row>
+                <v-col
+                  cols="12"
+                  sm="12"
+                  v-for="publicacao in publicacoes"
+                  :key="publicacao.id"
+                >
+                  <router-link
+                    class="router-link"
+                    :to="{
+                      name: 'publicacoesById',
+                      params: { id: publicacao.id },
+                    }"
+                  >
+                    <div class="ultimas-publicacoes">
+                      <h3>{{ publicacao.titulo }}</h3>
+                    </div>
+                  </router-link>
+                </v-col>
+              </v-row>
             </div>
           </v-sheet>
         </v-col>
@@ -81,6 +102,7 @@ export default {
   data: function () {
     return {
       ong: {},
+      publicacoes: {},
     };
   },
   methods: {
@@ -88,9 +110,15 @@ export default {
       const url = `/ongs/${this.$route.params.id}`;
       await api.get(url).then((res) => (this.ong = res.data));
     },
+
+    loadPublicacoes() {
+      const url = `/ultimasPublicacoes/${this.$route.params.id}`;
+      api.get(url).then((res) => (this.publicacoes = res.data));
+    },
   },
   mounted() {
     this.loadOng();
+    this.loadPublicacoes();
     this.$root.$once("ong-by-id", () => {
       this.loadOng();
     });
@@ -123,5 +151,23 @@ export default {
 
 .ong-left-card-header {
   padding-bottom: 10px;
+}
+
+.publicacao-divider{
+  background-color: #212121;
+  margin-bottom: 10px;
+}
+
+.ultimas-publicacoes{
+  color: #ee6c4d;
+  background-color: #293241;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.ultimas-publicacoes:hover{
+  background-color: #fff;
+  border: 1px solid #293241;
 }
 </style>
