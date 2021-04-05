@@ -13,6 +13,7 @@
     "highlightjs": "9.10.0",
     "liquor-tree": "0.2.32",
     "vue": "^2.6.11",
+    "vue-disqus": "^4.0.1",
     "vue-gravatar": "1.2.1",
     "vue-mobile-detection": "^1.0.0",
     "vue-router": "^3.2.0",

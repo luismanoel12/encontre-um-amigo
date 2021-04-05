@@ -35,7 +35,13 @@
                 />
               </div>
               <h4>Descrição:</h4>
-                <div class="publicacao-content" v-html="publicacao.descricao"></div>
+              <div
+                class="publicacao-content"
+                v-html="publicacao.descricao"
+              ></div>
+            </div>
+            <div class="disqus">
+              <Disqus :pageConfig="pageConfig"/>
             </div>
           </v-sheet>
         </v-col>
@@ -62,6 +68,9 @@ export default {
   data: function () {
     return {
       publicacao: {},
+      pageConfig: {
+        identifier: this.$route.params.id,
+      },
     };
   },
   methods: {
@@ -77,9 +86,11 @@ export default {
     });
   },
   updated() {
-    document.querySelectorAll(".publicacao-content pre.ql-syntax").forEach((e) => {
-      hljs.highlightBlock(e);
-    });
+    document
+      .querySelectorAll(".publicacao-content pre.ql-syntax")
+      .forEach((e) => {
+        hljs.highlightBlock(e);
+      });
   },
 };
 </script>
@@ -129,12 +140,18 @@ export default {
   color: #fff;
 }
 
-
 .publicacao-content img {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .publicacao-content :last-child {
   margin-bottom: 0px;
+}
+
+.disqus {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 50px auto;
 }
 </style>

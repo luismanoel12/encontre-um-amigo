@@ -7,9 +7,13 @@ import './config/axios'
 import './config/msgs'
 import 'font-awesome/css/font-awesome.css'
 import VueTheMask from 'vue-the-mask'
+import VueDisqus from 'vue-disqus'
 
 Vue.config.productionTip = false
 Vue.use(VueTheMask)
+Vue.use(VueDisqus, {
+  shortname: 'encontre-um-amigo'
+})
 
 new Vue({
   router,
