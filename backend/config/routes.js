@@ -23,6 +23,10 @@ module.exports = app => {
         .get(owner(app.api.user.getById))
         .delete(admin(app.api.user.remove))
 
+    app.route('/setAdmin/:id')
+        .all(app.config.passport.authenticate())
+        .put(admin(app.api.user.setAdmin))
+
     // Rota das Ongs
 
     app.route('/ongs')

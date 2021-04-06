@@ -4,11 +4,41 @@
       <v-form class="form elevation-10">
         <h2 class="atencao">Usuários</h2>
         <v-row>
-          <v-col cols="12" sm="12">
+          <v-col cols="12" sm="6">
+            <v-text-field
+              label="Nome"
+              v-model="user.name"
+              readonly
+              required
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" sm="6">
+            <v-text-field
+              label="E-mail"
+              v-model="user.email"
+              readonly
+              required
+              outlined
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="12" sm="6">
             <v-text-field
               label="Administrador"
               v-model="user.admin"
-              :readonly="mode === 'remove'"
+              readonly
+              required
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" sm="6">
+            <v-text-field
+              label="ONG"
+              v-model="user.ong"
+              readonly
               required
               outlined
             ></v-text-field>
@@ -16,9 +46,23 @@
         </v-row>
 
         <div class="buttons">
-          <v-btn depressed v-if="mode === 'save'" @click="save" color="success">
-            Salvar
-            <v-icon dark right> mdi-content-save </v-icon>
+          <v-btn
+            depressed
+            v-if="user.admin"
+            @click="setAdmin"
+            color="error"
+          >
+            Remover Admin
+            <v-icon dark right> mdi-account-remove </v-icon>
+          </v-btn>
+          <v-btn
+            depressed
+            v-else
+            @click="setAdmin"
+            color="success"
+          >
+            Adicionar Admin
+            <v-icon dark right> mdi-account-lock </v-icon>
           </v-btn>
           <v-divider vertical></v-divider>
           <v-btn
@@ -107,10 +151,10 @@ export default {
       this.user = {};
       this.loadUsers();
     },
-    save() {
-      const method = this.user.id ? "put" : "post";
-      const id = this.user.id ? `/${this.user.id}` : "";
-      api[method](`/users${id}`, this.user)
+    setAdmin() {
+      const method = "put";
+      const id = this.user.id;
+      api[method](`/setAdmin/${id}`, this.user)
         .then(() => {
           this.$toasted.global.defaultSuccess();
           this.reset();

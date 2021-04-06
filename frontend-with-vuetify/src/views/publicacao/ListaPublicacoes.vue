@@ -36,8 +36,6 @@
             </div>
             <div class="card-publicacao-content">
               <p>{{ publicacao.chamada }}</p>
-
-              <h3>Acessar</h3>
             </div>
           </div>
         </v-col>

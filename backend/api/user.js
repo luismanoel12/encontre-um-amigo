@@ -90,6 +90,29 @@ module.exports = app => {
         }
     }
 
+    const setAdmin = (req, res) => {
+        const user = { ...req.body }
+        
+        if (user.admin) {
+            user.admin = false;
+            app.db('users')
+                .update({ admin: user.admin })
+                .where({ id: user.id })
+                .then(_ => res.status(204).send())
+                .catch(err => res.status(500).send(err))
+        } else {
+            user.admin = true;
+            app.db('users')
+                .update({ admin: user.admin })
+                .where({ id: user.id })
+                .then(_ => res.status(204).send())
+                .catch(err => res.status(500).send(err))
+        }
+
+
+
+    }
+
     const get = (req, res) => {
         app.db('users')
             .join('endereco', 'users.id', 'endereco.userId')
@@ -167,5 +190,5 @@ module.exports = app => {
         }
     }
 
-    return { save, get, getById, remove, getName, getOngs, getOngById  }
+    return { save, get, getById, remove, getName, getOngs, getOngById, setAdmin }
 }
