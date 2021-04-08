@@ -64,8 +64,8 @@ module.exports = app => {
     const getUltimasPublicacoes = async (req, res) => {
 
         app.db('publicacao')
-            .select('id', 'titulo', 'imageUrl', 'userId')
-            .limit(3)
+            .select('id', 'titulo', 'imageUrl', 'chamada', 'userId')
+            .limit(5)
             .orderBy('id', 'desc')
             .where({ userId: req.params.id })
             .then(publicacao => res.json(publicacao))

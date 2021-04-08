@@ -15,6 +15,7 @@
     "vue": "^2.6.11",
     "vue-disqus": "^4.0.1",
     "vue-gravatar": "1.2.1",
+    "vue-instagram": "^3.0.0",
     "vue-mobile-detection": "^1.0.0",
     "vue-router": "^3.2.0",
     "vue-the-mask": "^0.11.1",

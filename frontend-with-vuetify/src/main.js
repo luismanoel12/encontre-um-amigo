@@ -8,7 +8,9 @@ import './config/msgs'
 import 'font-awesome/css/font-awesome.css'
 import VueTheMask from 'vue-the-mask'
 import VueDisqus from 'vue-disqus'
-
+import VueInstagram from 'vue-instagram'
+ 
+Vue.use(VueInstagram)
 Vue.config.productionTip = false
 Vue.use(VueTheMask)
 Vue.use(VueDisqus, {

@@ -55,22 +55,35 @@
               <h1>{{ ong.name }}</h1>
             </div>
             <v-divider></v-divider>
-            <div class="ong-page-content"></div>
+            <div class="ong-page-content">
+              <!-- Em andamento -->
+              <!-- <vue-instagram
+                token="a7acf785614a7dc474222ad8e68960db"
+                username="robertdowneyjr"
+                :count="5"
+                mediaType="image"
+              >
+                <template slot="feeds" slot-scope="props">
+                  <li class="fancy-list">{{ props.feed.link }}</li>
+                </template>
+                <template slot="error" slot-scope="props">
+                  <div class="fancy-alert">{{ props.error.error_message }}</div>
+                </template>
+              </vue-instagram> -->
+              <!-- Em andamento -->
+            </div>
           </v-sheet>
-        </v-col>
 
-        <v-col cols="12" sm="3">
-          <v-sheet rounded="lg" min-height="268" elevation="10">
-            <div class="ong-right-card">
-              <h4 class="text-center">ÚLTIMAS PUBLICAÇÕES</h4>
-              <v-divider class="publicacao-divider"></v-divider>
-              <v-row>
-                <v-col
-                  cols="12"
-                  sm="12"
-                  v-for="publicacao in publicacoes"
-                  :key="publicacao.id"
-                >
+            <h1 class="text-center mt-10">ÚLTIMAS PUBLICAÇÕES</h1>
+          <v-row class="ultimas-publicacoes">
+            <v-col
+              cols="12"
+              sm="12"
+              v-for="publicacao in publicacoes"
+              :key="publicacao.id"
+            >
+              <div class="card-publicacao">
+                <div class="card-publicacao-header">
                   <router-link
                     class="router-link"
                     :to="{
@@ -78,12 +91,39 @@
                       params: { id: publicacao.id },
                     }"
                   >
-                    <div class="ultimas-publicacoes">
-                      <h3>{{ publicacao.titulo }}</h3>
+                    <h2 class="pub-titulo">{{ publicacao.titulo }}</h2>
+
+                    <h5>{{ publicacao.createdAt }}</h5>
+                    <div class="img-publicacao" style="height: 200px">
+                      <img
+                        v-if="publicacao.imageUrl"
+                        :src="publicacao.imageUrl"
+                        height="100%"
+                        alt="Publicação"
+                      />
+                      <img
+                        v-else
+                        src="@/assets/publicacao.jpg"
+                        height="100%"
+                        alt="Article"
+                      />
                     </div>
                   </router-link>
-                </v-col>
-              </v-row>
+                  <p>Publicado por: {{ publicacao.userName }}</p>
+                </div>
+                <div class="card-publicacao-content">
+                  <p>{{ publicacao.chamada }}</p>
+                </div>
+              </div>
+            </v-col>
+          </v-row>
+        </v-col>
+
+        <v-col cols="12" sm="3">
+          <v-sheet rounded="lg" min-height="268" elevation="10">
+            <div class="ong-right-card">
+              <h4 class="text-center">INSTAGRAM</h4>
+              <v-divider class="publicacao-divider"></v-divider>
             </div>
           </v-sheet>
         </v-col>
@@ -95,10 +135,11 @@
 <script>
 import api from "../../config/api";
 import Gravatar from "vue-gravatar";
+import VueInstagram from "vue-instagram";
 
 export default {
   name: "OngById",
-  components: { Gravatar },
+  components: { Gravatar, VueInstagram },
   data: function () {
     return {
       ong: {},
@@ -153,21 +194,9 @@ export default {
   padding-bottom: 10px;
 }
 
-.publicacao-divider{
+.publicacao-divider {
   background-color: #212121;
   margin-bottom: 10px;
 }
 
-.ultimas-publicacoes{
-  color: #ee6c4d;
-  background-color: #293241;
-  text-align: center;
-  padding: 5px;
-  border-radius: 5px;
-}
-
-.ultimas-publicacoes:hover{
-  background-color: #fff;
-  border: 1px solid #293241;
-}
 </style>
