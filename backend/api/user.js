@@ -92,7 +92,7 @@ module.exports = app => {
 
     const setAdmin = (req, res) => {
         const user = { ...req.body }
-        
+
         if (user.admin) {
             user.admin = false;
             app.db('users')
@@ -108,9 +108,6 @@ module.exports = app => {
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         }
-
-
-
     }
 
     const get = (req, res) => {
