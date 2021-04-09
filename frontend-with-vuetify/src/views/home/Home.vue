@@ -19,46 +19,40 @@
         </div>
         <v-row>
           <v-col cols="12" sm="4">
-            <div class="home-2-card" elevation="24">
-              <div class="home-2-card-header">
-                <h2>Titulo</h2>
+            <router-link class="router-link" to="/animais/adocao">
+              <div class="home-2-card" elevation="24">
+                <div class="home-2-card-header">
+                  <h2>Animais Para Adoção</h2>
+                </div>
+                <div class="home-2-card-content">
+                  <img src="@/assets/pets.png" width="220" alt="" />
+                </div>
               </div>
-              <div class="home-2-card-content">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  bibendum nulla eu ex venenatis, ut elementum libero tempus. Ut
-                  elementum ornare feugiat. Sed nec laoreet augue.
-                </p>
-              </div>
-            </div>
+            </router-link>
           </v-col>
           <v-col cols="12" sm="4">
-            <div class="home-2-card">
-              <div class="home-2-card-header">
-                <h2>Titulo</h2>
+            <router-link class="router-link" to="/publicacoes">
+              <div class="home-2-card">
+                <div class="home-2-card-header">
+                  <h2>Publicações</h2>
+                </div>
+                <div class="home-2-card-content">
+                  <img src="@/assets/pub.png" width="150" alt="" />
+                </div>
               </div>
-              <div class="home-2-card-content">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  bibendum nulla eu ex venenatis, ut elementum libero tempus. Ut
-                  elementum ornare feugiat. Sed nec laoreet augue.
-                </p>
-              </div>
-            </div>
+            </router-link>
           </v-col>
           <v-col cols="12" sm="4">
-            <div class="home-2-card">
-              <div class="home-2-card-header">
-                <h2>Titulo</h2>
+            <router-link class="router-link" to="/metas">
+              <div class="home-2-card">
+                <div class="home-2-card-header">
+                  <h2>Doações com Metas</h2>
+                </div>
+                <div class="home-2-card-content">
+                  <img src="@/assets/donation.png" width="150" alt="" />
+                </div>
               </div>
-              <div class="home-2-card-content">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  bibendum nulla eu ex venenatis, ut elementum libero tempus. Ut
-                  elementum ornare feugiat. Sed nec laoreet augue.
-                </p>
-              </div>
-            </div>
+            </router-link>
           </v-col>
         </v-row>
       </v-container>
@@ -98,8 +92,8 @@ export default {
 <style scoped>
 .home-2 {
   padding-top: 50px;
-  background-color: #212121;
-  height: auto;
+  /* background-color: #212121; */
+  height: 100%;
 }
 
 .home-2-card {
@@ -109,7 +103,13 @@ export default {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12),
     0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12),
     0 16px 16px rgba(0, 0, 0, 0.12);
-    
+  transition: ease-out 0.3s;
+  color: #212121;
+  font-weight: 5px;
+}
+
+.home-2-card:hover {
+  transform: scale(1.05);
 }
 
 .home-2-card-header {
@@ -119,6 +119,10 @@ export default {
 .home-2-card-content {
   text-align: center;
   padding-top: 20px;
+}
+
+.home-2-card-content > img {
+  max-width: 100%;
 }
 
 .home-2-title h1 {
