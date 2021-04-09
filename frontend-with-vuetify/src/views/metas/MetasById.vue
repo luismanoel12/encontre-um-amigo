@@ -150,8 +150,6 @@ export default {
 </script>
 
 <style>
-.view-page {
-}
 
 .view-header {
   text-align: center;

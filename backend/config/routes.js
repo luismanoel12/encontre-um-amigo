@@ -110,6 +110,10 @@ module.exports = app => {
         .get(app.api.animais.getById)
         .delete(admin(app.api.animais.remove))
 
+    app.route('/animaisSearch')
+        .all(app.config.passport.authenticate())
+        .get(admin(app.api.animais.getCustomSearch))
+
 
     // Cadastro de publicações e listagem
 
