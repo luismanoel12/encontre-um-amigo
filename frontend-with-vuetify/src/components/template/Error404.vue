@@ -8,7 +8,7 @@
           <h3>Parece que a página que você está procurando não existe!</h3>
         </div>
         <div class="e404-content">
-          <v-btn elevation="15" color="#fffff" class="e404-button" to="/">
+          <v-btn elevation="15" color="#fffff" class="e404-button" to="/home">
             <v-icon>mdi-home</v-icon>
              Voltar ao início
           </v-btn>

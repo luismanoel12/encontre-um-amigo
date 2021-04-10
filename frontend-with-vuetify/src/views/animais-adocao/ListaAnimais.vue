@@ -1,99 +1,102 @@
 <template>
   <v-container>
     <div class="lista-animais-page">
-      <div class="search">
-        <v-row>
-          <v-col cols="12" sm="4">
-            <v-text-field
-              label="Nome da Ong"
-              prepend-inner-icon="mdi-account-group"
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="4">
-            <v-select
-              :items="estados"
-              prepend-inner-icon="mdi-google-maps"
-              v-model="search.estado"
-              label="Estado"
-              outlined
-            ></v-select>
-          </v-col>
-          <v-col cols="12" sm="4">
-            <v-text-field
-              label="Cidade"
-              prepend-inner-icon="mdi-city"
-              v-model="search.cidade"
-              outlined
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
-        <div class="search-buttons">
-          <v-btn depressed @click="procurar" color="success">
-            Buscar
-            <v-icon dark right> mdi-magnify </v-icon>
-          </v-btn>
-          <v-divider vertical></v-divider>
-          <v-btn depressed @click="clear" color="info">
-            Cancelar
-            <v-icon dark right> mdi-close </v-icon>
-          </v-btn>
-        </div>
-      </div>
       <v-row>
-        <v-col cols="12" lg="3" md="4" sm="4" v-for="animal in animais" :key="animal.id">
-          <router-link
-            class="router-link"
-            :to="{ name: 'animaisById', params: { id: animal.id } }"
-          >
-            <v-card
-              class="mx-auto my-12 animal-card"
-              max-width="374"
-              elevation="10"
-            >
-              <div class="img-card">
-                <img
-                  v-if="animal.imagem"
-                  :src="animal.imagem"
-                  height="100%"
-                  alt="Animais"
-                />
-                <img
-                  v-else
-                  src="@/assets/article.png"
-                  height="100%"
-                  alt="Article"
-                />
+        <v-col cols="12" sm="9">
+          <v-sheet min-height="70vh" rounded="lg">
+            <v-row>
+              <v-col
+                cols="12"
+                xl="3"
+                lg="4"
+                sm="6"
+                v-for="animal in animais"
+                :key="animal.id"
+              >
+                <router-link
+                  class="router-link"
+                  :to="{ name: 'animaisById', params: { id: animal.id } }"
+                >
+
+                  <v-card
+                    class="mx-auto my-12 animal-card"
+                    max-width="374"
+                    elevation="10"
+                  >
+                    <div class="img-card">
+                      <img
+                        v-if="animal.imagem"
+                        :src="animal.imagem"
+                        height="100%"
+                        alt="Animais"
+                      />
+                      <img
+                        v-else
+                        src="@/assets/article.png"
+                        height="100%"
+                        alt="Animais"
+                      />
+                    </div>
+
+                    <v-card-title> {{ animal.nome }}</v-card-title>
+
+                    <v-card-text class="text-center">
+                      <v-row>
+                        <v-col cols="12" sm="12">
+                          <span>{{ animal.cidade }} <br> {{ animal.estado }}</span>
+                        </v-col>
+                      </v-row>
+                    </v-card-text>
+                  </v-card>
+                </router-link>
+              </v-col>
+            </v-row>
+          </v-sheet>
+        </v-col>
+
+        <v-col cols="12" sm="3">
+          <v-sheet rounded="lg" min-height="268">
+            <div class="search">
+              <h2 class="text-center mb-5">PESQUISAR</h2>
+              <v-row>
+                <v-col cols="12" sm="12">
+                  <v-text-field
+                    label="Nome da Ong"
+                    prepend-inner-icon="mdi-account-group"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="12">
+                  <v-select
+                    :items="estados"
+                    prepend-inner-icon="mdi-google-maps"
+                    v-model="search.estado"
+                    label="Estado"
+                    outlined
+                  ></v-select>
+                </v-col>
+                <v-col cols="12" sm="12">
+                  <v-text-field
+                    label="Cidade"
+                    prepend-inner-icon="mdi-city"
+                    v-model="search.cidade"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+
+              <div class="search-buttons">
+                <v-btn depressed block @click="procurar" color="success">
+                  Pesquisar
+                  <v-icon dark right> mdi-magnify </v-icon>
+                </v-btn>
+                <v-btn depressed block @click="clear" class="mt-5" color="info">
+                  Cancelar
+                  <v-icon dark right> mdi-close </v-icon>
+                </v-btn>
               </div>
-
-              <v-card-title> {{ animal.nome }}</v-card-title>
-
-              <v-card-text class="text-center">
-                <v-row>
-                  <v-col cols="12" sm="12">
-                    <h4>{{ animal.cidade }} - {{ animal.estado }}</h4>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col cols="12" sm="6">
-                    Sexo:
-                    <div class="span-animal-card">
-                      <span>
-                        {{ animal.sexo }}
-                      </span>
-                    </div>
-                  </v-col>
-                  <v-col cols="12" sm="6">
-                    Porte:
-                    <div class="span-animal-card">
-                      <span>{{ animal.porte }}</span>
-                    </div>
-                  </v-col>
-                </v-row>
-              </v-card-text>
-            </v-card>
-          </router-link>
+            </div>
+          </v-sheet>
         </v-col>
       </v-row>
     </div>
@@ -160,10 +163,10 @@ export default {
     },
 
     procurar() {
-      api(`/animaisSearch`, this.search ).then((res) => {
-       this.animais = this.animais.concat(res.data.data);
+      api(`/animaisSearch`, this.search).then((res) => {
+        this.animais = this.animais.concat(res.data.data);
 
-         if (res.data.data.length === 0) this.loadMore = false;
+        if (res.data.data.length === 0) this.loadMore = false;
       });
     },
 
@@ -196,7 +199,8 @@ export default {
 
 .animal-card {
   background-color: #fff;
-  width: 80%;
+  border-left: 3px solid #52b69a;
+  width: 200px;
 }
 
 .button-aciton {
@@ -217,13 +221,13 @@ export default {
 }
 
 .img-card {
-  height: 200px;
+  height: 100%;
 }
 
 .img-card img {
-  width: 100%;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+  max-width: 100%;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   object-fit: cover;
 }
 

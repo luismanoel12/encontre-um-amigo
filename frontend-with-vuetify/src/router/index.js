@@ -27,14 +27,14 @@ Vue.use(VueRouter)
 
 const routes = [{
     name: 'home',
-    path: '/',
+    path: '/home',
     component: Home
 },
 {
     name: 'auth',
     path: '/auth',
     component: Auth,
-    meta: { requiresOff: true }
+    // meta: { requiresOff: true }
 },
 {
     name: 'users',
@@ -64,25 +64,25 @@ const routes = [{
     name: 'metasList',
     path: '/metas',
     component: MetasList,
-    meta: { requiresOff: false }
+    // meta: { requiresOff: false }
 },
 {
     name: 'metasById',
     path: '/metas/:id',
     component: MetasById,
-    meta: { requiresOff: false }
+    // meta: { requiresOff: false }
 },
 {
     name: 'ongs',
     path: '/ongs',
     component: Ongs,
-    meta: { requiresOff: false }
+    // meta: { requiresOff: false }
 },
 {
     name: 'ongById',
     path: '/ongs/:id',
     component: OngById,
-    meta: { requiresOff: false }
+    // meta: { requiresOff: false }
 },
 {
     name: 'animais',
@@ -94,13 +94,13 @@ const routes = [{
     name: 'listaAnimais',
     path: '/animais/adocao',
     component: ListaAnimais,
-    meta: { requiresOff: false }
+    // meta: { requiresOff: false }
 },
 {
     name: 'animaisById',
     path: '/animais/:id',
     component: AnimaisById,
-    meta: { requiresOff: false }
+    // meta: { requiresOff: false }
 },
 {
     name: 'publicacoes',
@@ -112,13 +112,13 @@ const routes = [{
     name: 'listaPublicacoes',
     path: '/publicacoes',
     component: ListaPublicacoes,
-    meta: { requiresAuthorization: false }
+    // meta: { requiresAuthorization: false }
 },
 {
     name: 'publicacoesById',
     path: '/publicacao/:id',
     component: PublicacoesById,
-    meta: { requiresOff: false }
+    // meta: { requiresOff: false }
 },
 {
     name: 'error404',
@@ -137,21 +137,21 @@ router.beforeEach((to, from, next) => {
 
     if(to.matched.some(record => record.meta.requiresAdmin)){
         const user = JSON.parse(json)
-        user && user.admin ? next() : next({ path: '/' })
+        user && user.admin ? next() : next({ path: '/home' })
     } else {
         next()
     }
 
     if(to.matched.some(record => record.meta.requiresAuthorization)){
         const user = JSON.parse(json)
-        user && user.admin || user.ong ? next() : next({ path: '/' })
+        user && user.admin || user.ong ? next() : next({ path: '/home' })
     } else {
         next()
     }
 
     if(to.matched.some(record => record.meta.requiresOff)){
         const user = JSON.parse(json)
-        !user ? next() : next({ path: '/' })
+        !user ? next() : next({ path: '/home' })
     } else {
         next()
     }

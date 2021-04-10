@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app color="#00171f" v-if="user">
-      <v-list-item>
+      <v-list-item v-if="user">
         <v-list-item-content>
           <div class="user-dropdown-img">
             <Gravatar :email="user.email" alt="User" />
@@ -25,7 +25,7 @@
       <v-divider class="divider-menu"></v-divider>
 
       <v-list dense nav dark>
-        <v-list-item to="/">
+        <v-list-item to="/home">
           <v-list-item-icon>
             <v-icon> mdi-home </v-icon>
           </v-list-item-icon>
@@ -35,7 +35,10 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item :to="{ name: 'perfil', params: { id: user.id } }">
+        <v-list-item
+          v-if="user"
+          :to="{ name: 'perfil', params: { id: user.id } }"
+        >
           <v-list-item-icon>
             <v-icon> mdi-account </v-icon>
           </v-list-item-icon>
@@ -64,7 +67,7 @@
 
           <v-list-item
             to="/animais/cadastrar"
-            v-if="user.ong == true || user.admin == true"
+            v-if="(user && user.ong == true) || user.admin == true"
           >
             <v-list-item-icon>
               <v-icon> mdi-paw </v-icon>
@@ -94,7 +97,7 @@
 
           <v-list-item
             to="/minhas-metas"
-            v-if="user.ong == true || user.admin == true"
+            v-if="(user && user.ong == true) || user.admin == true"
           >
             <v-list-item-icon>
               <v-icon> mdi-bullseye </v-icon>
@@ -125,7 +128,7 @@
 
           <v-list-item
             to="/publicacao/cadastrar"
-            v-if="user.admin || user.ong"
+            v-if="(user && user.admin) || user.ong"
           >
             <v-list-item-icon>
               <v-icon> mdi-newspaper-plus </v-icon>
@@ -157,12 +160,12 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-divider color="#fff" v-if="user.admin"></v-divider>
+        <v-divider color="#fff" v-if="user && user.admin"></v-divider>
 
         <v-list-group
           no-action
           prepend-icon="mdi-account-lock"
-          v-if="user.admin"
+          v-if="user && user.admin"
         >
           <template v-slot:activator>
             <v-list-item-content>
@@ -192,10 +195,12 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app dark color="#232F34">
+    <v-app-bar app dark color="#232F34" v-if="!user || user">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Encontre um amigo</v-toolbar-title>
+      <router-link to="/home" class="home-router">
+        <v-toolbar-title to="/home">Encontre um amigo</v-toolbar-title>
+      </router-link>
 
       <v-btn
         v-if="user"
@@ -236,7 +241,7 @@ import Gravatar from "vue-gravatar";
 export default {
   name: "Menu",
   components: { Gravatar },
-  computed: {...mapState(["user"])},
+  computed: { ...mapState(["user"]) },
   data() {
     return {
       drawer: null,
@@ -302,10 +307,17 @@ export default {
   padding-left: 25px !important;
 }
 
-.v-list-item__title, .v-list-item__subtitle {
-    flex: 1 1 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: none!important;
+.v-list-item__title,
+.v-list-item__subtitle {
+  flex: 1 1 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: none !important;
+}
+
+.home-router{
+  text-decoration: none;
+  color: #fff!important;
+  margin-left: 20px;
 }
 </style>
