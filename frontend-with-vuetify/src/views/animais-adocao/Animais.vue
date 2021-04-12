@@ -7,6 +7,7 @@
             <v-text-field
               label="Nome"
               v-model="animal.nome"
+              prepend-inner-icon="mdi-paw"
               :readonly="mode === 'remove'"
               required
               outlined
@@ -16,6 +17,7 @@
             <v-select
               :items="tipo"
               :readonly="mode === 'remove'"
+              prepend-inner-icon="mdi-paw"
               v-model="animal.tipo"
               label="Tipo"
               outlined
@@ -25,6 +27,7 @@
             <v-select
               :items="sexo"
               :readonly="mode === 'remove'"
+              prepend-inner-icon="mdi-gender-male-female"
               v-model="animal.sexo"
               label="Sexo"
               outlined
@@ -37,6 +40,7 @@
             <v-select
               :items="porte"
               :readonly="mode === 'remove'"
+              prepend-inner-icon="mdi-arrow-expand"
               v-model="animal.porte"
               label="Porte"
               outlined
@@ -47,6 +51,7 @@
               label="URL da Imagem"
               v-model="animal.imagem"
               :readonly="mode === 'remove'"
+              prepend-inner-icon="mdi-link-variant"
               required
               outlined
             ></v-text-field>
@@ -93,7 +98,9 @@
             <v-text-field
               label="CEP"
               v-model="animal.cep"
+              v-mask="'#####-###'"
               :readonly="mode === 'remove'"
+              prepend-inner-icon="mdi-numeric"
               required
               outlined
             ></v-text-field>
@@ -102,6 +109,7 @@
             <v-select
               :items="estados"
               :readonly="mode === 'remove'"
+              prepend-inner-icon="mdi-sign-real-estate"
               v-model="animal.estado"
               label="Estado"
               outlined
@@ -112,6 +120,7 @@
               label="Cidade"
               v-model="animal.cidade"
               :readonly="mode === 'remove'"
+              prepend-inner-icon="mdi-city"
               required
               outlined
             ></v-text-field>
@@ -125,6 +134,7 @@
               name="input-7-4"
               v-model="animal.descricao"
               :readonly="mode === 'remove'"
+              prepend-inner-icon="mdi-card-text"
               label="Descrição"
             ></v-textarea>
           </v-col>

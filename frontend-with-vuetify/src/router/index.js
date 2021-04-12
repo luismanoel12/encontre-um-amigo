@@ -35,7 +35,6 @@ const routes = [{
     name: 'auth',
     path: '/auth',
     component: Auth,
-    // meta: { requiresOff: true }
 },
 {
     name: 'users',
@@ -71,25 +70,21 @@ const routes = [{
     name: 'metasList',
     path: '/metas',
     component: MetasList,
-    // meta: { requiresOff: false }
 },
 {
     name: 'metasById',
     path: '/metas/:id',
     component: MetasById,
-    // meta: { requiresOff: false }
 },
 {
     name: 'ongs',
     path: '/ongs',
     component: Ongs,
-    // meta: { requiresOff: false }
 },
 {
     name: 'ongById',
     path: '/ongs/:id',
     component: OngById,
-    // meta: { requiresOff: false }
 },
 {
     name: 'animais',
@@ -101,13 +96,11 @@ const routes = [{
     name: 'listaAnimais',
     path: '/animais/adocao',
     component: ListaAnimais,
-    // meta: { requiresOff: false }
 },
 {
     name: 'animaisById',
     path: '/animais/:id',
     component: AnimaisById,
-    // meta: { requiresOff: false }
 },
 {
     name: 'publicacoes',
@@ -128,6 +121,11 @@ const routes = [{
     // meta: { requiresOff: false }
 },
 {
+    name: 'home',
+    path: '/',
+    component: Home
+},
+{
     name: 'error404',
     path: '/*',
     component: Error404
@@ -135,7 +133,6 @@ const routes = [{
 
 
 const router = new VueRouter({
-    // mode: 'history',
     routes 
 })
 

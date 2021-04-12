@@ -44,7 +44,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>Perfil</v-list-item-title>
+            <v-list-item-title>Meus Dados</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -273,7 +273,7 @@ export default {
 
 <style>
 .main-body {
-  background-color: #efefef;
+  background-color: #eee;
 }
 
 .title {

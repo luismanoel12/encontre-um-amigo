@@ -110,6 +110,14 @@ module.exports = app => {
         }
     }
 
+    const getAdmins = (req, res) => {
+        app.db('users')
+            .select('id', 'name', 'email', 'telefone', 'admin')
+            .where({ 'admin': true })
+            .then(users => res.json(users))
+            .catch(err => res.status(500).send(err))
+    }
+
     const get = (req, res) => {
         app.db('users')
             .join('endereco', 'users.id', 'endereco.userId')
@@ -187,5 +195,5 @@ module.exports = app => {
         }
     }
 
-    return { save, get, getById, remove, getName, getOngs, getOngById, setAdmin }
+    return { save, get, getById, remove, getName, getOngs, getOngById, setAdmin, getAdmins }
 }

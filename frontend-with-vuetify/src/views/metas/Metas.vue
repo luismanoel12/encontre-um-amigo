@@ -320,6 +320,7 @@ export default {
       api[method](`/metas${id}`, this.meta)
         .then(() => {
           this.$toasted.global.defaultSuccess();
+          this.loadMetasList();
           this.reset();
         })
         .catch(showError);
