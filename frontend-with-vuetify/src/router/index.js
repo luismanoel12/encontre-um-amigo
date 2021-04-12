@@ -19,6 +19,7 @@ import Publicacoes from "@/views/publicacao/Publicacoes"
 import ListaPublicacoes from "@/views/publicacao/ListaPublicacoes"
 import PublicacoesById from "@/views/publicacao/PublicacoesById"
 import Users from "@/views/users/Users"
+import Dashboard from "@/views/dashboard/Dashboard"
 
 
 import { userKey } from "@/global"
@@ -40,6 +41,12 @@ const routes = [{
     name: 'users',
     path: '/users',
     component: Users,
+    meta: { requiresAdmin: true }
+},
+{
+    name: 'dashboard',
+    path: '/dashboard',
+    component: Dashboard,
     meta: { requiresAdmin: true }
 },
 {

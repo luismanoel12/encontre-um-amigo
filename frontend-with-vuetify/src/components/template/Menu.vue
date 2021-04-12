@@ -173,6 +173,15 @@
             </v-list-item-content>
           </template>
 
+          <v-list-item to="/dashboard">
+            <v-list-item-icon>
+              <v-icon> mdi-chart-bar </v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>Dashboard</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
           <v-list-item to="/users">
             <v-list-item-icon>
               <v-icon> mdi-account-multiple </v-icon>
@@ -315,9 +324,9 @@ export default {
   white-space: none !important;
 }
 
-.home-router{
+.home-router {
   text-decoration: none;
-  color: #fff!important;
+  color: #fff !important;
   margin-left: 20px;
 }
 </style>
