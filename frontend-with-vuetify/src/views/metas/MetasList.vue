@@ -104,7 +104,7 @@ export default {
 
   methods: {
     getMetas() {
-      api(`/metas?page=${this.page}`).then((res) => {
+      api(`/metasPublic?page=${this.page}`).then((res) => {
         this.metas = this.metas.concat(res.data.data);
         this.page++;
 

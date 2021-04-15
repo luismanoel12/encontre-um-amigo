@@ -6,16 +6,31 @@ module.exports = app => {
     app.post('/signin', app.api.auth.signin)
     app.post('/validateToken', app.api.auth.validateToken)
 
+
+    // Public routes
+
+    app.get('/user-name/:id', app.api.user.getName)
+    app.get('/ongs', app.api.user.getOngs)
+    app.get('/ongs/:id', app.api.user.getOngById)
+    app.get('/carouselPublic', app.api.carousel.get)
+    app.get('/metasPublic', app.api.metas.get)
+    app.get('/metasPublic/:id', app.api.metas.getById)
+    app.get('/objetivosMetaPublic/:id', app.api.objetivos.get)
+    app.get('/animaisPublic', app.api.animais.get)
+    app.get('/animaisPublic/:id', app.api.animais.getById)    
+    app.get('/animaisSearch', app.api.animais.getCustomSearch)
+    app.get('/publicacaoPublic', app.api.publicacao.get) 
+    app.get('/publicacaoPublic/:id', app.api.publicacao.getById)
+    app.get('/ultimasPublicacoes/:id', app.api.publicacao.getUltimasPublicacoes) 
+
+
+
     // User routes
 
     app.route('/users')
         .all(app.config.passport.authenticate())
         .post(admin(app.api.user.save))
         .get(owner(app.api.user.get))
-
-    app.route('/user-name/:id')
-        .all(app.config.passport.authenticate())
-        .get(app.api.user.getName)
 
     app.route('/users/:id')
         .all(app.config.passport.authenticate())
@@ -31,22 +46,12 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .get(admin(app.api.user.getAdmins))
 
-    // Rota das Ongs
-
-    app.route('/ongs')
-        .all(app.config.passport.authenticate())
-        .get(app.api.user.getOngs)
-
-    app.route('/ongs/:id')
-        .all(app.config.passport.authenticate())
-        .get(app.api.user.getOngById)
-
 
     // Carousel routes
 
     app.route('/carousel')
         .all(app.config.passport.authenticate())
-        .post(app.config.passport.authenticate(app.api.carousel.save))
+        .post(app.api.carousel.save)
         .get(app.api.carousel.get)
 
     app.route('/carousel/:id')
@@ -75,12 +80,12 @@ module.exports = app => {
 
     app.route('/objetivos')
         .all(app.config.passport.authenticate())
-        .post(admin(app.api.objetivos.save))
-        .put(admin(app.api.objetivos.save))
+        .post(app.api.objetivos.save)
+        .put(app.api.objetivos.save)
 
-    app.route('/objetivosMeta/:id')
-        .all(app.config.passport.authenticate())
-        .get(app.api.objetivos.get)
+    // app.route('/objetivosMeta/:id')
+    //     .all(app.config.passport.authenticate())
+    //     .get(app.api.objetivos.get)
 
     app.route('/objetivos/:id')
         .all(app.config.passport.authenticate())
@@ -90,7 +95,7 @@ module.exports = app => {
 
     app.route('/objetivosUsuario/:id')
         .all(app.config.passport.authenticate())
-        .post(admin(app.api.objetivos.save))
+        .post(app.api.objetivos.save)
         .get(app.api.objetivos.getPorUsuario)
 
 
@@ -113,10 +118,6 @@ module.exports = app => {
         .get(app.api.animais.getById)
         .delete(app.api.animais.remove)
 
-    app.route('/animaisSearch')
-        .all(app.config.passport.authenticate())
-        .get(app.api.animais.getCustomSearch)
-
 
     // Cadastro de publicações e listagem
 
@@ -131,15 +132,15 @@ module.exports = app => {
         .post(admin(app.api.publicacao.save))
         .get(app.api.publicacao.getPorUsuario)
 
-    app.route('/ultimasPublicacoes/:id')
-        .all(app.config.passport.authenticate())
-        .get(app.api.publicacao.getUltimasPublicacoes)
 
     app.route('/publicacao/:id')
         .all(app.config.passport.authenticate())
         .put(app.api.publicacao.save)
         .get(app.api.publicacao.getById)
         .delete(app.api.publicacao.remove)
+
+
+    // Dashboard
 
     app.route('/getCount')
         .all(app.config.passport.authenticate())

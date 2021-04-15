@@ -119,12 +119,12 @@ export default {
   },
   methods: {
     async loadMeta() {
-      const url = `/metas/${this.$route.params.id}`;
+      const url = `/metasPublic/${this.$route.params.id}`;
       await api.get(url).then((res) => (this.meta = res.data));
     },
 
     async loadObjetivos() {
-      const url = `/objetivosMeta/${this.$route.params.id}`;
+      const url = `/objetivosMetaPublic/${this.$route.params.id}`;
       await api.get(url).then((res) => (this.objetivos = res.data));
     },
   },

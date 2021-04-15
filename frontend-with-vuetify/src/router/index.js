@@ -58,7 +58,6 @@ const routes = [{
     name: 'perfil',
     path: '/perfil/:id',
     component: Perfil,
-    meta: { requiresOff: false }
 },
 {
     name: 'metas',
@@ -70,21 +69,25 @@ const routes = [{
     name: 'metasList',
     path: '/metas',
     component: MetasList,
+    meta: { allowGuest: true }
 },
 {
     name: 'metasById',
     path: '/metas/:id',
     component: MetasById,
+    meta: { allowGuest: true }
 },
 {
     name: 'ongs',
     path: '/ongs',
     component: Ongs,
+    meta: { allowGuest: true }
 },
 {
     name: 'ongById',
     path: '/ongs/:id',
     component: OngById,
+    meta: { allowGuest: true }
 },
 {
     name: 'animais',
@@ -96,11 +99,13 @@ const routes = [{
     name: 'listaAnimais',
     path: '/animais/adocao',
     component: ListaAnimais,
+    meta: { allowGuest: true }
 },
 {
     name: 'animaisById',
     path: '/animais/:id',
     component: AnimaisById,
+    meta: { allowGuest: true }
 },
 {
     name: 'publicacoes',
@@ -112,18 +117,19 @@ const routes = [{
     name: 'listaPublicacoes',
     path: '/publicacoes',
     component: ListaPublicacoes,
-    // meta: { requiresAuthorization: false }
+    meta: { allowGuest: true }
 },
 {
     name: 'publicacoesById',
     path: '/publicacao/:id',
     component: PublicacoesById,
-    // meta: { requiresOff: false }
+    meta: { allowGuest: true }
 },
 {
     name: 'home',
     path: '/',
-    component: Home
+    component: Home,
+    meta: { allowGuest: true }
 },
 {
     name: 'error404',
@@ -156,6 +162,13 @@ router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresOff)){
         const user = JSON.parse(json)
         !user ? next() : next({ path: '/home' })
+    } else {
+        next()
+    }
+
+    if(to.matched.some(record => record.meta.allowGuest)){
+        const user = JSON.parse(json)
+        user || !user ? next() : next({ path: '/home' })
     } else {
         next()
     }

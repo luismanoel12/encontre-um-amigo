@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     async loadPublicacao() {
-      const url = `/publicacao/${this.$route.params.id}`;
+      const url = `/publicacaoPublic/${this.$route.params.id}`;
       await api.get(url).then((res) => (this.publicacao = res.data));
     },
   },

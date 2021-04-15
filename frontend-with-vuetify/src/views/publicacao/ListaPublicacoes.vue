@@ -65,7 +65,7 @@ export default {
 
   methods: {
     getPublicacoes() {
-      api(`/publicacao?page=${this.page}`).then((res) => {
+      api(`/publicacaoPublic?page=${this.page}`).then((res) => {
         this.publicacoes = this.publicacoes.concat(res.data.data);
         this.page++;
 

@@ -132,7 +132,7 @@ export default {
   },
   methods: {
     loadAnimal() {
-      const url = `/animais/${this.$route.params.id}`;
+      const url = `/animaisPublic/${this.$route.params.id}`;
       api.get(url).then((res) => (this.animal = res.data));
     },
 

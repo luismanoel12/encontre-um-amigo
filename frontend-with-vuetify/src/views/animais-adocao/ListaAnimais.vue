@@ -154,7 +154,7 @@ export default {
 
   methods: {
     getAnimais() {
-      api(`/animais?page=${this.page}`).then((res) => {
+      api(`/animaisPublic?page=${this.page}`).then((res) => {
         this.animais = this.animais.concat(res.data.data);
         this.page++;
 

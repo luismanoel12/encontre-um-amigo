@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     async loadCarousel() {
-      const url = `/carousel`;
+      const url = `/carouselPublic`;
       await api
         .get(url)
         .then((res) => {
