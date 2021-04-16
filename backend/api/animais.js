@@ -84,8 +84,6 @@ module.exports = app => {
     const getCustomSearch = async (req, res) => {
         const search = { ...req.body }
 
-        console.log(search)
-
         const page = req.query.page || 1
         const result = await app.db('animais').count('id').first()
         const count = parseInt(result.count)

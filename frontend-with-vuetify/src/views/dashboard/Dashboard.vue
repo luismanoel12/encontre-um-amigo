@@ -10,7 +10,7 @@
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
-          <h1> {{ count.usersCount }} </h1>
+          <h1>{{ count.usersCount }}</h1>
         </div>
       </div>
 
@@ -63,6 +63,23 @@
           <h1>50</h1>
         </div>
       </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2>Tipos de Usuários</h2>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <apexchart
+            type="pie"
+            width="380"
+            :options="chartOptions"
+            :series="series"
+          ></apexchart>
+        </div>
+      </div>
+
+      
     </div>
 
     <div class="dashboard-page-title">
@@ -183,6 +200,28 @@ export default {
     return {
       admins: [],
       count: [],
+
+      series: [0, 0, 0],
+      chartOptions: {
+        chart: {
+          width: 380,
+          type: "pie",
+        },
+        labels: ["Admin", "ONG", "Usuário"],
+        responsive: [
+          {
+            breakpoint: 600,
+            options: {
+              chart: {
+                width: 350,
+              },
+              legend: {
+                position: "bottom",
+              },
+            },
+          },
+        ],
+      },
     };
   },
 
@@ -196,10 +235,15 @@ export default {
     getCount() {
       api(`/getCount`).then((res) => {
         this.count = res.data;
+        console.log(this.count)
+        this.series = [
+          res.data.adminsCount,
+          res.data.ongsCount,
+          res.data.tutoresCount,
+        ];
       });
-
-      console.log(this.count)
     },
+
   },
   watch: {
     $route(to) {
@@ -210,6 +254,7 @@ export default {
     },
   },
   mounted() {
+
     this.getAdmins();
     this.getCount();
   },
@@ -217,7 +262,6 @@ export default {
 </script>
 
 <style scoped>
-
 .dashboard-1 {
   border-radius: 5px;
   padding: 20px;
@@ -288,6 +332,12 @@ export default {
 
 .admin-card {
   word-break: break-all;
+}
+
+.chart {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
 }
 
 @media only screen and (max-width: 600px) {

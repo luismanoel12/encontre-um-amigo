@@ -19,14 +19,15 @@ module.exports = app => {
         const metas = await app.db('doacoes_com_metas').count('id').first()
         const metasCount = parseInt(metas.count)
 
-        // const u = await app.db('users').count('id').first()
-        // const users = parseInt(u.count)
+        const admins = await app.db('users').where({ 'admin': true }).count('id').first()
+        const adminsCount = parseInt(admins.count)
 
-        // const u = await app.db('users').count('id').first()
-        // const users = parseInt(u.count)
+        const tutores = await app.db('users').where({ 'ong': false }).andWhere({ 'admin': false }).count('id').first()
+        const tutoresCount = parseInt(tutores.count)
 
-        app.db('carousel')
-        .then(count => res.json({ data: count, usersCount, ongsCount, publicacoesCount, animaisCount, metasCount }))
+        app.db('users')
+        .where({ 'id': 0 })
+        .then(count => res.json({ data: count, usersCount, ongsCount, publicacoesCount, animaisCount, metasCount, adminsCount, tutoresCount }))
         .catch(err => res.status(500).send(err))
     }
 
