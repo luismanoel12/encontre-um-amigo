@@ -169,7 +169,7 @@ export default {
 }
 
 .progress-bar {
-  padding: 10px;
+  padding: 10px!important;
 }
 
 .v-card__title {

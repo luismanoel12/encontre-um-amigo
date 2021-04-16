@@ -20,7 +20,7 @@
             </div>
             <v-divider></v-divider>
             <div class="publicacao-page-content">
-              <div class="img-card">
+              <div class="img-card-publicacao">
                 <img
                   v-if="publicacao.imageUrl"
                   :src="publicacao.imageUrl"
@@ -100,7 +100,7 @@ export default {
   margin-top: 20px;
 }
 
-.img-card{
+.img-card-publicacao{
   width: 100%;
   height: auto;
 }

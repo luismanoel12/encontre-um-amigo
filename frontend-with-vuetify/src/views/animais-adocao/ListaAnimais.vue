@@ -23,7 +23,7 @@
                     max-width="374"
                     elevation="10"
                   >
-                    <div class="img-card">
+                    <div class="img-card-animal">
                       <img
                         v-if="animal.imagem"
                         :src="animal.imagem"
@@ -220,11 +220,11 @@ export default {
   display: block !important;
 }
 
-.img-card {
-  height: 100%;
+.img-card-animal {
+  height: 150px;
 }
 
-.img-card img {
+.img-card-animal img {
   max-width: 100%;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;

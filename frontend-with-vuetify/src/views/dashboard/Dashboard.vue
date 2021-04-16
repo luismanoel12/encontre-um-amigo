@@ -216,7 +216,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
 .dashboard-1 {
   border-radius: 5px;
   padding: 20px;
