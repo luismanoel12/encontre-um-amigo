@@ -81,13 +81,21 @@ module.exports = app => {
     }
 
 
-    const getCustomSearch = (req, res) => {
+    const getCustomSearch = async (req, res) => {
         const search = { ...req.body }
+
+        console.log(search)
+
+        const page = req.query.page || 1
+        const result = await app.db('animais').count('id').first()
+        const count = parseInt(result.count)
 
         app.db('animais')
             .where({ estado: search.estado })
-            .orWhere( 'cidade', 'like', `%${search.cidade}%`)
-            .then(animais => res.json(animais))
+            .orWhere({ cidade: search.cidade })
+            .orderBy('id', 'desc')
+            .limit(limit).offset(page * limit - limit)
+            .then(animais => res.json({ data: animais, count, limit }))
             .catch(err => res.status(500).send(err))
     }
 

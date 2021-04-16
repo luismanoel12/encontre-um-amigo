@@ -163,7 +163,11 @@ export default {
     },
 
     procurar() {
-      api(`/animaisSearch`, this.search).then((res) => {
+      const method = "get";
+
+    console.log(this.search)
+
+      api[method](`/animaisSearch`, this.search).then((res) => {
         this.animais = this.animais.concat(res.data.data);
 
         if (res.data.data.length === 0) this.loadMore = false;
@@ -199,7 +203,6 @@ export default {
 
 .animal-card {
   background-color: #fff;
-  border-left: 3px solid #52b69a;
   width: 200px;
 }
 
@@ -265,6 +268,10 @@ export default {
 @media only screen and (max-width: 600px) {
   .animal-card {
     width: 90%;
+  }
+
+  .img-card-animal > img{
+    width: 100%;
   }
 }
 </style>
