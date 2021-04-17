@@ -7,6 +7,7 @@
       <div class="dashboard-card">
         <div class="dashboard-card-header">
           <h2>Usuários Cadastrados</h2>
+          <span class="mdi mdi-account-multiple mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -17,6 +18,7 @@
       <div class="dashboard-card">
         <div class="dashboard-card-header">
           <h2>Animais Cadastrados</h2>
+          <span class="mdi mdi-dog-side mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -27,6 +29,7 @@
       <div class="dashboard-card">
         <div class="dashboard-card-header">
           <h2>ONGs Cadastrados</h2>
+          <span class="mdi mdi-account-group mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -37,6 +40,7 @@
       <div class="dashboard-card">
         <div class="dashboard-card-header">
           <h2>Publicações</h2>
+          <span class="mdi mdi-newspaper-variant-outline mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -46,7 +50,8 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>Doaçoes com Metas Cadastrados</h2>
+          <h2>Doações com Metas Cadastradas</h2>
+          <span class="mdi mdi-bullseye-arrow mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -57,6 +62,7 @@
       <div class="dashboard-card">
         <div class="dashboard-card-header">
           <h2>Animais Adotados</h2>
+          <span class="mdi mdi-dog-side mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -67,6 +73,7 @@
       <div class="dashboard-card">
         <div class="dashboard-card-header">
           <h2>Tipos de Usuários</h2>
+          <span class="mdi mdi-account mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -79,6 +86,21 @@
         </div>
       </div>
 
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2>Principais interações</h2>
+          <span class="mdi mdi-cursor-default-click mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <apexchart
+            type="pie"
+            width="380"
+            :options="chartOptions2"
+            :series="series2"
+          ></apexchart>
+        </div>
+      </div>
       
     </div>
 
@@ -222,6 +244,28 @@ export default {
           },
         ],
       },
+
+      series2: [0, 0, 0],
+      chartOptions2: {
+        chart: {
+          width: 380,
+          type: "pie",
+        },
+        labels: ["Publicações", "Animais", "Metas"],
+        responsive: [
+          {
+            breakpoint: 600,
+            options: {
+              chart: {
+                width: 350,
+              },
+              legend: {
+                position: "bottom",
+              },
+            },
+          },
+        ],
+      },
     };
   },
 
@@ -235,12 +279,17 @@ export default {
     getCount() {
       api(`/getCount`).then((res) => {
         this.count = res.data;
-        console.log(this.count)
         this.series = [
           res.data.adminsCount,
           res.data.ongsCount,
           res.data.tutoresCount,
         ];
+
+        this.series2 = [
+          res.data.publicacoesCount,
+          res.data.animaisCount,
+          res.data.metasCount,
+        ]
       });
     },
 
@@ -307,10 +356,7 @@ export default {
 
 .dashboard-card-header {
   text-align: center;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  
 }
 
 .dashboard-card-content {

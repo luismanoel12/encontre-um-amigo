@@ -16,8 +16,8 @@
       <v-text-field label="CNPJ" prepend-inner-icon="mdi-card-account-details"  v-mask="'##############'" outlined v-if="isOng && showSignup" v-model="user.cnpj"></v-text-field>
 
       <v-text-field label="Telefone" prepend-inner-icon="mdi-phone" type="tel" v-mask="'(##) #####-####'" outlined v-if="showSignup" v-model="user.telefone"></v-text-field>    
-      <v-text-field label="Senha" prepend-inner-icon="mdi-lock" type="password" outlined v-model="user.password" autocomplete="current-password"></v-text-field>
-      <v-text-field label="Confime sua Senha" prepend-inner-icon="mdi-lock" type="password" outlined v-if="showSignup" v-model="user.confirmPassword"></v-text-field>
+      <v-text-field prepend-inner-icon="mdi-lock"  outlined :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" v-model="user.password" autocomplete="current-password" :rules="[rules.required]"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="Senha"   @click:append="show1 = !show1" ></v-text-field>
+      <v-text-field prepend-inner-icon="mdi-lock"  outlined :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" v-if="showSignup" v-model="user.confirmPassword" autocomplete="current-password" :rules="[rules.required]"  :type="show2 ? 'text' : 'password'" name="input-10-1" label="Confime sua Senha"   @click:append="show2 = !show2" ></v-text-field>
       
       <v-divider color="black" class="hr-signup" v-if="showSignup"></v-divider>
       <h1 class="endereco-title" v-if="showSignup">Endereço</h1>
@@ -65,6 +65,11 @@ export default {
       data: {},
       user: {},
       checkbox: false,
+      show1: false,
+      show2: false,
+      rules: {
+        required: (value) => !!value || "Required.",
+      },
       estados: [
         { text: "Acre", value: "AC"},
         { text: "Alagoas", value: "AL"},
