@@ -4,7 +4,6 @@
       <Menu />
       <Loading v-if="validatingToken" />
       <!-- <Content v-else /> -->
-      <HelpButton />
       <Footer />
     </div>
   </v-app>
@@ -17,12 +16,11 @@ import { mapState } from "vuex";
 import Menu from "@/components/template/Menu";
 import Content from "@/components/template/Content";
 import Footer from "@/components/template/Footer";
-import HelpButton from "@/components/template/HelpButton";
 import Loading from "@/components/template/Loading";
 
 export default {
   name: "App",
-  components: { Menu, Content, Footer, Loading, HelpButton },
+  components: { Menu, Content, Footer, Loading },
   computed: mapState(["isMenuVisible", "user"]),
   data: function () {
     return {

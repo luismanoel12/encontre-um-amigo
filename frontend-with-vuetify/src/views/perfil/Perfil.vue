@@ -139,7 +139,7 @@
             ></v-text-field>
           </v-col>
         </v-row>
-        <v-btn tile color="success" @click="update">
+        <v-btn color="success" @click="update">
           <v-icon left> mdi-account-edit </v-icon>
           Atualizar
         </v-btn>
