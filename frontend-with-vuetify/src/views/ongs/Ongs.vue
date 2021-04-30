@@ -8,7 +8,7 @@
             class="router-link"
             :to="{ name: 'ongById', params: { id: ong.id } }"
           >
-            <v-card class="ong-card" color="#34a0a4" elevation="10" dark>
+            <v-card class="ong-card" color="#fff" dark>
               <div class="d-flex flex-no-wrap">
                 <v-avatar class="ma-2 avatar-img" size="100" tile>
                   <Gravatar :email="ong.email" :alt="ong.name" />
@@ -84,7 +84,6 @@ export default {
 
 <style scoped>
 .ongs-page {
-  background-color: #fff;
   border-radius: 10px;
   margin-top: 20px;
   padding: 20px;
@@ -107,7 +106,7 @@ export default {
 }
 
 .divider-avatar {
-  background-color: #fff;
+  background-color: #52b69a;
 }
 
 .card-content {
@@ -116,10 +115,13 @@ export default {
 
 .ong-card{
   transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+  color: #52b69a;
+  border-left: .25rem solid #52b69a!important;
+  box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15)!important;
+
 }
 
 .ong-card:hover{
   transform: scale(1.03);
-  background-color: #52b69a!important;
 }
 </style>
