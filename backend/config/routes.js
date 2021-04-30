@@ -18,7 +18,7 @@ module.exports = app => {
     app.get('/objetivosMetaPublic/:id', app.api.objetivos.get)
     app.get('/animaisPublic', app.api.animais.get)
     app.get('/animaisPublic/:id', app.api.animais.getById)    
-    app.get('/animaisSearch', app.api.animais.getCustomSearch)
+    app.post('/animaisSearch', app.api.animais.getCustomSearch)
     app.get('/publicacaoPublic', app.api.publicacao.get) 
     app.get('/publicacaoPublic/:id', app.api.publicacao.getById)
     app.get('/ultimasPublicacoes/:id', app.api.publicacao.getUltimasPublicacoes) 

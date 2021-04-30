@@ -17,7 +17,6 @@
                   class="router-link"
                   :to="{ name: 'animaisById', params: { id: animal.id } }"
                 >
-
                   <v-card
                     class="mx-auto my-12 animal-card"
                     max-width="374"
@@ -43,7 +42,10 @@
                     <v-card-text class="text-center">
                       <v-row>
                         <v-col cols="12" sm="12">
-                          <span>{{ animal.cidade }} <br> {{ animal.estado }}</span>
+                          <span
+                            >{{ animal.cidade }} <br />
+                            {{ animal.estado }}</span
+                          >
                         </v-col>
                       </v-row>
                     </v-card-text>
@@ -111,6 +113,7 @@
 
 <script>
 import api from "../../config/api";
+import { showError } from "@/global";
 
 export default {
   name: "ListaAnimais",
@@ -163,19 +166,22 @@ export default {
     },
 
     procurar() {
-      const method = "get";
+      const method = "post";
 
-    console.log(this.search)
+      api
+        .post(`/animaisSearch`, this.search)
+        .then((res) => {
+          this.animais = [];
+          this.animais = this.animais.concat(res.data.data);
 
-      api[method](`/animaisSearch`, this.search).then((res) => {
-        this.animais = this.animais.concat(res.data.data);
-
-        if (res.data.data.length === 0) this.loadMore = false;
-      });
+          if (res.data.data.length === 0) this.loadMore = false;
+        })
+        .catch(showError);
     },
 
     clear() {
       this.search = {};
+      location.reload()      
     },
   },
   watch: {
@@ -270,7 +276,7 @@ export default {
     width: 90%;
   }
 
-  .img-card-animal > img{
+  .img-card-animal > img {
     width: 100%;
   }
 }

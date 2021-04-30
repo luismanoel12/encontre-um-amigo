@@ -15,7 +15,7 @@ module.exports = app => {
             existsOrError(animais.estado, 'Estado não informado')
             existsOrError(animais.cidade, 'Cidade não informada')
         } catch (msg) {
-            res.status(400).send(msg)
+            return res.status(400).send(msg)
         }
 
         animais.userId = req.user.id;
@@ -81,11 +81,20 @@ module.exports = app => {
     }
 
 
-    const getCustomSearch = async (req, res) => {
+    const getCustomSearch = (req, res) => {
         const search = { ...req.body }
 
+        try {
+
+            existsOrError(search.cidade, 'Informe o nome da cidade')
+            existsOrError(search.estado, 'Selecione o estado')
+
+        } catch (msg) {
+            return res.status(400).send(msg)
+        }
+
         const page = req.query.page || 1
-        const result = await app.db('animais').count('id').first()
+        const result = app.db('animais').count('id').first()
         const count = parseInt(result.count)
 
         app.db('animais')
