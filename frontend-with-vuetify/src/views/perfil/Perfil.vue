@@ -171,6 +171,7 @@
                       :type="show1 ? 'text' : 'password'"
                       name="input-10-1"
                       label="Senha Atual*"
+                      v-model="userPassword.password"
                       counter
                       @click:append="show1 = !show1"
                     ></v-text-field>
@@ -182,6 +183,7 @@
                       :type="show2 ? 'text' : 'password'"
                       name="input-10-1"
                       label="Nova Senha*"
+                      v-model="userPassword.newPassword"
                       counter
                       @click:append="show2 = !show2"
                     ></v-text-field>
@@ -193,6 +195,7 @@
                       :type="show3 ? 'text' : 'password'"
                       name="input-10-1"
                       label="Confirmar Nova Senha*"
+                      v-model="userPassword.confirmPassword"
                       counter
                       @click:append="show3 = !show3"
                     ></v-text-field>
@@ -206,7 +209,7 @@
               <v-btn color="red darken-1" text @click="dialog = false">
                 Cancelar
               </v-btn>
-              <v-btn color="green darken-1" text @click="dialog = false">
+              <v-btn color="green darken-1" text @click="newUserPassword">
                 Salvar
               </v-btn>
             </v-card-actions>
@@ -232,6 +235,7 @@ export default {
   data: function () {
     return {
       userData: {},
+      userPassword: {},
       loading: true,
       dialog: false,
       show1: false,
@@ -297,6 +301,16 @@ export default {
         })
         .catch(showError);
     },
+    newUserPassword(){
+       api
+        .put(`/newPassword`, this.userPassword)
+        .then(() => {
+          this.$toasted.global.defaultSuccess();
+          this.userPassword = {};
+          this.dialog = false;
+        })
+        .catch(showError);
+    }
   },
 };
 </script>

@@ -100,7 +100,7 @@ export default {
   margin-top: 20px;
 }
 
-.img-card-publicacao{
+.img-card-publicacao > img{
   width: 100%;
   height: auto;
 }

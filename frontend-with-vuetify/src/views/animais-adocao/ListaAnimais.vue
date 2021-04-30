@@ -30,6 +30,7 @@
                       offset-y="20"
                       :content="animal.estado"
                       overlap
+                      tile
                     >
                       <div class="img-card-animal">
                         <img
