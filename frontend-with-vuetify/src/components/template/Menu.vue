@@ -273,7 +273,7 @@ export default {
 
 <style>
 .main-body {
-  background-color: #eee;
+  background-color: #f8f9fc;
 }
 
 .title {

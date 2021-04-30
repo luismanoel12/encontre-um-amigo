@@ -3,7 +3,7 @@
     <div class="lista-animais-page">
       <v-row>
         <v-col cols="12" sm="9">
-          <v-sheet min-height="70vh" rounded="lg">
+          <v-sheet min-height="70vh" color="transparent" rounded="lg">
             <v-row>
               <v-col
                 cols="12"
@@ -22,30 +22,54 @@
                     max-width="374"
                     elevation="10"
                   >
-                    <div class="img-card-animal">
-                      <img
-                        v-if="animal.imagem"
-                        :src="animal.imagem"
-                        height="100%"
-                        alt="Animais"
-                      />
-                      <img
-                        v-else
-                        src="@/assets/article.png"
-                        height="100%"
-                        alt="Animais"
-                      />
-                    </div>
+                    <v-badge
+                      bordered
+                      color="success"
+                      icon="mdi-dog-side"
+                      offset-x="25"
+                      offset-y="20"
+                      :content="animal.estado"
+                      overlap
+                    >
+                      <div class="img-card-animal">
+                        <img
+                          v-if="animal.imagem"
+                          :src="animal.imagem"
+                          height="100%"
+                          alt="Animais"
+                        />
+                        <img
+                          v-else
+                          src="@/assets/article.png"
+                          height="100%"
+                          alt="Animais"
+                        />
+                      </div>
+                    </v-badge>
 
                     <v-card-title> {{ animal.nome }}</v-card-title>
 
                     <v-card-text class="text-center">
                       <v-row>
                         <v-col cols="12" sm="12">
-                          <span
-                            >{{ animal.cidade }} <br />
-                            {{ animal.estado }}</span
-                          >
+                          <span>{{ animal.cidade }} <br /></span>
+
+                          <v-divider class="divider-animal-specs"></v-divider>
+                          <v-row>
+                            <v-col cols="4" sm="4">
+                                <span class="mdi mdi-cat mdi-24px" v-if="animal.tipo == 'Gato'"></span>
+                                <span class="mdi mdi-dog-side mdi-24px" v-else></span>
+                            </v-col>
+                            <v-col cols="4" sm="4">
+                                <span class="mdi mdi-alpha-p-circle mdi-24px" v-if="animal.porte == 'Pequeno' "></span>
+                                <span class="mdi mdi-alpha-m-circle mdi-24px" v-if="animal.porte == 'Médio' "></span>
+                                <span class="mdi mdi-alpha-g-circle mdi-24px" v-if="animal.porte == 'Grande' "></span>
+                            </v-col>
+                            <v-col cols="4" sm="4">
+                                <span class="mdi mdi-gender-male mdi-24px" v-if="animal.sexo == 'Macho' "></span>
+                                <span class="mdi mdi-gender-female mdi-24px" v-else></span>
+                            </v-col>
+                          </v-row>
                         </v-col>
                       </v-row>
                     </v-card-text>
@@ -61,13 +85,13 @@
             <div class="search">
               <h2 class="text-center mb-5">PESQUISAR</h2>
               <v-row>
-                <v-col cols="12" sm="12">
+                <!-- <v-col cols="12" sm="12">
                   <v-text-field
                     label="Nome da Ong"
                     prepend-inner-icon="mdi-account-group"
                     outlined
                   ></v-text-field>
-                </v-col>
+                </v-col> -->
                 <v-col cols="12" sm="12">
                   <v-select
                     :items="estados"
@@ -181,7 +205,7 @@ export default {
 
     clear() {
       this.search = {};
-      location.reload()      
+      location.reload();
     },
   },
   watch: {
@@ -269,6 +293,15 @@ export default {
   border-radius: 5px;
   box-shadow: 0 6px 6px -3px rgba(0, 0, 0, 0.2),
     0 10px 14px 1px rgba(0, 0, 0, 0.14), 0 4px 18px 3px rgba(0, 0, 0, 0.12) !important;
+}
+
+.animal-badge {
+  border: 1px solid #212121;
+  border-radius: 5px;
+}
+
+.divider-animal-specs{
+  margin-bottom: 10px;
 }
 
 @media only screen and (max-width: 600px) {

@@ -99,7 +99,7 @@ module.exports = app => {
 
         app.db('animais')
             .where({ estado: search.estado })
-            .orWhere({ cidade: search.cidade })
+            .andWhere({ cidade: search.cidade })
             .orderBy('id', 'desc')
             .limit(limit).offset(page * limit - limit)
             .then(animais => res.json({ data: animais, count, limit }))

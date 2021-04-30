@@ -6,7 +6,7 @@
     <div class="dashboard-1">
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>Usuários Cadastrados</h2>
+          <h2 class="card-title-v1">Usuários Cadastrados</h2>
           <span class="mdi mdi-account-multiple mdi-48px"></span>
         </div>
         <v-divider></v-divider>
@@ -17,7 +17,7 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>Animais Cadastrados</h2>
+          <h2 class="card-title-v1">Animais Cadastrados</h2>
           <span class="mdi mdi-dog-side mdi-48px"></span>
         </div>
         <v-divider></v-divider>
@@ -28,7 +28,7 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>ONGs Cadastrados</h2>
+          <h2 class="card-title-v1">ONGs Cadastrados</h2>
           <span class="mdi mdi-account-group mdi-48px"></span>
         </div>
         <v-divider></v-divider>
@@ -39,7 +39,7 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>Publicações</h2>
+          <h2 class="card-title-v1">Publicações</h2>
           <span class="mdi mdi-newspaper-variant-outline mdi-48px"></span>
         </div>
         <v-divider></v-divider>
@@ -50,7 +50,7 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>Doações com Metas Cadastradas</h2>
+          <h2 class="card-title-v1">Doações com Metas Cadastradas</h2>
           <span class="mdi mdi-bullseye-arrow mdi-48px"></span>
         </div>
         <v-divider></v-divider>
@@ -61,7 +61,7 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>Animais Adotados</h2>
+          <h2 class="card-title-v1">Animais Adotados</h2>
           <span class="mdi mdi-dog-side mdi-48px"></span>
         </div>
         <v-divider></v-divider>
@@ -72,7 +72,7 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>Tipos de Usuários</h2>
+          <h2 class="card-title-v1">Tipos de Usuários</h2>
           <span class="mdi mdi-account mdi-48px"></span>
         </div>
         <v-divider></v-divider>
@@ -88,7 +88,7 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>Principais interações</h2>
+          <h2 class="card-title-v1">Principais interações</h2>
           <span class="mdi mdi-cursor-default-click mdi-48px"></span>
         </div>
         <v-divider></v-divider>
@@ -111,7 +111,7 @@
     <div class="dashboard-2">
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>Usuários Cadastrados</h2>
+          <h2 class="card-title-v1">Usuários Cadastrados</h2>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -121,7 +121,7 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>Animais Cadastrados</h2>
+          <h2 class="card-title-v1">Animais Cadastrados</h2>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -131,7 +131,7 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>Animais Adotados</h2>
+          <h2 class="card-title-v1">Animais Adotados</h2>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -141,7 +141,7 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>Publicações</h2>
+          <h2 class="card-title-v1">Publicações</h2>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -151,7 +151,7 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>Doaçoes com Metas Cadastrados</h2>
+          <h2 class="card-title-v1">Doaçoes com Metas Cadastrados</h2>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -161,7 +161,7 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2>Usuários Cadastrados</h2>
+          <h2 class="card-title-v1">Usuários Cadastrados</h2>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -340,6 +340,8 @@ export default {
   padding: 10px;
   border-radius: 5px;
   text-align: center;
+  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
+    0 1px 5px 0 rgb(0 0 0 / 12%);
 }
 
 .dashboard-card {
@@ -350,8 +352,7 @@ export default {
   border-radius: 5px;
   margin-left: 50px;
   margin-top: 20px;
-  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
-    0 1px 5px 0 rgb(0 0 0 / 12%);
+box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15);
 }
 
 .dashboard-card-header {
@@ -384,6 +385,10 @@ export default {
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
+}
+
+.card-title-v1{
+  color: #2a9d8f;
 }
 
 @media only screen and (max-width: 600px) {
