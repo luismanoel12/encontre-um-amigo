@@ -154,7 +154,7 @@
               v-on="on"
             >
               <v-icon left> mdi-form-textbox-password </v-icon>
-              Nova senha
+              Atualizar senha
             </v-btn>
           </template>
           <v-card>

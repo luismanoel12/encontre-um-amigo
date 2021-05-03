@@ -1,12 +1,12 @@
 <template>
   <v-container>
     <div class="metas-page">
-      <v-card color="#1BB351">
+      <v-card color="#e9ecef">
         <v-card-title class="text-center justify-center py-6">
           <h1 class="font-weight-bold display-3 basil--text">Metas</h1>
         </v-card-title>
 
-        <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
+        <v-tabs v-model="tab" background-color="transparent" color="#e9ecef" grow>
           <v-tab> Cadastrar Metas </v-tab>
 
           <v-tab> Cadastrar Objetivos </v-tab>
@@ -14,7 +14,7 @@
 
         <v-tabs-items v-model="tab">
           <v-tab-item>
-            <v-card color="#fff" flat>
+            <v-card flat>
               <v-form class="form elevation-10">
                 <v-row>
                   <v-col cols="12" sm="3">

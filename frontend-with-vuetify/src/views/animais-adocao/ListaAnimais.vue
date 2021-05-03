@@ -20,7 +20,7 @@
                   <v-card
                     class="mx-auto my-12 animal-card"
                     max-width="374"
-                    elevation="10"
+                  
                   >
                     <v-badge
                       bordered
@@ -226,7 +226,6 @@ export default {
 
 <style scoped>
 .lista-animais-page {
-  /* background-color: #fff; */
   border-radius: 10px;
   margin-top: 20px;
   padding: 20px;
@@ -235,6 +234,7 @@ export default {
 .animal-card {
   background-color: #fff;
   width: 200px;
+  box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15)!important;
 }
 
 .button-aciton {

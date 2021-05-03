@@ -101,7 +101,6 @@
           ></apexchart>
         </div>
       </div>
-      
     </div>
 
     <div class="dashboard-page-title">
@@ -289,10 +288,9 @@ export default {
           res.data.publicacoesCount,
           res.data.animaisCount,
           res.data.metasCount,
-        ]
+        ];
       });
     },
-
   },
   watch: {
     $route(to) {
@@ -303,7 +301,6 @@ export default {
     },
   },
   mounted() {
-
     this.getAdmins();
     this.getCount();
   },
@@ -352,12 +349,11 @@ export default {
   border-radius: 5px;
   margin-left: 50px;
   margin-top: 20px;
-box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15);
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
 }
 
 .dashboard-card-header {
   text-align: center;
-  
 }
 
 .dashboard-card-content {
@@ -387,7 +383,7 @@ box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15);
   border-radius: 5px;
 }
 
-.card-title-v1{
+.card-title-v1 {
   color: #2a9d8f;
 }
 

@@ -10,7 +10,6 @@
             <v-card
               class="mx-auto my-12 meta-card"
               max-width="374"
-              elevation="10"
             >
               <div class="img-card">
                 <img
@@ -136,14 +135,14 @@ export default {
 <style>
 
 .metas-page {
-  background-color: #fff;
-  border-radius: 10px;
   margin-top: 20px;
   padding: 20px;
 }
 
-.metas-card {
+.meta-card {
   background-color: #fff;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15)!important;
+
 }
 
 .metas-header {

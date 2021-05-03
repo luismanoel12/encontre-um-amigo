@@ -2,26 +2,36 @@
   <div class="animal-page">
     <v-container>
       <v-row>
-        <v-col cols="12" sm="3">
+        <v-col cols="12" sm="4">
           <v-sheet rounded="lg" min-height="268" elevation="10">
             <div class="animal-left-card">
               <div class="animal-left-card-header">
-                <h2 class="text-center">Foto</h2>
+                <h2 class="text-center" >Foto</h2>
               </div>
               <div class="animal-left-card-content">
-                <div class="img-card">
-                  <img
-                    v-if="animal.imagem"
-                    :src="animal.imagem"
-                    height="100%"
-                    alt="Animais"
-                  />
-                  <img
-                    v-else
-                    src="@/assets/article.png"
-                    height="100%"
-                    alt="Article"
-                  />
+                <div class="animal-info">
+                  <h2>Cidade: {{ animal.cidade }}</h2>
+                  <span class="mdi mdi-city mdi-24px  ml-3"></span>
+                </div>
+                <div class="animal-info">
+                  <h2>Estado: {{ animal.estado }}</h2>
+                  <span class="mdi mdi-sign-real-estate mdi-24px  ml-3"></span>
+                </div>
+                <div class="animal-info">
+                  <h2>Tipo: {{ animal.tipo }}</h2>
+                  <span class="mdi mdi-cat mdi-24px ml-3" v-if="animal.tipo == 'Gato'"></span>
+                  <span class="mdi mdi-dog-side mdi-24px  ml-3" v-else></span>
+                </div>
+                <div class="animal-info">
+                  <h2>Sexo: {{ animal.sexo }}</h2>
+                  <span class="mdi mdi-gender-male mdi-24px  ml-3" v-if="animal.sexo == 'Macho' "></span>
+                  <span class="mdi mdi-gender-female mdi-24px  ml-3" v-else></span>
+                </div>
+                <div class="animal-info">
+                  <h2>Porte: {{ animal.porte }}</h2>
+                  <span class="mdi mdi-alpha-p-circle mdi-24px  ml-3" v-if="animal.porte == 'Pequeno' "></span>
+                  <span class="mdi mdi-alpha-m-circle mdi-24px  ml-3" v-if="animal.porte == 'Médio' "></span>
+                  <span class="mdi mdi-alpha-g-circle mdi-24px  ml-3" v-if="animal.porte == 'Grande' "></span>
                 </div>
               </div>
             </div>
@@ -33,17 +43,25 @@
             <div class="animal-page-header">
               <h1>{{ animal.nome }}</h1>
             </div>
-            <v-divider></v-divider>
             <div class="animal-page-content">
+              <div class="img-card-animalById">
+                <img
+                  v-if="animal.imagem"
+                  :src="animal.imagem"
+                  height="100%"
+                  alt="Animais"
+                />
+                <img
+                  v-else
+                  src="@/assets/article.png"
+                  height="100%"
+                  alt="Article"
+                />
+              </div>
               <h4>Descrição:</h4>
               <p>
                 {{ animal.descricao }}
               </p>
-
-              <h2>Cidade: {{ animal.cidade }} - {{ animal.estado }}</h2>
-              <h2>{{ animal.tipo }}</h2>
-              <h2>{{ animal.sexo }}</h2>
-              <h2>{{ animal.porte }}</h2>
             </div>
 
             <div class="share-button">
@@ -79,35 +97,6 @@
             </div>
           </v-sheet>
         </v-col>
-
-        <v-col cols="12" sm="3">
-          <v-sheet rounded="lg" min-height="268" elevation="10">
-            <div class="animal-right-card">
-              <h4 class="text-center">ÚLTIMAS PUBLICAÇÕES</h4>
-              <v-divider class="publicacao-divider"></v-divider>
-              <v-row>
-                <v-col
-                  cols="12"
-                  sm="12"
-                  v-for="publicacao in publicacoes"
-                  :key="publicacao.id"
-                >
-                  <router-link
-                    class="router-link"
-                    :to="{
-                      name: 'publicacoesById',
-                      params: { id: publicacao.id },
-                    }"
-                  >
-                    <div class="ultimas-publicacoes">
-                      <span>{{ publicacao.titulo }}</span>
-                    </div>
-                  </router-link>
-                </v-col>
-              </v-row>
-            </div>
-          </v-sheet>
-        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -121,13 +110,12 @@ export default {
   data: function () {
     return {
       animal: {},
-      publicacoes: [],
       value: 1,
       active: true,
       fbUrl: null,
-      wpUrl: '',
-      ttUrl: '',
-      igUrl: '',
+      wpUrl: "",
+      ttUrl: "",
+      igUrl: "",
     };
   },
   methods: {
@@ -136,22 +124,15 @@ export default {
       api.get(url).then((res) => (this.animal = res.data));
     },
 
-    loadPublicacoes() {
-      const url = `/ultimasPublicacoes/${this.animal.userId}`;
-      api.get(url).then((res) => (this.publicacoes = res.data));
-    },
-
-    loadSharingUrls(){
+    loadSharingUrls() {
       const atualUrl = document.location.href;
 
-      this.fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${atualUrl}`
-      
-    }
+      this.fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${atualUrl}`;
+    },
   },
   mounted() {
     this.loadSharingUrls();
     this.loadAnimal();
-    this.loadPublicacoes();
   },
 };
 </script>
@@ -212,4 +193,17 @@ export default {
 .share-button {
   margin-top: 50px;
 }
+.animal-info{
+  display: flex;
+  flex-direction: row;
+  color: #2a9d8f;
+}
+
+.img-card-animalById > img{
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
 </style>

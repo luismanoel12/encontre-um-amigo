@@ -2,6 +2,12 @@
   <v-container>
     <div class="publicacao-page">
       <v-row>
+
+          <v-col
+            cols="12"
+            sm="8"
+          >
+            <v-row>
         <v-col
           cols="12"
           sm="12"
@@ -40,6 +46,21 @@
           </div>
         </v-col>
       </v-row>
+          </v-col>
+
+          <v-col
+            cols="12"
+            sm="4"
+          >
+            <v-sheet
+              rounded="lg"
+              min-height="268"
+              elevation="5"
+            >
+              <!--  -->
+            </v-sheet>
+          </v-col>
+        </v-row>
     </div>
 
     <div class="text-center pagination">
