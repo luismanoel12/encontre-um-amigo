@@ -20,6 +20,7 @@ import ListaPublicacoes from "@/views/publicacao/ListaPublicacoes"
 import PublicacoesById from "@/views/publicacao/PublicacoesById"
 import Users from "@/views/users/Users"
 import Dashboard from "@/views/dashboard/Dashboard"
+import Denuncia from "@/views/denuncia/Denuncia"
 
 
 import { userKey } from "@/global"
@@ -124,6 +125,12 @@ const routes = [{
     path: '/publicacao/:id',
     component: PublicacoesById,
     meta: { allowGuest: true }
+},
+{
+    name: 'denuncia',
+    path: '/denuncia',
+    component: Denuncia,
+    meta: { requiresAdmin: true }
 },
 {
     name: 'home',

@@ -200,6 +200,15 @@
               <v-list-item-title>Carousel</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <v-list-item to="/denuncia">
+            <v-list-item-icon>
+              <v-icon> mdi-alert </v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>Denúncias</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-list-group>
       </v-list>
     </v-navigation-drawer>

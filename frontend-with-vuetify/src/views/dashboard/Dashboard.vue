@@ -72,6 +72,39 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
+          <h2 class="card-title-v1">Denúncias</h2>
+          <span class="mdi mdi-alert mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <h1>{{ count.denunciasCount }}</h1>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2 class="card-title-v1">Denúncias Abertas</h2>
+          <span class="mdi mdi-alert mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <h1>{{ count.denunciasAbertasCount }}</h1>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2 class="card-title-v1">Denúncias Finalizadas</h2>
+          <span class="mdi mdi-alert-plus mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <h1>{{ count.denunciasFinalizadasCount }}</h1>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
           <h2 class="card-title-v1">Tipos de Usuários</h2>
           <span class="mdi mdi-account mdi-48px"></span>
         </div>
