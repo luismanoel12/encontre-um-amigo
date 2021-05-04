@@ -1,9 +1,9 @@
 exports.up = function(knex) {
-    return knex.schema.createTable('denucia', table => {
+    return knex.schema.createTable('denuncia', table => {
         table.increments('id').primary()
-        table.string('tipoDenucia').notNull()
+        table.string('tipoDenuncia').notNull()
         table.string('status', 100)
-        table.binary('descricao').notNull()
+        table.string('descricao').notNull()
         table.integer('userId').references('id')
             .inTable('users').notNull()
         table.timestamp('createdAt')
@@ -12,5 +12,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-    return knex.schema.dropTable('denucia')
+    return knex.schema.dropTable('denuncia')
 };

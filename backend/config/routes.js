@@ -150,4 +150,18 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .get(admin(app.api.count.getCount))
 
+    // Denúncia
+
+    app.route('/denuncia')
+        .all(app.config.passport.authenticate())
+        .post(app.api.denuncia.save)
+        .get(admin(app.api.denuncia.get))
+        .put(admin(app.api.denuncia.save))
+
+    app.route('/denuncia/:id')
+        .all(app.config.passport.authenticate())
+        .put(admin(app.api.denuncia.save))
+        .get(admin(app.api.denuncia.getById))
+        .delete(admin(app.api.denuncia.remove))
+
 }
