@@ -134,6 +134,22 @@
           ></apexchart>
         </div>
       </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2 class="card-title-v1">Denúncias</h2>
+          <span class="mdi mdi-cursor-default-click mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <apexchart
+            type="pie"
+            width="380"
+            :options="chartOptions3"
+            :series="series3"
+          ></apexchart>
+        </div>
+      </div>
     </div>
 
     <div class="dashboard-page-title">
@@ -298,6 +314,28 @@ export default {
           },
         ],
       },
+
+      series3: [0, 0, 0],
+      chartOptions3: {
+        chart: {
+          width: 380,
+          type: "pie",
+        },
+        labels: ["Abertas", "Finalizadas", "Total"],
+        responsive: [
+          {
+            breakpoint: 600,
+            options: {
+              chart: {
+                width: 350,
+              },
+              legend: {
+                position: "bottom",
+              },
+            },
+          },
+        ],
+      },
     };
   },
 
@@ -321,6 +359,12 @@ export default {
           res.data.publicacoesCount,
           res.data.animaisCount,
           res.data.metasCount,
+        ];
+
+        this.series3 = [
+          res.data.denunciasAbertasCount,
+          res.data.denunciasFinalizadasCount,
+          res.data.denunciasCount,
         ];
       });
     },
