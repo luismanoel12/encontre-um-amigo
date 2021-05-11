@@ -22,6 +22,7 @@ module.exports = app => {
     app.get('/publicacaoPublic', app.api.publicacao.get)
     app.get('/publicacaoPublic/:id', app.api.publicacao.getById)
     app.get('/ultimasPublicacoes/:id', app.api.publicacao.getUltimasPublicacoes)
+    app.get('/bioById/:id', app.api.bio.getById)
 
 
 
@@ -113,7 +114,7 @@ module.exports = app => {
 
     app.route('/animaisUsuario')
         .all(app.config.passport.authenticate())
-        .post(admin(app.api.animais.save))
+        .post(app.api.animais.save)
         .get(app.api.animais.getPorUsuario)
 
     app.route('/animais/:id')
@@ -133,7 +134,7 @@ module.exports = app => {
 
     app.route('/publicacaoUsuario')
         .all(app.config.passport.authenticate())
-        .post(admin(app.api.publicacao.save))
+        .post(app.api.publicacao.save)
         .get(app.api.publicacao.getPorUsuario)
 
 
@@ -163,5 +164,14 @@ module.exports = app => {
         .put(admin(app.api.denuncia.save))
         .get(admin(app.api.denuncia.getById))
         .delete(admin(app.api.denuncia.remove))
+
+    // Ong bio
+
+    app.route('/ongBio')
+        .all(app.config.passport.authenticate())
+        .post(app.api.bio.save)
+        .get(app.api.bio.getPorUsuario)
+        .put(app.api.bio.save)
+
 
 }

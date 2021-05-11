@@ -55,7 +55,13 @@
               <h1>{{ ong.name }}</h1>
             </div>
             <v-divider></v-divider>
-            <div class="ong-page-content"></div>
+            <div class="ong-page-content">
+              <h1 class="text-center">BIO</h1>
+              <div
+                class="publicacao-content"
+                v-html="bio.descricao"
+              ></div>
+            </div>
             <v-divider></v-divider>
             <div class="ong-page-actions">
               <BtnDenunciar :name="ong.name" :id="ong.id"></BtnDenunciar>
@@ -139,15 +145,16 @@
 import api from "../../config/api";
 import Gravatar from "vue-gravatar";
 import VueInstagram from "vue-instagram";
-import BtnDenunciar from "../../components/template/BtnDenunciar"
+import BtnDenunciar from "../../components/template/BtnDenunciar";
 
 export default {
   name: "OngById",
-  components: { Gravatar, VueInstagram, BtnDenunciar},
+  components: { Gravatar, VueInstagram, BtnDenunciar },
   data: function () {
     return {
       ong: {},
       publicacoes: {},
+      bio: {},
     };
   },
   methods: {
@@ -161,10 +168,15 @@ export default {
       api.get(url).then((res) => (this.publicacoes = res.data));
     },
 
+    loadBio(){
+      const url = `/bioById/${this.$route.params.id}`;
+      api.get(url).then((res) => (this.bio = res.data));
+    }
   },
   mounted() {
     this.loadOng();
     this.loadPublicacoes();
+    this.loadBio();
     this.$root.$once("ong-by-id", () => {
       this.loadOng();
     });
@@ -207,5 +219,6 @@ export default {
 .ong-page-actions {
   text-align: center;
   margin-top: 10px;
+  padding-bottom: 20px;
 }
 </style>

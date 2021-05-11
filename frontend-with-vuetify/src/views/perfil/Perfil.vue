@@ -4,7 +4,7 @@
   </v-container>
 
   <v-container v-else>
-    <div class="perfil-main elevation-15">
+    <div class="perfil-main">
       <div class="perfil-header">
         <div class="gravatar-img">
           <Gravatar :email="user.email" alt="User" />
@@ -165,7 +165,7 @@
               <v-container>
                 <v-row>
                   <v-col cols="12">
-                   <v-text-field
+                    <v-text-field
                       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                       :rules="[rules.required]"
                       :type="show1 ? 'text' : 'password'"
@@ -217,6 +217,27 @@
         </v-dialog>
       </div>
     </div>
+
+    <div class="ongBio">
+      <div class="ongBio-header">
+        <h1 class="text-center">Minha BIO</h1>
+      </div>
+      <v-divider></v-divider>
+      <div class="ongBio-content">
+        <v-row>
+          <v-col cols="12" sm="12">
+            <VueEditor v-model="bio.descricao" placeholder="Descreva sua BIO" />
+          </v-col>
+        </v-row>
+
+        <div class="ongBio-actions">
+          <v-btn color="success" @click="bioSave">
+            <v-icon left> mdi-account-edit </v-icon>
+            Salvar
+          </v-btn>
+        </div>
+      </div>
+    </div>
   </v-container>
 </template>
 
@@ -226,16 +247,18 @@ import { mapState } from "vuex";
 import Gravatar from "vue-gravatar";
 import { showError } from "@/global";
 import api from "../../config/api";
+import { VueEditor } from "vue2-editor";
 
 export default {
   name: "Perfil",
-  components: { Gravatar },
+  components: { Gravatar, VueEditor },
   computed: mapState(["user"]),
 
   data: function () {
     return {
       userData: {},
       userPassword: {},
+      bio: {},
       loading: true,
       dialog: false,
       show1: false,
@@ -276,12 +299,6 @@ export default {
     };
   },
 
-  mounted() {
-    this.loadUsers();
-    this.$root.$once("user-updated", () => {
-      this.loadUsers();
-    });
-  },
   methods: {
     async loadUsers() {
       const url = `/users/${this.user.id}`;
@@ -301,8 +318,8 @@ export default {
         })
         .catch(showError);
     },
-    newUserPassword(){
-       api
+    newUserPassword() {
+      api
         .put(`/newPassword`, this.userPassword)
         .then(() => {
           this.$toasted.global.defaultSuccess();
@@ -310,7 +327,47 @@ export default {
           this.dialog = false;
         })
         .catch(showError);
-    }
+    },
+
+    // bio
+
+    async loadBio() {
+      const url = `/ongBio`;
+      await api
+        .get(url)
+        .then((res) => {
+          this.bio = res.data;
+          this.loading = false;
+        })
+        .catch((erro) => {});
+    },
+
+    bioSave() {
+      if (this.bio == null) {
+        api
+          .post(`/ongBio`, this.bio)
+          .then(() => {
+            this.$toasted.global.defaultSuccess();
+          })
+          .catch(showError);
+      } else {
+        api
+          .put(`/ongBio`, this.bio)
+          .then(() => {
+            this.$toasted.global.defaultSuccess();
+          })
+          .catch(showError);
+      }
+    },
+  },
+
+  mounted() {
+    this.loadUsers();
+    this.loadBio();
+    this.$root.$once("user-updated", () => {
+      this.loadUsers();
+      this.loadBio();
+    });
   },
 };
 </script>
@@ -321,6 +378,7 @@ export default {
   background-color: #fff;
   padding: 30px;
   border-radius: 5px;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
 }
 
 .perfil-header {
@@ -341,5 +399,17 @@ export default {
 
 .btn-new-password {
   margin-left: 20px;
+}
+
+.ongBio {
+  background-color: #fff;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+.ongBio-actions{
+  margin-top: 20px;
 }
 </style>
