@@ -58,60 +58,7 @@
             <div class="ong-page-content"></div>
             <v-divider></v-divider>
             <div class="ong-page-actions">
-              <v-dialog v-model="dialog" persistent max-width="600px">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    color="red"
-                    class="btn-new-password"
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-icon left> mdi-alert </v-icon>
-                    Denunciar
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-card-title>
-                    <span class="headline">Denunciar: {{ ong.name }} </span>
-                  </v-card-title>
-                  <v-card-text>
-                    <v-container>
-                      <v-row>
-                        <v-col cols="12">
-                          <v-select
-                            :items="tiposDenuncias"
-                            prepend-inner-icon="mdi-sign-real-estate"
-                            label="Tipo da Denúncia"
-                            v-model="denuncia.tipoDenuncia"
-                            :rules="[rules.required]"
-                            outlined
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12">
-                          <v-textarea
-                            outlined
-                            name="input-7-4"
-                            label="Descrição da Denúncia"
-                            v-model="denuncia.descricao"
-                            :rules="[rules.required]"
-                          ></v-textarea>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                    <small>* indica campo necessário</small>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialog = false">
-                      Cancelar
-                    </v-btn>
-                    <v-btn color="red darken-1" text @click="denunciar">
-                      Enviar Denúncia
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+              <BtnDenunciar :name="ong.name" :id="ong.id"></BtnDenunciar>
             </div>
           </v-sheet>
 
@@ -192,25 +139,15 @@
 import api from "../../config/api";
 import Gravatar from "vue-gravatar";
 import VueInstagram from "vue-instagram";
+import BtnDenunciar from "../../components/template/BtnDenunciar"
 
 export default {
   name: "OngById",
-  components: { Gravatar, VueInstagram },
+  components: { Gravatar, VueInstagram, BtnDenunciar},
   data: function () {
     return {
       ong: {},
       publicacoes: {},
-      denuncia: {},
-      dialog: false,
-      rules: {
-        required: (value) => !!value || "Requerido.",
-      },
-      tiposDenuncias: [
-        { text: "Violência animal", value: "VA" },
-        { text: "Venda de animais", value: "VDA" },
-        { text: "Abusos", value: "AS" },
-        { text: "Outros", value: "OS" },
-      ],
     };
   },
   methods: {
@@ -224,17 +161,6 @@ export default {
       api.get(url).then((res) => (this.publicacoes = res.data));
     },
 
-    denunciar() {    
-      this.denuncia.userId = this.ong.id;
-      
-      api.post(`/denuncia`, this.denuncia)
-        .then(() => {
-          this.$toasted.global.defaultSuccess();
-          this.denuncia = {};
-          this.dialog = false;
-        })
-        .catch(showError);
-    },
   },
   mounted() {
     this.loadOng();
