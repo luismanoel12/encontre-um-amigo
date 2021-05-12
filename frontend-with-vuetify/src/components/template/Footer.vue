@@ -1,52 +1,53 @@
 <template>
-    <v-footer  dark padless>
-      <v-card flat tile class="indigo lighten-1 white--text text-center">
-        <v-card-text>
-          <v-btn
-            v-for="icon in icons"
-            :key="icon"
-            class="mx-4 white--text"
-            icon
-          >
-            <v-icon size="24px">
-              {{ icon }}
-            </v-icon>
-          </v-btn>
-        </v-card-text>
+  <v-footer
+    dark
+    padless
+  >
+    <v-card
+      class="flex"
+      flat
+      tile
+    >
+      <v-card-title class="teal">
+        <strong class="subheading">Conheça nossas redes sociais</strong>
 
-        <v-card-text class="white--text pt-0">
-          Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet.
-          Mauris cursus commodo interdum. Praesent ut risus eget metus luctus
-          accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim
-          a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula
-          lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus
-          iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum
-          tempor vel ut orci. Orci varius natoque penatibus et magnis dis
-          parturient montes, nascetur ridiculus mus.
-        </v-card-text>
+        <v-spacer></v-spacer>
 
-        <v-divider></v-divider>
+        <v-btn
+          v-for="icon in icons"
+          :key="icon"
+          class="mx-4"
+          dark
+          icon
+        >
+          <v-icon size="24px">
+            {{ icon }}
+          </v-icon>
+        </v-btn>
+      </v-card-title>
 
-        <v-card-text class="white--text">
-          {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-        </v-card-text>
-      </v-card>
-    </v-footer>
+      <v-card-text class="py-2 white--text text-center">
+        {{ new Date().getFullYear() }} — <strong>Encontre um Amigo</strong>
+      </v-card-text>
+    </v-card>
+  </v-footer>
 </template>
 
 <script>
 export default {
   name: "Footer",
   data: () => ({
-    icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
+    icons: [
+        'mdi-facebook',
+        'mdi-twitter',
+        'mdi-linkedin',
+        'mdi-instagram',
+      ],
   }),
 };
 </script>
 
 <style>
 
-.v-application .indigo.lighten-1{
-  background-color: #82549c!important;
-  border-color: #82549c!important;
-}
+
 </style>

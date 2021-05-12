@@ -213,7 +213,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app dark color="#232F34" v-if="!user || user">
+    <v-app-bar app dark color="#036564" v-if="!user || user">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <router-link to="/home" class="home-router">

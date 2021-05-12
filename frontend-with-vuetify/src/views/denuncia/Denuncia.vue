@@ -46,16 +46,16 @@
         </v-row>
 
         <div class="buttons">
-          <v-btn depressed v-if="denuncia.status == 'Aberto'"  @click="setStatus" color="success">
+          <v-btn
+            depressed
+            v-if="denuncia.status == 'Aberto'"
+            @click="setStatus"
+            color="success"
+          >
             Finalizar Denúncia
             <v-icon dark right> mdi-check-bold </v-icon>
           </v-btn>
-          <v-btn
-            depressed
-            v-else
-            @click="setStatus"
-            color="warning"
-          >
+          <v-btn depressed v-else @click="setStatus" color="warning">
             Reabrir Denúncia
             <v-icon dark right> mdi-folder-open-outline </v-icon>
           </v-btn>
@@ -79,7 +79,8 @@
       </v-form>
 
       <v-data-table :items="denuncias" :headers="headers" class="elevation-10">
-        <template v-slot:[`item.actions`]="{ item }">
+        <template v-slot:[`denuncias.actions`]="{ item }">
+          
           <v-btn
             class="bt-actions"
             color="green"
@@ -150,12 +151,12 @@ export default {
       const method = "put";
       const id = this.denuncia.id;
 
-      if(this.denuncia.status == 'Aberto'){
-          this.denuncia.status = 'Finalizado'
-      }else{
-          this.denuncia.status = 'Aberto'
+      if (this.denuncia.status == "Aberto") {
+        this.denuncia.status = "Finalizado";
+      } else {
+        this.denuncia.status = "Aberto";
       }
-      
+
       api[method](`/denuncia/${id}`, this.denuncia)
         .then(() => {
           this.$toasted.global.defaultSuccess();
@@ -179,6 +180,7 @@ export default {
         .get(`/denuncia/${denuncia.id}`)
         .then((res) => (this.denuncia = res.data));
     },
+
   },
   watch: {
     page() {

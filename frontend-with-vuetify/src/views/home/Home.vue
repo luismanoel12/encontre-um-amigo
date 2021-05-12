@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <v-container>
-      <v-carousel continuous>
+      <v-carousel cycle>
         <v-carousel-item
           v-for="(carousel, id) in carouselData"
           :key="id"
@@ -159,12 +159,11 @@ export default {
   background-color: #fff;
   border-radius: 5px;
   padding: 20px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12),
-    0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12),
-    0 16px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
   transition: ease-out 0.3s;
   color: #212121;
   font-weight: 5px;
+  border-left: 3px solid #43aa8b;
 }
 
 .home-2-card:hover {
