@@ -35,6 +35,7 @@
 
             <div class="publicacao-page-header-title">
               <h2>{{ publicacao.titulo }}</h2>
+              <h5>Publicado em {{ publicacao.dataPub }}</h5>
             </div>
 
             <v-divider></v-divider>

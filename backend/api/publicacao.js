@@ -18,10 +18,11 @@ module.exports = app => {
 
         if (publicacao.id) {
             app.db('publicacao')
-                .update(publicacao)
+                .update({ titulo: publicacao.titulo, imageUrl: publicacao.imageUrl, chamada: publicacao.chamada, descricao: publicacao.descricao })
                 .where({ id: publicacao.id })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
+
         } else {
 
             publicacao.userId = req.user.id;

@@ -11,6 +11,23 @@
               :key="publicacao.id"
             >
               <div class="card-publicacao">
+                <div class="card-publicacao-user">
+                  <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
+                <Gravatar
+                  :email="publicacao.email"
+                  :alt="publicacao.userName"
+                />
+              </v-avatar>
+              <router-link
+                class="pub-router-link"
+                :to="{
+                  name: 'ongById',
+                  params: { id: publicacao.userId },
+                }"
+              >
+                <h3>{{ publicacao.userName }}</h3>
+              </router-link>
+                </div>
                 <div class="card-publicacao-header">
                   <router-link
                     class="router-link"
@@ -58,7 +75,7 @@
 
     <div class="text-center pagination">
       <v-btn depressed color="primary" v-if="loadMore" @click="getPublicacoes">
-        Carregar Mais
+        Carregar Mais Publicações
       </v-btn>
     </div>
   </v-container>
@@ -66,9 +83,11 @@
 
 <script>
 import api from "../../config/api";
+import Gravatar from "vue-gravatar";
 
 export default {
   name: "ListaPublicacoes",
+  components: { Gravatar },
   data: function () {
     return {
       publicacoes: [],
@@ -143,6 +162,13 @@ export default {
 
 .router-link {
   text-decoration: none !important;
+}
+
+.card-publicacao-user{
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 @media only screen and (max-width: 600px) {
