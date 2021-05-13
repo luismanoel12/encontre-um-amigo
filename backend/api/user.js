@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt-nodejs')
+var moment = require('moment');
 
 module.exports = app => {
     const { existsOrError, notExistsOrError, equalsOrError } = app.api.validation
@@ -78,7 +79,7 @@ module.exports = app => {
                 });
         } else {
             app.db("users")
-                .insert({ name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password, ong: user.ong, admin: user.admin })
+                .insert({ name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password, ong: user.ong, admin: user.admin, createdAt: moment().locale('pt-br').format('L') })
                 .returning('id')
                 .then(function (response) {
                     app.db('endereco')

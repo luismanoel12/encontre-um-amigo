@@ -17,6 +17,7 @@ exports.up = function(knex) {
         table.integer('userId').references('id')
             .inTable('users').notNull()
         table.string('imagem').notNull()
+        table.timestamp('createdAt')
     })
 };
 

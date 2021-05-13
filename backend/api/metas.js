@@ -1,3 +1,4 @@
+var moment = require('moment');
 
 module.exports = app => {
     const { existsOrError, notExistsOrError } = app.api.validation
@@ -23,7 +24,7 @@ module.exports = app => {
                 .catch(err => res.status(500).send(err))
         } else {
             app.db('doacoes_com_metas')
-                .insert({ titulo: metas.titulo, descricao: metas.descricao, imageUrl: metas.imageUrl, valorEsperado: metas.valorEsperado, valorAtual: 0, userId: req.user.id })
+                .insert({ titulo: metas.titulo, descricao: metas.descricao, imageUrl: metas.imageUrl, valorEsperado: metas.valorEsperado, valorAtual: 0, userId: req.user.id, createdAt: moment().locale('pt-br').format('L') })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         }

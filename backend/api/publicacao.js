@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 module.exports = app => {
     const { existsOrError, notExistsOrError } = app.api.validation
 
@@ -14,14 +16,6 @@ module.exports = app => {
         }
 
 
-        publicacao.userId = req.user.id;
-
-        const userName = app.db('users').select('name').where({ id: req.user.id })
-        publicacao.userName = userName;
-
-        publicacao.createdAt = new Date();
-
-
         if (publicacao.id) {
             app.db('publicacao')
                 .update(publicacao)
@@ -29,6 +23,16 @@ module.exports = app => {
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         } else {
+
+            publicacao.userId = req.user.id;
+
+            const userName = app.db('users').select('name').where({ id: req.user.id })
+            publicacao.userName = userName;
+
+            publicacao.createdAt = moment().locale('pt-br').format('L');
+            publicacao.dataPub = moment().locale('pt-br').format('LLLL');
+
+
             app.db('publicacao')
                 .insert(publicacao)
                 .then(_ => res.status(204).send())
@@ -78,8 +82,11 @@ module.exports = app => {
         const result = await app.db('publicacao').count('id').first()
         const count = parseInt(result.count)
 
+
         app.db('publicacao')
-            .select('id', 'titulo', 'descricao', 'chamada', 'imageUrl', 'userName', 'createdAt', 'userId')
+            .join('users', 'publicacao.userId', 'users.id')
+            .select('publicacao.id', 'publicacao.titulo', 'publicacao.descricao', 'publicacao.chamada', 'publicacao.imageUrl', 'publicacao.userName',
+                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email')
             .orderBy('id', 'desc')
             .limit(limit).offset(page * limit - limit)
             .then(publicacao => res.json({ data: publicacao, count, limit }))
@@ -88,7 +95,10 @@ module.exports = app => {
 
     const getById = (req, res) => {
         app.db('publicacao')
-            .where({ id: req.params.id })
+            .join('users', 'publicacao.userId', 'users.id')
+            .select('publicacao.id', 'publicacao.titulo', 'publicacao.descricao', 'publicacao.chamada', 'publicacao.imageUrl', 'publicacao.userName',
+                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email')
+            .where({ 'publicacao.id': req.params.id })
             .first()
             .then(publicacao => {
                 publicacao.descricao = publicacao.descricao.toString()

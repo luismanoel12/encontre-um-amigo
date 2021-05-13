@@ -6,7 +6,7 @@
           <v-sheet rounded="lg" min-height="268" elevation="10">
             <div class="publicacao-left-card">
               <div class="publicacao-left-card-header">
-                <h2 class="text-center">Foto</h2>
+                <h2 class="text-center">Compartilhar</h2>
               </div>
               <div class="publicacao-left-card-content"></div>
             </div>
@@ -16,8 +16,27 @@
         <v-col cols="12" sm="6">
           <v-sheet min-height="70vh" rounded="lg" elevation="10">
             <div class="publicacao-page-header">
-              <h1>{{ publicacao.titulo }}</h1>
+              <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
+                <Gravatar
+                  :email="publicacao.email"
+                  :alt="publicacao.userName"
+                />
+              </v-avatar>
+              <router-link
+                class="pub-router-link"
+                :to="{
+                  name: 'ongById',
+                  params: { id: publicacao.userId },
+                }"
+              >
+                <h3>{{ publicacao.userName }}</h3>
+              </router-link>
             </div>
+
+            <div class="publicacao-page-header-title">
+              <h2>{{ publicacao.titulo }}</h2>
+            </div>
+
             <v-divider></v-divider>
             <div class="publicacao-page-content">
               <div class="img-card-publicacao">
@@ -41,7 +60,7 @@
               ></div>
             </div>
             <div class="disqus">
-              <Disqus :pageConfig="pageConfig"/>
+              <Disqus :pageConfig="pageConfig" />
             </div>
           </v-sheet>
         </v-col>
@@ -62,9 +81,11 @@
 import api from "../../config/api";
 import "highlightjs/styles/dracula.css";
 import hljs from "highlightjs/highlight.pack.js";
+import Gravatar from "vue-gravatar";
 
 export default {
   name: "PublicacoesById",
+  components: { Gravatar },
   data: function () {
     return {
       publicacao: {},
@@ -100,7 +121,7 @@ export default {
   margin-top: 20px;
 }
 
-.img-card-publicacao > img{
+.img-card-publicacao > img {
   width: 100%;
   height: auto;
 }
@@ -108,13 +129,12 @@ export default {
 .publicacao-page-header {
   padding: 20px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
 }
 
-.avatar-img > img {
-  border-radius: 50%;
+.publicacao-page-header-title {
+  padding: 20px;
 }
 
 .publicacao-page-content,
@@ -129,6 +149,13 @@ export default {
 
 .publicacao-left-card-header {
   padding-bottom: 10px;
+}
+
+.publicacao-left-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .publicacao-content {
@@ -158,5 +185,18 @@ export default {
   padding: 20px;
   border-radius: 10px;
   margin: 50px auto;
+}
+
+.pub-avatar-img > img {
+  border-radius: 50%;
+}
+
+.pub-router-link{
+  text-decoration: none;
+  color: #2a9d8f!important;
+}
+
+.pub-router-link:hover{
+  color: #264653!important;
 }
 </style>

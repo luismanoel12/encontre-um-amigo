@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 module.exports = app => {
     const { existsOrError, notExistsOrError } = app.api.validation
 
@@ -18,7 +20,7 @@ module.exports = app => {
             return res.status(400).send(msg)
         }
 
-        animais.userId = req.user.id;
+        
 
         if (animais.id) {
             app.db('animais')
@@ -27,6 +29,10 @@ module.exports = app => {
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         } else {
+            animais.userId = req.user.id;
+
+            animais.createdAt = moment().locale('pt-br').format('L');
+
             app.db('animais')
                 .insert(animais)
                 .then(_ => res.status(204).send())
