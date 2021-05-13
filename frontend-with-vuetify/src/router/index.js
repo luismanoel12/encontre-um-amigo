@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 
 import Home from '@/views/home/Home'
 import Auth from "@/views/auth/Auth"
+import Signup from "@/views/auth/Signup"
 import Carousel from "@/views/carousel/Carousel"
 import Error404 from "@/components/template/Error404"
 import Perfil from "@/views/perfil/Perfil"
@@ -36,6 +37,11 @@ const routes = [{
     name: 'auth',
     path: '/auth',
     component: Auth,
+},
+{
+    name: 'signup',
+    path: '/signup',
+    component: Signup,
 },
 {
     name: 'users',
