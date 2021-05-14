@@ -7,10 +7,7 @@
             class="router-link"
             :to="{ name: 'metasById', params: { id: meta.id } }"
           >
-            <v-card
-              class="mx-auto my-12 meta-card"
-              max-width="374"
-            >
+            <v-card class="mx-auto my-12 meta-card" max-width="374">
               <div class="img-card">
                 <img
                   v-if="meta.imageUrl"
@@ -52,7 +49,11 @@
                   >
                 </h3>
 
-                <span>Criado por: {{ metaUser.name }} </span>
+                <div>
+                  <span>Criado por: {{ meta.name }} </span>
+                </div>
+                <div>
+                </div>
               </v-card-text>
 
               <v-divider class="mx-4"></v-divider>
@@ -88,6 +89,7 @@
 
 <script>
 import api from "../../config/api";
+import moment from "moment";
 
 export default {
   name: "MetasList",
@@ -111,9 +113,8 @@ export default {
       });
     },
 
-    async getMetaUser() {
-      const url = `/user-name/${this.meta.userId}`;
-      await api.get(url).then((res) => (this.metaUser = res.data));
+    moment: function () {
+      return moment();
     },
   },
   watch: {
@@ -133,7 +134,6 @@ export default {
 </script>
 
 <style>
-
 .metas-page {
   margin-top: 20px;
   padding: 20px;
@@ -141,8 +141,7 @@ export default {
 
 .meta-card {
   background-color: #fff;
-  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15)!important;
-
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
 }
 
 .metas-header {
@@ -168,7 +167,7 @@ export default {
 }
 
 .progress-bar {
-  padding: 10px!important;
+  padding: 10px !important;
 }
 
 .v-card__title {

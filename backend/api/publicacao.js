@@ -30,7 +30,7 @@ module.exports = app => {
             const userName = app.db('users').select('name').where({ id: req.user.id })
             publicacao.userName = userName;
 
-            publicacao.createdAt = moment().locale('pt-br').format('L');
+            publicacao.createdAt = new Date();
             publicacao.dataPub = moment().locale('pt-br').format('LLLL');
 
 

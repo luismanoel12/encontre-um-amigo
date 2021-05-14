@@ -10,6 +10,7 @@ import VueTheMask from 'vue-the-mask'
 import VueDisqus from 'vue-disqus'
 import VueInstagram from 'vue-instagram'
 import VueApexCharts from 'vue-apexcharts'
+import Moment from 'moment'
 
  
 Vue.config.productionTip = false
@@ -19,6 +20,7 @@ Vue.component('apexchart', VueApexCharts)
 
 Vue.use(VueInstagram)
 Vue.use(VueTheMask)
+Vue.use(Moment)
 Vue.use(VueDisqus, {
   shortname: 'encontre-um-amigo'
 })

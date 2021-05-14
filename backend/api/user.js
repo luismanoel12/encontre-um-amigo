@@ -79,7 +79,7 @@ module.exports = app => {
                 });
         } else {
             app.db("users")
-                .insert({ name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password, ong: user.ong, admin: user.admin, createdAt: moment().locale('pt-br').format('L') })
+                .insert({ name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password, ong: user.ong, admin: user.admin, createdAt: new Date() })
                 .returning('id')
                 .then(function (response) {
                     app.db('endereco')

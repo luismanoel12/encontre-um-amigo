@@ -13,20 +13,20 @@
               <div class="card-publicacao">
                 <div class="card-publicacao-user">
                   <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
-                <Gravatar
-                  :email="publicacao.email"
-                  :alt="publicacao.userName"
-                />
-              </v-avatar>
-              <router-link
-                class="pub-router-link"
-                :to="{
-                  name: 'ongById',
-                  params: { id: publicacao.userId },
-                }"
-              >
-                <h3>{{ publicacao.userName }}</h3>
-              </router-link>
+                    <Gravatar
+                      :email="publicacao.email"
+                      :alt="publicacao.userName"
+                    />
+                  </v-avatar>
+                  <router-link
+                    class="pub-router-link"
+                    :to="{
+                      name: 'ongById',
+                      params: { id: publicacao.userId },
+                    }"
+                  >
+                    <h3>{{ publicacao.userName }}</h3>
+                  </router-link>
                 </div>
                 <div class="card-publicacao-header">
                   <router-link
@@ -39,7 +39,7 @@
                     <h2 class="pub-titulo">{{ publicacao.titulo }}</h2>
 
                     <h5>Publicado em {{ publicacao.dataPub }}</h5>
-                    <div class="img-publicacao" style="height: 200px">
+                    <div class="img-publicacao" style="height: 400px">
                       <img
                         v-if="publicacao.imageUrl"
                         :src="publicacao.imageUrl"
@@ -76,6 +76,8 @@
     <div class="text-center pagination">
       <v-btn depressed color="primary" v-if="loadMore" @click="getPublicacoes">
         Carregar Mais Publicações
+
+        <v-icon dark class="ml-2"> mdi-reload </v-icon>
       </v-btn>
     </div>
   </v-container>
@@ -164,7 +166,7 @@ export default {
   text-decoration: none !important;
 }
 
-.card-publicacao-user{
+.card-publicacao-user {
   padding-bottom: 20px;
   display: flex;
   flex-direction: row;
@@ -174,6 +176,10 @@ export default {
 @media only screen and (max-width: 600px) {
   .card-publicacao {
     width: auto;
+  }
+
+  .img-publicacao {
+    height: auto !important;
   }
 
   .img-publicacao > img {

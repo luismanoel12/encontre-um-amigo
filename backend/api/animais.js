@@ -31,7 +31,7 @@ module.exports = app => {
         } else {
             animais.userId = req.user.id;
 
-            animais.createdAt = moment().locale('pt-br').format('L');
+            animais.createdAt = new Date();
 
             app.db('animais')
                 .insert(animais)
