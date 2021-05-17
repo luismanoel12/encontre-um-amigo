@@ -10,6 +10,7 @@ exports.up = function(knex) {
         table.string('password').notNull()
         table.boolean('ong')
         table.boolean('admin').notNull().defaultTo(false)
+        table.timestamp('createdAt')
         table.timestamp('deletedAt')
     })
 };

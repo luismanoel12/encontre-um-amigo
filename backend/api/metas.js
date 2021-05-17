@@ -1,3 +1,4 @@
+var moment = require('moment');
 
 module.exports = app => {
     const { existsOrError, notExistsOrError } = app.api.validation
@@ -23,7 +24,7 @@ module.exports = app => {
                 .catch(err => res.status(500).send(err))
         } else {
             app.db('doacoes_com_metas')
-                .insert({ titulo: metas.titulo, descricao: metas.descricao, imageUrl: metas.imageUrl, valorEsperado: metas.valorEsperado, valorAtual: 0, userId: req.user.id })
+                .insert({ titulo: metas.titulo, descricao: metas.descricao, imageUrl: metas.imageUrl, valorEsperado: metas.valorEsperado, valorAtual: 0, userId: req.user.id, createdAt: new Date() })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         }
@@ -56,22 +57,27 @@ module.exports = app => {
 
     const limit = 12; // limite de itens por página 
     const get = async (req, res) => {
-        const page = req.query.page || 1 
- 
+        const page = req.query.page || 1
+
         const result = await app.db('doacoes_com_metas').count('id').first()
         const count = parseInt(result.count)
-                    
+
         app.db('doacoes_com_metas')
-            .select('id', 'titulo', 'imageUrl', 'valorEsperado', 'valorAtual', 'userId')
-            .limit(limit).offset(page * limit - limit )
+            .join('users', 'doacoes_com_metas.userId', 'users.id')
+            .select('doacoes_com_metas.id', 'doacoes_com_metas.titulo', 'doacoes_com_metas.imageUrl', 'doacoes_com_metas.valorEsperado', 'doacoes_com_metas.valorAtual',
+                'doacoes_com_metas.userId', 'doacoes_com_metas.createdAt', 'users.name')
+            .limit(limit).offset(page * limit - limit)
             .then(metas => res.json({ data: metas, count, limit }))
             .catch(err => res.status(500).send(err))
-            
+
     }
 
     const getById = (req, res) => {
         app.db('doacoes_com_metas')
-            .where({ id: req.params.id })
+            .join('users', 'doacoes_com_metas.userId', 'users.id')
+            .select('doacoes_com_metas.id', 'doacoes_com_metas.titulo', 'doacoes_com_metas.imageUrl', 'doacoes_com_metas.valorEsperado', 'doacoes_com_metas.valorAtual',
+                'doacoes_com_metas.userId', 'doacoes_com_metas.descricao', 'doacoes_com_metas.createdAt', 'users.name')
+            .where({ 'doacoes_com_metas.id': req.params.id })
             .first()
             .then(metas => {
                 metas.descricao = metas.descricao.toString()

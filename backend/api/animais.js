@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 module.exports = app => {
     const { existsOrError, notExistsOrError } = app.api.validation
 
@@ -15,10 +17,10 @@ module.exports = app => {
             existsOrError(animais.estado, 'Estado não informado')
             existsOrError(animais.cidade, 'Cidade não informada')
         } catch (msg) {
-            res.status(400).send(msg)
+            return res.status(400).send(msg)
         }
 
-        animais.userId = req.user.id;
+        
 
         if (animais.id) {
             app.db('animais')
@@ -27,6 +29,10 @@ module.exports = app => {
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         } else {
+            animais.userId = req.user.id;
+
+            animais.createdAt = new Date();
+
             app.db('animais')
                 .insert(animais)
                 .then(_ => res.status(204).send())
@@ -81,16 +87,25 @@ module.exports = app => {
     }
 
 
-    const getCustomSearch = async (req, res) => {
+    const getCustomSearch = (req, res) => {
         const search = { ...req.body }
 
+        try {
+
+            existsOrError(search.cidade, 'Informe o nome da cidade')
+            existsOrError(search.estado, 'Selecione o estado')
+
+        } catch (msg) {
+            return res.status(400).send(msg)
+        }
+
         const page = req.query.page || 1
-        const result = await app.db('animais').count('id').first()
+        const result = app.db('animais').count('id').first()
         const count = parseInt(result.count)
 
         app.db('animais')
             .where({ estado: search.estado })
-            .orWhere({ cidade: search.cidade })
+            .andWhere({ cidade: search.cidade })
             .orderBy('id', 'desc')
             .limit(limit).offset(page * limit - limit)
             .then(animais => res.json({ data: animais, count, limit }))

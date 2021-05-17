@@ -17,11 +17,12 @@ module.exports = app => {
     app.get('/metasPublic/:id', app.api.metas.getById)
     app.get('/objetivosMetaPublic/:id', app.api.objetivos.get)
     app.get('/animaisPublic', app.api.animais.get)
-    app.get('/animaisPublic/:id', app.api.animais.getById)    
-    app.get('/animaisSearch', app.api.animais.getCustomSearch)
-    app.get('/publicacaoPublic', app.api.publicacao.get) 
+    app.get('/animaisPublic/:id', app.api.animais.getById)
+    app.post('/animaisSearch', app.api.animais.getCustomSearch)
+    app.get('/publicacaoPublic', app.api.publicacao.get)
     app.get('/publicacaoPublic/:id', app.api.publicacao.getById)
-    app.get('/ultimasPublicacoes/:id', app.api.publicacao.getUltimasPublicacoes) 
+    app.get('/ultimasPublicacoes/:id', app.api.publicacao.getUltimasPublicacoes)
+    app.get('/bioById/:id', app.api.bio.getById)
 
 
 
@@ -37,6 +38,10 @@ module.exports = app => {
         .put(owner(app.api.user.save))
         .get(owner(app.api.user.getById))
         .delete(admin(app.api.user.remove))
+
+    app.route('/newPassword')
+        .all(app.config.passport.authenticate())
+        .put(owner(app.api.user.newPassword))
 
     app.route('/setAdmin/:id')
         .all(app.config.passport.authenticate())
@@ -109,7 +114,7 @@ module.exports = app => {
 
     app.route('/animaisUsuario')
         .all(app.config.passport.authenticate())
-        .post(admin(app.api.animais.save))
+        .post(app.api.animais.save)
         .get(app.api.animais.getPorUsuario)
 
     app.route('/animais/:id')
@@ -129,7 +134,7 @@ module.exports = app => {
 
     app.route('/publicacaoUsuario')
         .all(app.config.passport.authenticate())
-        .post(admin(app.api.publicacao.save))
+        .post(app.api.publicacao.save)
         .get(app.api.publicacao.getPorUsuario)
 
 
@@ -145,5 +150,28 @@ module.exports = app => {
     app.route('/getCount')
         .all(app.config.passport.authenticate())
         .get(admin(app.api.count.getCount))
+
+    // Denúncia
+
+    app.route('/denuncia')
+        .all(app.config.passport.authenticate())
+        .post(app.api.denuncia.save)
+        .get(admin(app.api.denuncia.get))
+        .put(admin(app.api.denuncia.save))
+
+    app.route('/denuncia/:id')
+        .all(app.config.passport.authenticate())
+        .put(admin(app.api.denuncia.save))
+        .get(admin(app.api.denuncia.getById))
+        .delete(admin(app.api.denuncia.remove))
+
+    // Ong bio
+
+    app.route('/ongBio')
+        .all(app.config.passport.authenticate())
+        .post(app.api.bio.save)
+        .get(app.api.bio.getPorUsuario)
+        .put(app.api.bio.save)
+
 
 }

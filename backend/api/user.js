@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt-nodejs')
+var moment = require('moment');
 
 module.exports = app => {
     const { existsOrError, notExistsOrError, equalsOrError } = app.api.validation
@@ -78,7 +79,7 @@ module.exports = app => {
                 });
         } else {
             app.db("users")
-                .insert({ name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password, ong: user.ong, admin: user.admin })
+                .insert({ name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password, ong: user.ong, admin: user.admin, createdAt: new Date() })
                 .returning('id')
                 .then(function (response) {
                     app.db('endereco')
@@ -195,5 +196,41 @@ module.exports = app => {
         }
     }
 
-    return { save, get, getById, remove, getName, getOngs, getOngById, setAdmin, getAdmins }
+    const newPassword = async (req, res) => {
+        const userPassword = { ...req.body }
+
+        try {
+            existsOrError(userPassword.password, 'Senha Atual não informada')
+            existsOrError(userPassword.newPassword, 'Nova senha não informada')
+            existsOrError(userPassword.confirmPassword, 'Confirmação da senha atual não informada')
+            equalsOrError(userPassword.newPassword, userPassword.confirmPassword,
+                'Senhas não conferem')
+
+
+        } catch (msg) {
+            return res.status(400).send(msg)
+        }
+
+
+        const user = await app.db('users')
+        .where({ id: req.user.id })
+        .first()
+
+        const isMatch = bcrypt.compareSync(userPassword.password, user.password)
+        if (!isMatch) return res.status(401).send('A senha atual que você digitou não é igual a sua senha cadastrada')
+        else{
+            userPassword.newPassword = ecryptPassword(userPassword.newPassword)
+            delete userPassword.confirmPassword
+
+            app.db('users')
+            .update({ password: userPassword.newPassword })
+            .where({ id: req.user.id })
+            .then(_ => res.status(204).send())
+            .catch(err => res.status(500).send(err))
+
+        }
+
+    }
+
+    return { save, get, getById, remove, getName, getOngs, getOngById, setAdmin, getAdmins, newPassword }
 }

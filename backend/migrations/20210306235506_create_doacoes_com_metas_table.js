@@ -9,6 +9,7 @@ exports.up = function(knex) {
         table.integer('valorAtual').notNull()
         table.integer('userId').references('id')
         .inTable('users').notNull()
+        table.timestamp('createdAt')
     })
 };
 

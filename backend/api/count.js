@@ -25,9 +25,19 @@ module.exports = app => {
         const tutores = await app.db('users').where({ 'ong': false }).andWhere({ 'admin': false }).count('id').first()
         const tutoresCount = parseInt(tutores.count)
 
+        const denuncias = await app.db('denuncia').count('id').first()
+        const denunciasCount = parseInt(denuncias.count)
+
+        const denunciasAbertas = await app.db('denuncia').where({ 'status': 'Aberto' }).count('id').first()
+        const denunciasAbertasCount = parseInt(denunciasAbertas.count)
+
+        const denunciasFinalizadas = await app.db('denuncia').where({ 'status': 'Finalizado' }).count('id').first()
+        const denunciasFinalizadasCount = parseInt(denunciasFinalizadas.count)
+
         app.db('users')
         .where({ 'id': 0 })
-        .then(count => res.json({ data: count, usersCount, ongsCount, publicacoesCount, animaisCount, metasCount, adminsCount, tutoresCount }))
+        .then(count => res.json({ data: count, usersCount, ongsCount, publicacoesCount, animaisCount, metasCount, 
+            adminsCount, tutoresCount, denunciasCount, denunciasAbertasCount, denunciasFinalizadasCount }))
         .catch(err => res.status(500).send(err))
     }
 
