@@ -20,7 +20,7 @@ module.exports = app => {
             return res.status(400).send(msg)
         }
 
-        
+
 
         if (animais.id) {
             app.db('animais')
