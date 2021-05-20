@@ -80,7 +80,10 @@ module.exports = app => {
 
     const getById = (req, res) => {
         app.db('animais')
-            .where({ id: req.params.id })
+            .join('users', 'animais.userId', 'users.id')
+            .select('animais.id', 'animais.tipo', 'animais.nome', 'animais.sexo', 'animais.porte', 'animais.deficiente', 'animais.vermifugado', 'animais.vacinado', 'animais.castrado', 'animais.descricao',
+                'animais.estado', 'animais.cidade', 'animais.cep', 'animais.userId', 'animais.imagem', 'animais.createdAt', 'users.name', 'users.email')
+            .where({ 'animais.id': req.params.id })
             .first()
             .then(animais => res.json(animais))
             .catch(err => res.status(500).send(err))

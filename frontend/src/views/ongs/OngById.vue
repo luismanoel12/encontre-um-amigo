@@ -161,6 +161,11 @@ export default {
     async loadOng() {
       const url = `/ongs/${this.$route.params.id}`;
       await api.get(url).then((res) => (this.ong = res.data));
+     
+      if(this.ong === {}) {
+        console.log("erro")
+      }
+
     },
 
     loadPublicacoes() {

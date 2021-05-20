@@ -1,15 +1,21 @@
 <template>
   <v-container>
     <div class="metas-page">
-      <v-card color="#e9ecef">
+      <v-card color="#2a9d8f">
         <v-card-title class="text-center justify-center py-6">
-          <h1 class="font-weight-bold display-3 basil--text">Metas</h1>
+          <h1 class="display-3">Minhas Metas</h1>
         </v-card-title>
 
-        <v-tabs v-model="tab" background-color="transparent" color="#e9ecef" grow>
-          <v-tab> Cadastrar Metas </v-tab>
-
-          <v-tab> Cadastrar Objetivos </v-tab>
+        <v-tabs v-model="tab" background-color="#287271" color="white" grow>
+          <v-tab>
+            Cadastrar Metas
+            <span class="mdi mdi-bullseye-arrow ml-3 mdi-24px"></span>
+          </v-tab>
+          <v-divider vertical color="white"></v-divider>
+          <v-tab>
+            Cadastrar Objetivos
+            <span class="mdi mdi-bullseye-arrow ml-3 mdi-24px"></span>
+          </v-tab>
         </v-tabs>
 
         <v-tabs-items v-model="tab">

@@ -38,7 +38,6 @@
                   >
                     <h2 class="pub-titulo">{{ publicacao.titulo }}</h2>
 
-                    <h5>Publicado em {{ publicacao.dataPub }}</h5>
                     <div class="img-publicacao" style="height: 400px">
                       <img
                         v-if="publicacao.imageUrl"
@@ -54,8 +53,8 @@
                       />
                     </div>
                   </router-link>
-                  <p>Publicado por: {{ publicacao.userName }}</p>
                 </div>
+                <h5>Publicado em {{ publicacao.dataPub }}</h5>
                 <v-divider></v-divider>
                 <div class="card-publicacao-content">
                   <p>{{ publicacao.chamada }}</p>
@@ -156,10 +155,11 @@ export default {
 
 .pub-titulo {
   color: #212121;
+  margin-bottom: 10px;
 }
 
 .pub-titulo:hover {
-  color: #0899ba;
+  color: #023e8a;
 }
 
 .router-link {

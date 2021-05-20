@@ -124,9 +124,10 @@ export default {
     };
   },
   mounted() {
-    this.$root.$once("carousel-get", () => {
-      this.loadCarousel();
-    });
+    this.loadCarousel();
+    // this.$root.$once("carousel-get", () => {
+    //   this.loadCarousel();
+    // });
   },
   methods: {
     async loadCarousel() {

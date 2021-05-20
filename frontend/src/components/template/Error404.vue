@@ -3,13 +3,14 @@
     <v-container>
       <div class="e404">
         <div class="e404-header">
+          
           <h1>404</h1>
-          <h2>página não encontrada</h2>
+          <h2>página não encontrada <span class="mdi mdi-emoticon-sad-outline icon-404"></span> </h2>
           <h3>Parece que a página que você está procurando não existe!</h3>
         </div>
         <div class="e404-content">
           <v-btn elevation="15" color="#fffff" class="e404-button" to="/home">
-            <v-icon>mdi-home</v-icon>
+            <v-icon class="mr-2">mdi-home</v-icon>
              Voltar ao início
           </v-btn>
         </div>
@@ -33,7 +34,7 @@ export default {
   background-color: #ff5757;
   width: 800px;
   border-radius: 5px;
-  margin: 100px auto;
+  margin: 50px auto;
   padding: 30px;
 }
 
@@ -60,7 +61,9 @@ export default {
   margin-top: 30px;
 }
 
-
+.icon-404{
+  font-size: 40px!important;
+}
 
 @media only screen and (max-width: 600px) {
   .e404 {

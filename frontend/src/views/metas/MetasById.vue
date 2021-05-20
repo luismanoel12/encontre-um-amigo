@@ -24,18 +24,6 @@
 
                 <div class="view-content">
                   <div class="meta-content" v-html="meta.descricao"></div>
-
-                  <v-timeline class="timeline-metas">
-                    <v-timeline-item right large icon="mdi-check-bold" color="green">0%</v-timeline-item>
-                    <v-timeline-item v-if="Math.ceil((meta.valorAtual * 100) / meta.valorEsperado) >= 25" right large color="green" icon="mdi-check-bold">25%</v-timeline-item>
-                    <v-timeline-item v-else right large color="grey" icon="mdi-close-thick">25%</v-timeline-item>
-                    <v-timeline-item v-if="Math.ceil((meta.valorAtual * 100) / meta.valorEsperado) >= 50" right large color="green" icon="mdi-check-bold">50%</v-timeline-item>
-                     <v-timeline-item v-else right large color="grey" icon="mdi-close-thick">50%</v-timeline-item>
-                    <v-timeline-item v-if="Math.ceil((meta.valorAtual * 100) / meta.valorEsperado) >= 75" right large color="green" icon="mdi-check-bold">75%</v-timeline-item>
-                     <v-timeline-item v-else right large color="grey" icon="mdi-close-thick">75%</v-timeline-item>
-                    <v-timeline-item v-if="Math.ceil((meta.valorAtual * 100) / meta.valorEsperado) >= 100" right large color="green" icon="mdi-check-decagram">100%</v-timeline-item>
-                     <v-timeline-item v-else right large color="grey" icon="mdi-close-thick">100%</v-timeline-item>
-                  </v-timeline>
                 </div>
               </div>
             </div>
@@ -171,8 +159,8 @@ export default {
 }
 
 .meta-content {
-  padding: 25px;
   margin-bottom: 30px;
+  word-break: break-all;
 }
 
 .meta-content pre {

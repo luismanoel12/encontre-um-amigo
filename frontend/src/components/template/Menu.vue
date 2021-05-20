@@ -217,7 +217,15 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <router-link to="/home" class="home-router">
-        <v-toolbar-title to="/home">Encontre um amigo</v-toolbar-title>
+        <v-toolbar-title class="logo-title">
+          <img
+            src="@/assets/logo.png"
+            class="logo mr-4"
+            width="40px"
+            alt="Logo"
+          />
+          Encontre um amigo</v-toolbar-title
+        >
       </router-link>
 
       <v-btn
@@ -282,7 +290,7 @@ export default {
 
 <style>
 .main-body {
-  background-color: #f8f9fc;
+  background-color: #DCE1E3;
 }
 
 .title {
@@ -337,5 +345,18 @@ export default {
   text-decoration: none;
   color: #fff !important;
   margin-left: 20px;
+}
+
+.logo-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .logo {
+    display: none;
+  }
 }
 </style>
