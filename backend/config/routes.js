@@ -23,7 +23,8 @@ module.exports = app => {
     app.get('/publicacaoPublic/:id', app.api.publicacao.getById)
     app.get('/ultimasPublicacoes/:id', app.api.publicacao.getUltimasPublicacoes)
     app.get('/bioById/:id', app.api.bio.getById)
-
+    app.get('/animais/desaparecidosPublic', app.api.animais_desaparecidos.get)
+    app.get('/animais/desaparecidosPublic/:id', app.api.animais_desaparecidos.getById)
 
 
     // User routes
@@ -173,5 +174,18 @@ module.exports = app => {
         .get(app.api.bio.getPorUsuario)
         .put(app.api.bio.save)
 
+    // animais desaparecidos
+
+    app.route('/animais/desaparecidos')
+    .all(app.config.passport.authenticate())
+    .post(app.api.animais_desaparecidos.save)
+    .get(app.api.animais_desaparecidos.getPorUsuario)
+  
+
+    
+    app.route('/animais/desaparecidos/:id')
+    .all(app.config.passport.authenticate())
+    .put(app.api.animais_desaparecidos.save)
+    .delete(app.api.animais_desaparecidos.remove)
 
 }
