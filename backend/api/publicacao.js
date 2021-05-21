@@ -27,9 +27,6 @@ module.exports = app => {
 
             publicacao.userId = req.user.id;
 
-            const userName = app.db('users').select('name').where({ id: req.user.id })
-            publicacao.userName = userName;
-
             publicacao.createdAt = new Date();
             publicacao.dataPub = moment().locale('pt-br').format('LLLL');
 
@@ -69,7 +66,9 @@ module.exports = app => {
     const getUltimasPublicacoes = async (req, res) => {
 
         app.db('publicacao')
-            .select('id', 'titulo', 'imageUrl', 'chamada', 'userId')
+            .join('users', 'publicacao.userId', 'users.id')
+            .select('publicacao.id', 'publicacao.titulo', 'publicacao.descricao', 'publicacao.chamada', 'publicacao.imageUrl',
+                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email', 'users.name')
             .limit(5)
             .orderBy('id', 'desc')
             .where({ userId: req.params.id })
@@ -86,8 +85,8 @@ module.exports = app => {
 
         app.db('publicacao')
             .join('users', 'publicacao.userId', 'users.id')
-            .select('publicacao.id', 'publicacao.titulo', 'publicacao.descricao', 'publicacao.chamada', 'publicacao.imageUrl', 'publicacao.userName',
-                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email')
+            .select('publicacao.id', 'publicacao.titulo', 'publicacao.descricao', 'publicacao.chamada', 'publicacao.imageUrl',
+                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email', 'users.name')
             .orderBy('id', 'desc')
             .limit(limit).offset(page * limit - limit)
             .then(publicacao => res.json({ data: publicacao, count, limit }))
@@ -97,8 +96,8 @@ module.exports = app => {
     const getById = (req, res) => {
         app.db('publicacao')
             .join('users', 'publicacao.userId', 'users.id')
-            .select('publicacao.id', 'publicacao.titulo', 'publicacao.descricao', 'publicacao.chamada', 'publicacao.imageUrl', 'publicacao.userName',
-                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email')
+            .select('publicacao.id', 'publicacao.titulo', 'publicacao.descricao', 'publicacao.chamada', 'publicacao.imageUrl',
+                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email', 'users.name')
             .where({ 'publicacao.id': req.params.id })
             .first()
             .then(publicacao => {

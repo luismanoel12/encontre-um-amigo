@@ -6,7 +6,7 @@
           <v-sheet rounded="lg" min-height="268" elevation="10">
             <div class="animal-left-card">
               <div class="animal-left-card-header">
-                <h2 class="text-center">Responsavel</h2>
+                <h2 class="text-center">Responsavel Pela adoção</h2>
               </div>
               <div class="animal-left-card-content">
                 <div class="animalById-responsavel">
@@ -34,6 +34,24 @@
                         new Date(animal.createdAt).toLocaleDateString("pt-br")
                       }}
                     </span>
+                  </div>
+                  <div class="contato-responsavel">
+                    <div class="contato-responsavel-header">
+                      <label class="text-center"
+                        >Para adotar ou saber mais sobre este pet, entre em
+                        contato:</label
+                      >
+                    </div>
+                    <div class="contato-responsavel-content">
+                      <h4>
+                        <span class="mdi mdi-email"></span>
+                        E-mail: <strong>{{ animal.email }}</strong>
+                      </h4>
+                      <h4>
+                        <span class="mdi mdi-phone-in-talk"></span>
+                        Telefone: <strong>{{ animal.telefone }}</strong>
+                      </h4>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -89,6 +107,8 @@
             </div>
 
             <div class="share-button">
+              <h4 class="text-center">Compartilhe</h4>
+              <v-divider></v-divider>
               <div class="overflow-hidden">
                 <v-bottom-navigation color="indigo" class="share">
                   <v-btn :href="this.fbUrl" target="_blank">
@@ -241,5 +261,14 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.contato-responsavel {
+  margin-top: 40px;
+}
+
+.contato-responsavel-content {
+  color: #2a9d8f;
+  text-align: center;
 }
 </style>

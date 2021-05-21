@@ -19,7 +19,7 @@
               <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
                 <Gravatar
                   :email="publicacao.email"
-                  :alt="publicacao.userName"
+                  :alt="publicacao.name"
                 />
               </v-avatar>
               <router-link
@@ -29,7 +29,7 @@
                   params: { id: publicacao.userId },
                 }"
               >
-                <h3>{{ publicacao.userName }}</h3>
+                <h3>{{ publicacao.name }}</h3>
               </router-link>
             </div>
 

@@ -25,7 +25,7 @@
                       params: { id: publicacao.userId },
                     }"
                   >
-                    <h3>{{ publicacao.userName }}</h3>
+                    <h3>{{ publicacao.name }}</h3>
                   </router-link>
                 </div>
                 <div class="card-publicacao-header">

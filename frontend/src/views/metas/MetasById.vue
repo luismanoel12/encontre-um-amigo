@@ -32,9 +32,39 @@
 
         <v-col cols="12" sm="4">
           <v-sheet rounded="lg" min-height="268" class="side-content">
+            <div class="card-metas-user">
+              <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
+                <Gravatar :email="meta.email" :alt="meta.name" />
+              </v-avatar>
+              <router-link
+                class="pub-router-link"
+                :to="{
+                  name: 'ongById',
+                  params: { id: meta.userId },
+                }"
+              >
+                <h2>{{ meta.name }}</h2>
+              </router-link>
+            </div>
+
             <div class="text-center">
-              <h1 class="side-content-h1">{{ meta.valorAtual.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }}</h1>
-              <span> Valor Esperado {{ meta.valorEsperado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }} </span>
+              <h1 class="side-content-h1">
+                {{
+                  new Intl.NumberFormat("pt-br", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(meta.valorAtual)
+                }}
+              </h1>
+              <span>
+                Valor Esperado
+                {{
+                  new Intl.NumberFormat("pt-br", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(meta.valorEsperado)
+                }}
+              </span>
             </div>
 
             <div class="pb">
@@ -63,7 +93,15 @@
                 </v-card-title>
 
                 <v-card-subtitle>
-                  <h1 class="text-center valores">R$ {{ objetivo.valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }}</h1>
+                  <h1 class="text-center valores">
+                    R$
+                    {{
+                      objetivo.valor.toLocaleString("pt-br", {
+                        style: "currency",
+                        currency: "BRL",
+                      })
+                    }}
+                  </h1>
                 </v-card-subtitle>
 
                 <v-card-text class="text-center">
@@ -77,7 +115,14 @@
                 </v-card-title>
 
                 <v-card-subtitle>
-                  <h1 class="text-center valores"> {{ objetivo.valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }}</h1>
+                  <h1 class="text-center valores">
+                    {{
+                      objetivo.valor.toLocaleString("pt-br", {
+                        style: "currency",
+                        currency: "BRL",
+                      })
+                    }}
+                  </h1>
                 </v-card-subtitle>
 
                 <v-card-text class="text-center">
@@ -96,9 +141,11 @@
 import api from "../../config/api";
 import "highlightjs/styles/dracula.css";
 import hljs from "highlightjs/highlight.pack.js";
+import Gravatar from "vue-gravatar";
 
 export default {
   name: "MetasById",
+  components: { Gravatar },
   data: function () {
     return {
       meta: {},
@@ -126,7 +173,6 @@ export default {
     this.$root.$once("metas-objetivos", () => {
       this.loadMeta();
     });
-
   },
 
   updated() {
@@ -138,7 +184,6 @@ export default {
 </script>
 
 <style>
-
 .view-header {
   text-align: center;
 }
@@ -195,6 +240,13 @@ export default {
 .meta-title {
   padding-top: 30px;
   color: #1e1e1e;
+}
+
+.card-metas-user {
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 @media only screen and (max-width: 600px) {

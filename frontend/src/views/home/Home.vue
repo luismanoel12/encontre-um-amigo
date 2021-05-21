@@ -25,7 +25,7 @@
                   <h2>Animais Para Adoção</h2>
                 </div>
                 <div class="home-2-card-content">
-                  <img src="@/assets/pets.png" width="220" alt="" />
+                  <img src="@/assets/pets.png" width="150" alt="" />
                 </div>
               </div>
             </router-link>
@@ -49,7 +49,7 @@
                   <h2>ONGs</h2>
                 </div>
                 <div class="home-2-card-content">
-                  <img src="@/assets/ongs.png" width="160" alt="" />
+                  <img src="@/assets/ongs.png" width="150" alt="" />
                 </div>
               </div>
             </router-link>
@@ -199,7 +199,7 @@ export default {
 }
 
 .page-3-card{
-  width: 600px;
+  width: auto;
   margin: auto;
   padding-top: 20px;
 }
