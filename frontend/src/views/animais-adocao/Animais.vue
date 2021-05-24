@@ -1,166 +1,200 @@
 <template>
   <div class="animais-page">
     <v-container>
-      <v-form class="form elevation-10">
-        <v-row>
-          <v-col cols="12" sm="4">
-            <v-text-field
-              label="Nome"
-              v-model="animal.nome"
-              prepend-inner-icon="mdi-paw"
-              :readonly="mode === 'remove'"
-              required
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="4">
-            <v-select
-              :items="tipo"
-              :readonly="mode === 'remove'"
-              prepend-inner-icon="mdi-paw"
-              v-model="animal.tipo"
-              label="Tipo"
-              outlined
-            ></v-select>
-          </v-col>
-          <v-col cols="12" sm="4">
-            <v-select
-              :items="sexo"
-              :readonly="mode === 'remove'"
-              prepend-inner-icon="mdi-gender-male-female"
-              v-model="animal.sexo"
-              label="Sexo"
-              outlined
-            ></v-select>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col cols="12" sm="6">
-            <v-select
-              :items="porte"
-              :readonly="mode === 'remove'"
-              prepend-inner-icon="mdi-arrow-expand"
-              v-model="animal.porte"
-              label="Porte"
-              outlined
-            ></v-select>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-text-field
-              label="URL da Imagem"
-              v-model="animal.imagem"
-              :readonly="mode === 'remove'"
-              prepend-inner-icon="mdi-link-variant"
-              required
-              outlined
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col cols="12" sm="3">
-            <v-checkbox
-              color="green"
-              v-model="animal.deficiente"
-              :readonly="mode === 'remove'"
-              :label="'Deficiente'"
-            ></v-checkbox>
-          </v-col>
-          <v-col cols="12" sm="3">
-            <v-checkbox
-              color="green"
-              v-model="animal.vermifugado"
-              :readonly="mode === 'remove'"
-              :label="'Vermifugado'"
-            ></v-checkbox>
-          </v-col>
-          <v-col cols="12" sm="3">
-            <v-checkbox
-              color="green"
-              v-model="animal.vacinado"
-              :readonly="mode === 'remove'"
-              :label="'Vacinado'"
-            ></v-checkbox>
-          </v-col>
-          <v-col cols="12" sm="3">
-            <v-checkbox
-              color="green"
-              v-model="animal.castrado"
-              :readonly="mode === 'remove'"
-              :label="'Castrado'"
-            ></v-checkbox>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col cols="12" sm="4">
-            <v-text-field
-              label="CEP"
-              v-model="animal.cep"
-              v-mask="'#####-###'"
-              :readonly="mode === 'remove'"
-              prepend-inner-icon="mdi-numeric"
-              required
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="4">
-            <v-select
-              :items="estados"
-              :readonly="mode === 'remove'"
-              prepend-inner-icon="mdi-sign-real-estate"
-              v-model="animal.estado"
-              label="Estado"
-              outlined
-            ></v-select>
-          </v-col>
-          <v-col cols="12" sm="4">
-            <v-text-field
-              label="Cidade"
-              v-model="animal.cidade"
-              :readonly="mode === 'remove'"
-              prepend-inner-icon="mdi-city"
-              required
-              outlined
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col cols="12" sm="12">
-            <v-textarea
-              outlined
-              name="input-7-4"
-              v-model="animal.descricao"
-              :readonly="mode === 'remove'"
-              prepend-inner-icon="mdi-card-text"
-              label="Descrição"
-            ></v-textarea>
-          </v-col>
-        </v-row>
-
-        <div class="buttons">
-          <v-btn depressed v-if="mode === 'save'" @click="save" color="success">
-            Salvar
-            <v-icon dark right> mdi-content-save </v-icon>
-          </v-btn>
-          <v-divider vertical></v-divider>
-          <v-btn
-            depressed
-            v-if="mode === 'remove'"
-            @click="remove"
-            color="error"
-            >Excluir
-            <v-icon dark right> mdi-delete </v-icon>
-          </v-btn>
-          <v-divider vertical></v-divider>
-          <v-btn depressed @click="reset" class="btn-cancel" color="primary">
-            Cancelar
-            <v-icon dark right> mdi-close-thick </v-icon>
-          </v-btn>
+      <div class="cadastrar-animais-form">
+        <div class="cadastrar-animais-titulo">
+          <h1>Olá, {{ user.name }}.</h1>
+          <h2>Aqui se encontram todos os seus pets cadastrados!</h2>
         </div>
-      </v-form>
+
+        <v-row class="mt-5 mb-2">
+          <v-dialog v-model="dialog" persistent max-width="800px">
+            <template v-slot:activator="{ on, attrs }">
+              <div class="novo-animal">
+                <v-btn color="success" dark v-bind="attrs" v-on="on">
+                  Cadastrar novo Animal
+
+                  <v-icon dark right> mdi-paw </v-icon>
+                </v-btn>
+              </div>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline excluir-animal" v-if="this.mode === 'remove'">Excluir o Animal: <strong> {{ animal.nome }} </strong> </span>
+                <span class="headline salvar-animal " v-if="!animal.id">Cadastrar Novo Animal</span>
+                <span class="headline atualizar-animal" v-if="animal.id && this.mode != 'remove' ">Atualizar o Animal: <strong> {{ animal.nome }} </strong> </span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Nome"
+                        v-model="animal.nome"
+                        prepend-inner-icon="mdi-paw"
+                        :readonly="mode === 'remove'"
+                        required
+                        outlined
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-select
+                        :items="tipo"
+                        :readonly="mode === 'remove'"
+                        prepend-inner-icon="mdi-paw"
+                        v-model="animal.tipo"
+                        label="Tipo"
+                        outlined
+                      ></v-select>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-select
+                        :items="sexo"
+                        :readonly="mode === 'remove'"
+                        prepend-inner-icon="mdi-gender-male-female"
+                        v-model="animal.sexo"
+                        label="Sexo"
+                        outlined
+                      ></v-select>
+                    </v-col>
+
+                    <v-col cols="12" sm="6">
+                      <v-select
+                        :items="porte"
+                        :readonly="mode === 'remove'"
+                        prepend-inner-icon="mdi-arrow-expand"
+                        v-model="animal.porte"
+                        label="Porte"
+                        outlined
+                      ></v-select>
+                    </v-col>
+                    <v-col cols="12" sm="6">
+                      <v-text-field
+                        label="URL da Imagem"
+                        v-model="animal.imagem"
+                        :readonly="mode === 'remove'"
+                        prepend-inner-icon="mdi-link-variant"
+                        required
+                        outlined
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="3">
+                      <v-checkbox
+                        color="green"
+                        v-model="animal.deficiente"
+                        :readonly="mode === 'remove'"
+                        :label="'Deficiente'"
+                      ></v-checkbox>
+                    </v-col>
+                    <v-col cols="12" sm="3">
+                      <v-checkbox
+                        color="green"
+                        v-model="animal.vermifugado"
+                        :readonly="mode === 'remove'"
+                        :label="'Vermifugado'"
+                      ></v-checkbox>
+                    </v-col>
+                    <v-col cols="12" sm="3">
+                      <v-checkbox
+                        color="green"
+                        v-model="animal.vacinado"
+                        :readonly="mode === 'remove'"
+                        :label="'Vacinado'"
+                      ></v-checkbox>
+                    </v-col>
+                    <v-col cols="12" sm="3">
+                      <v-checkbox
+                        color="green"
+                        v-model="animal.castrado"
+                        :readonly="mode === 'remove'"
+                        :label="'Castrado'"
+                      ></v-checkbox>
+                    </v-col>
+
+                    <v-col cols="12" sm="4">
+                      <v-text-field
+                        label="CEP"
+                        v-model="animal.cep"
+                        v-mask="'#####-###'"
+                        :readonly="mode === 'remove'"
+                        prepend-inner-icon="mdi-numeric"
+                        required
+                        outlined
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="4">
+                      <v-select
+                        :items="estados"
+                        :readonly="mode === 'remove'"
+                        prepend-inner-icon="mdi-sign-real-estate"
+                        v-model="animal.estado"
+                        label="Estado"
+                        outlined
+                      ></v-select>
+                    </v-col>
+                    <v-col cols="12" sm="4">
+                      <v-text-field
+                        label="Cidade"
+                        v-model="animal.cidade"
+                        :readonly="mode === 'remove'"
+                        prepend-inner-icon="mdi-city"
+                        required
+                        outlined
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="12">
+                      <v-textarea
+                        outlined
+                        name="input-7-4"
+                        v-model="animal.descricao"
+                        :readonly="mode === 'remove'"
+                        prepend-inner-icon="mdi-card-text"
+                        label="Descrição"
+                      ></v-textarea>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <small>*indicates required field</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <div class="buttons">
+                  <v-btn
+                    depressed
+                    v-if="mode === 'save'"
+                    @click="save"
+                    color="success"
+                  >
+                    Salvar
+                    <v-icon dark right> mdi-content-save </v-icon>
+                  </v-btn>
+                  <v-divider vertical></v-divider>
+                  <v-btn
+                    depressed
+                    v-if="mode === 'remove'"
+                    @click="remove"
+                    color="error"
+                    >Excluir
+                    <v-icon dark right> mdi-delete </v-icon>
+                  </v-btn>
+                  <v-divider vertical></v-divider>
+                  <v-btn
+                    depressed
+                    @click="reset"
+                    class="btn-cancel"
+                    color="primary"
+                  >
+                    Cancelar
+                    <v-icon dark right> mdi-close-thick </v-icon>
+                  </v-btn>
+                </div>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+      </div>
 
       <v-data-table :items="animais" :headers="headers" class="elevation-10">
         <template v-slot:[`item.actions`]="{ item }">
@@ -196,15 +230,18 @@
 <script>
 import { showError } from "@/global";
 import api from "../../config/api";
+import { mapState } from "vuex";
 
 export default {
   name: "Animais",
+  computed: { ...mapState(["user"]) },
   data: function () {
     return {
       mode: "save",
       animal: {},
       animais: [],
       checkbox: false,
+      dialog: false,
       tipo: [
         { text: "Cachorro", value: "Cachorro" },
         { text: "Gato", value: "Gato" },
@@ -273,6 +310,7 @@ export default {
       this.mode = "save";
       this.animal = {};
       this.loadAnimais();
+      this.dialog = false;
     },
     save() {
       const method = this.animal.id ? "put" : "post";
@@ -296,6 +334,7 @@ export default {
     },
     loadAnimal(animal, mode = "save") {
       this.mode = mode;
+      this.dialog = true;
       api.get(`/animais/${animal.id}`).then((res) => (this.animal = res.data));
     },
   },
@@ -311,11 +350,25 @@ export default {
 </script>
 
 <style>
-.form {
-  margin-top: 50px;
+.cadastrar-animais-form {
+  margin-top: 20px;
   background-color: #fff;
-  padding: 30px;
+  padding: 20px;
   border-radius: 5px;
   margin-bottom: 20px;
+}
+
+.cadastrar-animais-titulo {
+  text-align: center;
+}
+
+.excluir-animal{
+  color: #ef233c;
+}
+.salvar-animal{
+  color: #44cf6c;
+}
+.atualizar-animal{
+  color: #fad202;
 }
 </style>

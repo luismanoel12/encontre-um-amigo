@@ -21,91 +21,109 @@
         <v-tabs-items v-model="tab">
           <v-tab-item>
             <v-card flat>
-              <v-form class="form elevation-10">
-                <v-row>
-                  <v-col cols="12" sm="3">
-                    <v-text-field
-                      label="Título"
-                      v-model="meta.titulo"
-                      :readonly="mode === 'remove'"
-                      required
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="3">
-                    <v-text-field
-                      label="Valor Esperado"
-                      v-model="meta.valorEsperado"
-                      :readonly="mode === 'remove'"
-                      required
-                      type="number"
-                      prefix="R$"
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="3">
-                    <v-text-field
-                      label="Valor Atual"
-                      v-model="meta.valorAtual"
-                      type="number"
-                      prefix="R$"
-                      :readonly="mode === 'remove'"
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="3">
-                    <v-text-field
-                      label="URL da imagem"
-                      v-model="meta.imageUrl"
-                      :readonly="mode === 'remove'"
-                      required
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-
-                <v-row>
-                  <v-col cols="12" sm="12">
-                    <VueEditor
-                      v-model="meta.descricao"
-                      placeholder="Informe o que vai acontecer quando as metas forem atingidas."
-                      :readonly="mode === 'remove'"
-                    />
-                  </v-col>
-                </v-row>
-
-                <div class="buttons-metas">
-                  <v-btn
-                    depressed
-                    v-if="mode === 'save'"
-                    @click="save"
-                    color="success"
-                  >
-                    Salvar
-                    <v-icon dark right> mdi-content-save </v-icon>
-                  </v-btn>
-                  <v-divider vertical></v-divider>
-                  <v-btn
-                    depressed
-                    v-if="mode === 'remove'"
-                    @click="remove"
-                    color="error"
-                  >
-                    Excluir
-                    <v-icon dark right> mdi-delete </v-icon>
-                  </v-btn>
-                  <v-divider vertical></v-divider>
-                  <v-btn
-                    depressed
-                    @click="reset"
-                    class="btn-cancel"
-                    color="primary"
-                  >
-                    Cancelar
-                    <v-icon dark right> mdi-close-thick </v-icon>
-                  </v-btn>
-                </div>
-              </v-form>
+              <v-row>
+                <v-dialog v-model="dialog1" persistent max-width="1000px">
+                  <template v-slot:activator="{ on, attrs }">
+                    <div class="nova-meta">
+                      <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                      Cadastrar nova meta
+                    </v-btn>
+                    </div>
+                  </template>
+                  <v-card>
+                    <v-card-title>
+                      <span class="headline">Cadastrar Metas</span>
+                    </v-card-title>
+                    <v-card-text>
+                      <v-container>
+                        <v-row>
+                          <v-col cols="12" sm="6">
+                            <v-text-field
+                              label="Título"
+                              v-model="meta.titulo"
+                              :readonly="mode === 'remove'"
+                              required
+                              outlined
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="6">
+                            <v-text-field
+                              label="Valor Esperado"
+                              v-model="meta.valorEsperado"
+                              :readonly="mode === 'remove'"
+                              required
+                              type="number"
+                              prefix="R$"
+                              outlined
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="6">
+                            <v-text-field
+                              label="Valor Atual"
+                              v-model="meta.valorAtual"
+                              type="number"
+                              prefix="R$"
+                              :readonly="mode === 'remove'"
+                              outlined
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="6">
+                            <v-text-field
+                              label="URL da imagem"
+                              v-model="meta.imageUrl"
+                              :readonly="mode === 'remove'"
+                              required
+                              outlined
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="12">
+                            <VueEditor
+                              v-model="meta.descricao"
+                              placeholder="Informe o que vai acontecer quando as metas forem atingidas."
+                              :readonly="mode === 'remove'"
+                            />
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                      <small>*indicates required field</small>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <div class="buttons-metas">
+                        <v-btn
+                          depressed
+                          v-if="mode === 'save'"
+                          @click="save"
+                          color="success"
+                        >
+                          Salvar
+                          <v-icon dark right> mdi-content-save </v-icon>
+                        </v-btn>
+                        <v-divider vertical></v-divider>
+                        <v-btn
+                          depressed
+                          v-if="mode === 'remove'"
+                          @click="remove"
+                          color="error"
+                        >
+                          Excluir
+                          <v-icon dark right> mdi-delete </v-icon>
+                        </v-btn>
+                        <v-divider vertical></v-divider>
+                        <v-btn
+                          depressed
+                          @click="reset"
+                          class="btn-cancel"
+                          color="primary"
+                        >
+                          Cancelar
+                          <v-icon dark right> mdi-close-thick </v-icon>
+                        </v-btn>
+                      </div>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-row>
 
               <v-data-table
                 :items="metas"
@@ -145,85 +163,104 @@
 
           <v-tab-item>
             <v-card color="basil" flat>
-              <v-form class="form elevation-10">
-                <v-row>
-                  <v-col cols="12" sm="4">
-                    <v-text-field
-                      label="Título"
-                      v-model="objetivo.titulo"
-                      :readonly="mode === 'remove'"
-                      required
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="4">
-                    <v-text-field
-                      label="Valor"
-                      v-model="objetivo.valor"
-                      :readonly="mode === 'remove'"
-                      required
-                      type="number"
-                      prefix="R$"
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="4">
-                    <v-select
-                      :items="metasSelect"
-                      v-model="objetivo.metasId"
-                      label="Selecione a Meta"
-                      outlined
-                    ></v-select>
-                  </v-col>
-                </v-row>
+              <v-row>
+                <v-dialog v-model="dialog2" persistent max-width="800px">
+                  <template v-slot:activator="{ on, attrs }">
+                    <div class="novo-objetivo">
+                      <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                      Cadastrar novo objetivo
+                    </v-btn>
+                    </div>
+                  </template>
+                  <v-card>
+                    <v-card-title>
+                      <span class="headline">Cadastrar Objetivos</span>
+                    </v-card-title>
+                    <v-card-text>
+                      <v-container>
+                        <v-row>
+                          <v-col cols="12" sm="4">
+                            <v-text-field
+                              label="Título"
+                              v-model="objetivo.titulo"
+                              :readonly="mode === 'remove'"
+                              required
+                              outlined
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="4">
+                            <v-text-field
+                              label="Valor"
+                              v-model="objetivo.valor"
+                              :readonly="mode === 'remove'"
+                              required
+                              type="number"
+                              prefix="R$"
+                              outlined
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="4">
+                            <v-select
+                              :items="metasSelect"
+                              v-model="objetivo.metasId"
+                              label="Selecione a Meta"
+                              outlined
+                            ></v-select>
+                          </v-col>
 
-                <v-row>
-                  <v-col cols="12" sm="12">
-                    <v-textarea
-                      outlined
-                      v-model="objetivo.descricao"
-                      :readonly="mode === 'remove'"
-                      maxlength="250"
-                      counter="250"
-                      hint="Máximo de 250 caracteres"
-                      name="input-7-4"
-                      label="Descrição"
-                    ></v-textarea>
-                  </v-col>
-                </v-row>
-
-                <div class="buttons-metas">
-                  <v-btn
-                    depressed
-                    v-if="mode === 'save'"
-                    @click="saveObjetivos"
-                    color="success"
-                  >
-                    Salvar
-                    <v-icon dark right> mdi-content-save </v-icon>
-                  </v-btn>
-                  <v-divider vertical></v-divider>
-                  <v-btn
-                    depressed
-                    v-if="mode === 'remove'"
-                    @click="removeObjetivos"
-                    color="error"
-                  >
-                    Excluir
-                    <v-icon dark right> mdi-delete </v-icon>
-                  </v-btn>
-                  <v-divider vertical></v-divider>
-                  <v-btn
-                    depressed
-                    @click="resetObjetivos"
-                    class="btn-cancel"
-                    color="primary"
-                  >
-                    Cancelar
-                    <v-icon dark right> mdi-close-thick </v-icon>
-                  </v-btn>
-                </div>
-              </v-form>
+                          <v-col cols="12" sm="12">
+                            <v-textarea
+                              outlined
+                              v-model="objetivo.descricao"
+                              :readonly="mode === 'remove'"
+                              maxlength="250"
+                              counter="250"
+                              hint="Máximo de 250 caracteres"
+                              name="input-7-4"
+                              label="Descrição"
+                            ></v-textarea>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                      <small>*indicates required field</small>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <div class="buttons-metas">
+                        <v-btn
+                          depressed
+                          v-if="mode === 'save'"
+                          @click="saveObjetivos"
+                          color="success"
+                        >
+                          Salvar
+                          <v-icon dark right> mdi-content-save </v-icon>
+                        </v-btn>
+                        <v-divider vertical></v-divider>
+                        <v-btn
+                          depressed
+                          v-if="mode === 'remove'"
+                          @click="removeObjetivos"
+                          color="error"
+                        >
+                          Excluir
+                          <v-icon dark right> mdi-delete </v-icon>
+                        </v-btn>
+                        <v-divider vertical></v-divider>
+                        <v-btn
+                          depressed
+                          @click="resetObjetivos"
+                          class="btn-cancel"
+                          color="primary"
+                        >
+                          Cancelar
+                          <v-icon dark right> mdi-close-thick </v-icon>
+                        </v-btn>
+                      </div>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-row>
 
               <v-data-table
                 :items="objetivos"
@@ -283,6 +320,8 @@ export default {
       metas: [],
       metasSelect: [],
       objetivos: [],
+      dialog1: false,
+      dialog2: false,
       headers: [
         {
           align: "start",
@@ -319,6 +358,7 @@ export default {
       this.mode = "save";
       this.meta = {};
       this.loadMetas();
+      this.dialog1 = false;
     },
     save() {
       const method = this.meta.id ? "put" : "post";
@@ -381,6 +421,7 @@ export default {
       this.mode = "save";
       this.objetivo = {};
       this.loadObjetivos();
+      this.dialog2 = false;
     },
 
     loadObjetivo(objetivo, mode = "save") {
@@ -451,6 +492,14 @@ export default {
 }
 
 .v-card > *:last-child:not(.v-btn):not(.v-chip) {
+  padding: 20px;
+}
+
+.nova-meta{
+  padding: 20px;
+}
+
+.novo-objetivo{
   padding: 20px;
 }
 </style>
