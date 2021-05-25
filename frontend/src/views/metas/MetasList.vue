@@ -104,8 +104,9 @@
     </div>
 
     <div class="text-center pagination">
-      <v-btn depressed color="primary" v-if="loadMore" @click="getMetas">
+      <v-btn depressed class="bt-carregar-mais" elevation="24" dark v-if="loadMore" @click="getMetas">
         Carregar Mais
+        <v-icon dark right> mdi-reload </v-icon>
       </v-btn>
     </div>
   </v-container>

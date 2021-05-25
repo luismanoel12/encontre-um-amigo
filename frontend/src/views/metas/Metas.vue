@@ -25,14 +25,18 @@
                 <v-dialog v-model="dialog1" persistent max-width="1000px">
                   <template v-slot:activator="{ on, attrs }">
                     <div class="nova-meta">
-                      <v-btn color="primary" dark v-bind="attrs" v-on="on">
-                      Cadastrar nova meta
-                    </v-btn>
+                      <v-btn color="success" dark v-bind="attrs" v-on="on">
+                        Cadastrar nova meta
+
+                        <v-icon dark right> mdi-plus </v-icon>
+                      </v-btn>
                     </div>
                   </template>
                   <v-card>
                     <v-card-title>
-                      <span class="headline">Cadastrar Metas</span>
+                      <span class="headline excluir-animal" v-if="this.mode === 'remove'">Excluir a Meta: <strong> {{ meta.titulo }} </strong> </span>
+                      <span class="headline salvar-animal " v-if="!meta.id">Cadastrar Metas</span>
+                      <span class="headline atualizar-animal" v-if="meta.id && this.mode != 'remove' ">Atualizar a Meta: <strong> {{ meta.titulo }} </strong> </span>
                     </v-card-title>
                     <v-card-text>
                       <v-container>
@@ -42,6 +46,7 @@
                               label="Título"
                               v-model="meta.titulo"
                               :readonly="mode === 'remove'"
+                              prepend-inner-icon="mdi-format-title"
                               required
                               outlined
                             ></v-text-field>
@@ -72,6 +77,7 @@
                               label="URL da imagem"
                               v-model="meta.imageUrl"
                               :readonly="mode === 'remove'"
+                               prepend-inner-icon="mdi-image"
                               required
                               outlined
                             ></v-text-field>
@@ -79,6 +85,7 @@
                           <v-col cols="12" sm="12">
                             <VueEditor
                               v-model="meta.descricao"
+                              prepend-inner-icon="mdi-card-text-outline"
                               placeholder="Informe o que vai acontecer quando as metas forem atingidas."
                               :readonly="mode === 'remove'"
                             />
@@ -162,19 +169,23 @@
           <!-- Objetivos -->
 
           <v-tab-item>
-            <v-card color="basil" flat>
+            <v-card flat>
               <v-row>
                 <v-dialog v-model="dialog2" persistent max-width="800px">
                   <template v-slot:activator="{ on, attrs }">
                     <div class="novo-objetivo">
-                      <v-btn color="primary" dark v-bind="attrs" v-on="on">
-                      Cadastrar novo objetivo
-                    </v-btn>
+                      <v-btn color="success" dark v-bind="attrs" v-on="on">
+                        Cadastrar novo objetivo
+
+                        <v-icon dark right> mdi-plus </v-icon>
+                      </v-btn>
                     </div>
                   </template>
                   <v-card>
-                    <v-card-title>
-                      <span class="headline">Cadastrar Objetivos</span>
+                    <v-card-title>                
+                      <span class="headline excluir-animal" v-if="this.mode === 'remove'">Excluir o Objetivo: <strong> {{ objetivo.titulo }} </strong> </span>
+                      <span class="headline salvar-animal " v-if="!objetivo.id">Cadastrar Objetivos</span>
+                      <span class="headline atualizar-animal" v-if="objetivo.id && this.mode != 'remove' ">Atualizar o Objetivo: <strong> {{ objetivo.titulo }} </strong> </span>
                     </v-card-title>
                     <v-card-text>
                       <v-container>
@@ -183,6 +194,7 @@
                             <v-text-field
                               label="Título"
                               v-model="objetivo.titulo"
+                              prepend-inner-icon="mdi-format-title"
                               :readonly="mode === 'remove'"
                               required
                               outlined
@@ -203,6 +215,7 @@
                             <v-select
                               :items="metasSelect"
                               v-model="objetivo.metasId"
+                              prepend-inner-icon="mdi-bullseye-arrow"
                               label="Selecione a Meta"
                               outlined
                             ></v-select>
@@ -215,6 +228,7 @@
                               :readonly="mode === 'remove'"
                               maxlength="250"
                               counter="250"
+                              prepend-inner-icon="mdi-card-text-outline"
                               hint="Máximo de 250 caracteres"
                               name="input-7-4"
                               label="Descrição"
@@ -384,6 +398,7 @@ export default {
     loadMeta(meta, mode = "save") {
       this.mode = mode;
       api.get(`/metas/${meta.id}`).then((res) => (this.meta = res.data));
+      this.dialog1 = true;
     },
 
     // ################ objetivos ################
@@ -429,6 +444,7 @@ export default {
       api
         .get(`/objetivos/${objetivo.id}`)
         .then((res) => (this.objetivo = res.data));
+        this.dialog2 = true;
     },
 
     loadMetasList() {
@@ -495,11 +511,11 @@ export default {
   padding: 20px;
 }
 
-.nova-meta{
+.nova-meta {
   padding: 20px;
 }
 
-.novo-objetivo{
+.novo-objetivo {
   padding: 20px;
 }
 </style>

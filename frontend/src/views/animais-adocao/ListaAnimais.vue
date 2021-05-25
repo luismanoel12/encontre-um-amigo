@@ -129,8 +129,10 @@
     </div>
 
     <div class="text-center pagination">
-      <v-btn depressed color="primary" v-if="loadMore" @click="getAnimais">
+      <v-btn depressed class="bt-carregar-mais" elevation="24" dark v-if="loadMore" @click="getAnimais">
         Carregar Mais
+
+        <v-icon dark right> mdi-reload </v-icon>
       </v-btn>
     </div>
   </v-container>
@@ -304,6 +306,7 @@ export default {
 .divider-animal-specs{
   margin-bottom: 10px;
 }
+
 
 @media only screen and (max-width: 600px) {
   .animal-card {

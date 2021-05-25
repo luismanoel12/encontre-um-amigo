@@ -213,7 +213,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app dark color="#036564" v-if="!user || user">
+    <v-app-bar app dark class="menu-bg" v-if="!user || user">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <router-link to="/home" class="home-router">
@@ -352,6 +352,10 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.menu-bg{
+    background: linear-gradient(110deg, #00171f 30%, #036564 60%);
 }
 
 @media (max-width: 600px) {

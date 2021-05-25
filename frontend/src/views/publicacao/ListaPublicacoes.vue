@@ -73,10 +73,10 @@
     </div>
 
     <div class="text-center pagination">
-      <v-btn depressed color="primary" v-if="loadMore" @click="getPublicacoes">
-        Carregar Mais Publicações
+      <v-btn depressed class="bt-carregar-mais" elevation="24" dark v-if="loadMore" @click="getPublicacoes">
+        Carregar Mais
 
-        <v-icon dark class="ml-2"> mdi-reload </v-icon>
+        <v-icon dark right> mdi-reload </v-icon>
       </v-btn>
     </div>
   </v-container>
