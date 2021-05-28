@@ -24,7 +24,8 @@ module.exports = app => {
 
         if (animais.id) {
             app.db('animais')
-                .update(animais)
+                .update({ tipo: animais.tipo, nome: animais.nome, sexo: animais.sexo, porte: animais.porte, imagem: animais.imagem,
+                     cep: animais.cep, estado: animais.estado, cidade: animais.cidade})
                 .where({ id: animais.id })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
@@ -57,15 +58,21 @@ module.exports = app => {
         }
     }
 
+    // const limitPorUsuario = 10 //usado para paginação
     const getPorUsuario = async (req, res) => {
+        // const page = req.query.page || 1
+        // const result = await app.db('animais').count('id').first()
+        // const count = parseInt(result.count)
 
         app.db('animais')
             .where({ userId: req.user.id })
+            .orderBy('createdAt', 'desc')
+            // .limit(limitPorUsuario).offset(page * limitPorUsuario - limitPorUsuario)
             .then(animais => res.json(animais))
             .catch(err => res.status(500).send(err))
     }
 
-    const limit = 20 //usado para paginação
+    const limit = 10 //usado para paginação
     const get = async (req, res) => {
         const page = req.query.page || 1
         const result = await app.db('animais').count('id').first()
