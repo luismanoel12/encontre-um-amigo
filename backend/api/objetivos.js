@@ -48,7 +48,7 @@ module.exports = app => {
     }
 
     
-    const getPorUsuario = async (req, res) => {
+    const getByUser = async (req, res) => {
 
         app.db('doacoes_com_metas_objetivos')
             .where({ userId: req.user.id })
@@ -77,5 +77,5 @@ module.exports = app => {
     }
 
 
-    return { save, remove, get, getById, getPorUsuario }
+    return { save, remove, get, getById, getByUser }
 }

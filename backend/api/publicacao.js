@@ -58,7 +58,7 @@ module.exports = app => {
         }
     }
 
-    const getPorUsuario = async (req, res) => {
+    const getByUser = async (req, res) => {
 
         app.db('publicacao')
             .where({ userId: req.user.id })
@@ -66,7 +66,7 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    const getUltimasPublicacoes = async (req, res) => {
+    const getLatestPublications = async (req, res) => {
 
         app.db('publicacao')
             .select('id', 'titulo', 'imageUrl', 'chamada', 'userId')
@@ -109,5 +109,5 @@ module.exports = app => {
     }
 
 
-    return { save, remove, get, getById, getPorUsuario, getUltimasPublicacoes }
+    return { save, remove, get, getById, getByUser, getLatestPublications }
 }

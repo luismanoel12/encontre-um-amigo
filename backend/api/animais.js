@@ -57,7 +57,7 @@ module.exports = app => {
         }
     }
 
-    const getPorUsuario = async (req, res) => {
+    const getByUser = async (req, res) => {
 
         app.db('animais')
             .where({ userId: req.user.id })
@@ -112,5 +112,5 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    return { save, remove, get, getById, getPorUsuario, getCustomSearch }
+    return { save, remove, get, getById, getByUser, getCustomSearch }
 }

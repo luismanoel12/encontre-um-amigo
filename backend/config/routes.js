@@ -73,7 +73,7 @@ module.exports = app => {
 
     app.route('/metasUsuario')
         .all(app.config.passport.authenticate())
-        .get(app.api.metas.getPorUsuario)
+        .get(app.api.metas.getByUser)
 
     app.route('/metas/:id')
         .all(app.config.passport.authenticate())
@@ -101,7 +101,7 @@ module.exports = app => {
     app.route('/objetivosUsuario/:id')
         .all(app.config.passport.authenticate())
         .post(app.api.objetivos.save)
-        .get(app.api.objetivos.getPorUsuario)
+        .get(app.api.objetivos.getByUser)
 
 
     // Cadastro de animais e listagem
@@ -115,7 +115,7 @@ module.exports = app => {
     app.route('/animaisUsuario')
         .all(app.config.passport.authenticate())
         .post(app.api.animais.save)
-        .get(app.api.animais.getPorUsuario)
+        .get(app.api.animais.getByUser)
 
     app.route('/animais/:id')
         .all(app.config.passport.authenticate())
@@ -135,7 +135,7 @@ module.exports = app => {
     app.route('/publicacaoUsuario')
         .all(app.config.passport.authenticate())
         .post(app.api.publicacao.save)
-        .get(app.api.publicacao.getPorUsuario)
+        .get(app.api.publicacao.getByUser)
 
 
     app.route('/publicacao/:id')
@@ -170,7 +170,7 @@ module.exports = app => {
     app.route('/ongBio')
         .all(app.config.passport.authenticate())
         .post(app.api.bio.save)
-        .get(app.api.bio.getPorUsuario)
+        .get(app.api.bio.getByUser)
         .put(app.api.bio.save)
 
 

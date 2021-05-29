@@ -46,7 +46,7 @@ module.exports = app => {
         }
     }
 
-    const getPorUsuario = async (req, res) => {
+    const getByUser = async (req, res) => {
 
         app.db('ong_bio')
             .where({ userId: req.user.id })
@@ -78,5 +78,5 @@ module.exports = app => {
     }
 
 
-    return { save, remove, getById, get, getPorUsuario, }
+    return { save, remove, getById, get, getByUser }
 }
