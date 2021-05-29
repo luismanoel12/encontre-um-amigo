@@ -8,6 +8,21 @@
             :to="{ name: 'metasById', params: { id: meta.id } }"
           >
             <v-card class="mx-auto my-12 meta-card" max-width="374">
+              <div class="card-met-user">
+                <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
+                  <Gravatar :email="meta.email" :alt="meta.userName" />
+                </v-avatar>
+                <router-link
+                  class="pub-router-link"
+                  :to="{
+                    name: 'ongById',
+                    params: { id: meta.userId },
+                  }"
+                >
+                  <h3>{{ meta.name }}</h3>
+                </router-link>
+              </div>
+
               <div class="img-card">
                 <img
                   v-if="meta.imageUrl"
@@ -48,13 +63,22 @@
                     }}</strong
                   >
                 </h3>
-
-                <div>
-                  <span>Criado por: {{ meta.name }} </span>
-                </div>
-                <div>
-                </div>
               </v-card-text>
+
+              <h5 class="text-center">
+                {{
+                  new Date(meta.createdAt).toLocaleString("pt-br", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour12: true,
+                    hour: "numeric",
+                    minute: "2-digit",
+                    second: "2-digit",
+                  })
+                }}
+              </h5>
 
               <v-divider class="mx-4"></v-divider>
 
@@ -80,8 +104,9 @@
     </div>
 
     <div class="text-center pagination">
-      <v-btn depressed color="primary" v-if="loadMore" @click="getMetas">
+      <v-btn depressed class="bt-carregar-mais" elevation="24" dark v-if="loadMore" @click="getMetas">
         Carregar Mais
+        <v-icon dark right> mdi-reload </v-icon>
       </v-btn>
     </div>
   </v-container>
@@ -89,10 +114,11 @@
 
 <script>
 import api from "../../config/api";
-import moment from "moment";
+import Gravatar from "vue-gravatar";
 
 export default {
   name: "MetasList",
+  components: { Gravatar },
   data: function () {
     return {
       metas: [],
@@ -111,10 +137,6 @@ export default {
 
         if (res.data.data.length === 0) this.loadMore = false;
       });
-    },
-
-    moment: function () {
-      return moment();
     },
   },
   watch: {
@@ -181,8 +203,6 @@ export default {
 
 .img-card img {
   width: 100%;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
   object-fit: cover;
 }
 
@@ -198,5 +218,12 @@ export default {
   transform: scale(1.04);
   transition: 0.5s;
   border-radius: 8px;
+}
+
+.card-met-user {
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 </style>

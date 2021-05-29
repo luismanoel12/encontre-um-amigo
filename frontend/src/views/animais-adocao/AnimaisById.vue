@@ -6,32 +6,53 @@
           <v-sheet rounded="lg" min-height="268" elevation="10">
             <div class="animal-left-card">
               <div class="animal-left-card-header">
-                <h2 class="text-center" >Foto</h2>
+                <h2 class="text-center">Responsavel Pela adoção</h2>
               </div>
               <div class="animal-left-card-content">
-                <div class="animal-info">
-                  <h2>Cidade: {{ animal.cidade }}</h2>
-                  <span class="mdi mdi-city mdi-24px  ml-3"></span>
-                </div>
-                <div class="animal-info">
-                  <h2>Estado: {{ animal.estado }}</h2>
-                  <span class="mdi mdi-sign-real-estate mdi-24px  ml-3"></span>
-                </div>
-                <div class="animal-info">
-                  <h2>Tipo: {{ animal.tipo }}</h2>
-                  <span class="mdi mdi-cat mdi-24px ml-3" v-if="animal.tipo == 'Gato'"></span>
-                  <span class="mdi mdi-dog-side mdi-24px  ml-3" v-else></span>
-                </div>
-                <div class="animal-info">
-                  <h2>Sexo: {{ animal.sexo }}</h2>
-                  <span class="mdi mdi-gender-male mdi-24px  ml-3" v-if="animal.sexo == 'Macho' "></span>
-                  <span class="mdi mdi-gender-female mdi-24px  ml-3" v-else></span>
-                </div>
-                <div class="animal-info">
-                  <h2>Porte: {{ animal.porte }}</h2>
-                  <span class="mdi mdi-alpha-p-circle mdi-24px  ml-3" v-if="animal.porte == 'Pequeno' "></span>
-                  <span class="mdi mdi-alpha-m-circle mdi-24px  ml-3" v-if="animal.porte == 'Médio' "></span>
-                  <span class="mdi mdi-alpha-g-circle mdi-24px  ml-3" v-if="animal.porte == 'Grande' "></span>
+                <div class="animalById-responsavel">
+                  <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
+                    <Gravatar :email="animal.email" :alt="animal.name" />
+                  </v-avatar>
+                  <div class="animal-info">
+                    <span class="mdi mdi-account mr-2 mdi-24px"></span>
+                    <router-link
+                      class="pub-router-link"
+                      :to="{
+                        name: 'ongById',
+                        params: { id: animal.userId },
+                      }"
+                    >
+                      <h2>{{ animal.name }}</h2>
+                    </router-link>
+                  </div>
+
+                  <div class="animal-info">
+                    <span class="mdi mdi-clock mdi-16px mr-2"></span>
+                    <span
+                      >Anunciado em:
+                      {{
+                        new Date(animal.createdAt).toLocaleDateString("pt-br")
+                      }}
+                    </span>
+                  </div>
+                  <div class="contato-responsavel">
+                    <div class="contato-responsavel-header">
+                      <label class="text-center"
+                        >Para adotar ou saber mais sobre este pet, entre em
+                        contato:</label
+                      >
+                    </div>
+                    <div class="contato-responsavel-content">
+                      <h4>
+                        <span class="mdi mdi-email"></span>
+                        E-mail: <strong>{{ animal.email }}</strong>
+                      </h4>
+                      <h4>
+                        <span class="mdi mdi-phone-in-talk"></span>
+                        Telefone: <strong>{{ animal.telefone }}</strong>
+                      </h4>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -62,34 +83,51 @@
               <p>
                 {{ animal.descricao }}
               </p>
+
+              <v-divider></v-divider>
+
+              <div class="informacoes">
+                <label>Informações</label>
+                <v-row class="mt-4">
+                  <v-col cols="12" sm="4">
+                    <h3 id="tipo">Tipo : {{ animal.tipo }}</h3>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <h3>Sexo: {{ animal.sexo }}</h3>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <h3>Porte: {{ animal.porte }}</h3>
+                  </v-col>
+                </v-row>
+
+                <h3 class="mt-12">
+                  Localização: {{ animal.cidade }} - {{ animal.estado }}
+                </h3>
+              </div>
             </div>
 
             <div class="share-button">
+              <h4 class="text-center">Compartilhe</h4>
+              <v-divider></v-divider>
               <div class="overflow-hidden">
-                <div class="text-center mb-8">
-                  <v-btn color="deep-purple" outlined @click="active = !active">
-                    compartilhar
-                  </v-btn>
-                </div>
-
-                <v-bottom-navigation
-                  v-model="value"
-                  :input-value="active"
-                  color="indigo"
-                >
-                  <v-btn>
+                <v-bottom-navigation color="indigo" class="share">
+                  <v-btn :href="this.fbUrl" target="_blank">
                     <v-icon x-large color="#3B5998">mdi-facebook</v-icon>
                   </v-btn>
 
-                  <v-btn>
+                  <!-- <v-btn>
                     <v-icon x-large color="#8134AF">mdi-instagram</v-icon>
-                  </v-btn>
+                  </v-btn> -->
 
-                  <v-btn>
+                  <v-btn :href="this.twUrl" target="_blank">
                     <v-icon x-large color="#08a0e9">mdi-twitter</v-icon>
                   </v-btn>
 
-                  <v-btn>
+                  <v-btn
+                    :href="this.wpUrl"
+                    data-action="share/whatsapp/share"
+                    target="_blank"
+                  >
                     <v-icon x-large color="#25D366">mdi-whatsapp</v-icon>
                   </v-btn>
                 </v-bottom-navigation>
@@ -104,18 +142,20 @@
 
 <script>
 import api from "../../config/api";
+import Gravatar from "vue-gravatar";
 
 export default {
   name: "AnimaisById",
+  components: { Gravatar },
   data: function () {
     return {
       animal: {},
       value: 1,
       active: true,
+      atualUrl: null,
       fbUrl: null,
-      wpUrl: "",
-      ttUrl: "",
-      igUrl: "",
+      twUrl: null,
+      wpUrl: null,
     };
   },
   methods: {
@@ -125,9 +165,11 @@ export default {
     },
 
     loadSharingUrls() {
-      const atualUrl = document.location.href;
+      this.atualUrl = document.location.href;
 
-      this.fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${atualUrl}`;
+      this.fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${this.atualUrl}`;
+      this.twUrl = `https://twitter.com/intent/tweet?text=${this.atualUrl}`;
+      this.wpUrl = `https://api.whatsapp.com/send?text=${this.atualUrl}`;
     },
   },
   mounted() {
@@ -193,17 +235,40 @@ export default {
 .share-button {
   margin-top: 50px;
 }
-.animal-info{
+.animal-info {
   display: flex;
   flex-direction: row;
   color: #2a9d8f;
 }
 
-.img-card-animalById > img{
+.img-card-animalById > img {
   width: 100%;
   max-height: 300px;
   object-fit: cover;
   border-radius: 5px;
 }
 
+.informacoes {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.share {
+  border-radius: 3px;
+}
+
+.animalById-responsavel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contato-responsavel {
+  margin-top: 40px;
+}
+
+.contato-responsavel-content {
+  color: #2a9d8f;
+  text-align: center;
+}
 </style>

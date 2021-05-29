@@ -410,7 +410,7 @@ export default {
 }
 
 .dashboard-page-title {
-  background-color: #fff;
+  background: linear-gradient(110deg, #036564 60%, #00171f 40%);
   padding: 10px;
   border-radius: 5px;
   text-align: center;

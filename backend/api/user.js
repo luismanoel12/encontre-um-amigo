@@ -162,15 +162,19 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    const getOngById = (req, res) => {
+    const getOngById = async (req, res) => {
+
         app.db('users')
             .join('endereco', 'users.id', 'endereco.userId')
             .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.cnpj', 'users.ong',
                 'endereco.endereco', 'endereco.numero', 'endereco.complemento', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
             .where({ 'users.id': req.params.id })
+            .andWhere({ 'users.ong': true })
             .first()
             .then(user => res.json(user))
             .catch(err => res.status(500).send(err))
+
+
     }
 
 
@@ -213,20 +217,20 @@ module.exports = app => {
 
 
         const user = await app.db('users')
-        .where({ id: req.user.id })
-        .first()
+            .where({ id: req.user.id })
+            .first()
 
         const isMatch = bcrypt.compareSync(userPassword.password, user.password)
         if (!isMatch) return res.status(401).send('A senha atual que você digitou não é igual a sua senha cadastrada')
-        else{
+        else {
             userPassword.newPassword = ecryptPassword(userPassword.newPassword)
             delete userPassword.confirmPassword
 
             app.db('users')
-            .update({ password: userPassword.newPassword })
-            .where({ id: req.user.id })
-            .then(_ => res.status(204).send())
-            .catch(err => res.status(500).send(err))
+                .update({ password: userPassword.newPassword })
+                .where({ id: req.user.id })
+                .then(_ => res.status(204).send())
+                .catch(err => res.status(500).send(err))
 
         }
 

@@ -152,6 +152,7 @@ const routes = [{
 
 
 const router = new VueRouter({
+    mode: 'history',
     routes 
 })
 
@@ -185,6 +186,8 @@ router.beforeEach((to, from, next) => {
     } else {
         next()
     }
+
+    
 })
 
 export default router

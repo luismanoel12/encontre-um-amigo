@@ -68,7 +68,7 @@ module.exports = app => {
 
     const getById = (req, res) => {
         app.db('ong_bio')
-            .where({ id: req.params.id })
+            .where({ userId: req.params.id })
             .first()
             .then(bio => {
                 bio.descricao = bio.descricao.toString()

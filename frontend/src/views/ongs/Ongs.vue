@@ -2,6 +2,7 @@
   <v-container>
     <div class="ongs-page">
       <h1 class="text-center">ONGs Cadastradas no sistema</h1>
+      <v-divider class="mb-5"></v-divider>
       <v-row>
         <v-col cols="12" sm="4" v-for="ong in ongs" :key="ong.id">
           <router-link
@@ -35,8 +36,10 @@
     </div>
 
     <div class="text-center pagination">
-      <v-btn depressed color="#00bfad" dark v-if="loadMore" @click="getOngs">
+      <v-btn depressed class="bt-carregar-mais" elevation="24" dark v-if="loadMore" @click="getOngs">
         Carregar Mais
+
+        <v-icon dark right> mdi-reload </v-icon>
       </v-btn>
     </div>
   </v-container>
@@ -124,4 +127,5 @@ export default {
 .ong-card:hover{
   transform: scale(1.03);
 }
+
 </style>

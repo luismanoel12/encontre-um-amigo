@@ -1,76 +1,124 @@
 <template>
   <div class="animais-page">
     <v-container>
-      <v-form class="form elevation-10">
-        <v-row>
-          <v-col cols="12" sm="6">
-            <v-text-field
-              label="Título"
-              v-model="publicacao.titulo"
-              :readonly="mode === 'remove'"
-              required
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-text-field
-              label="URL da imagem"
-              v-model="publicacao.imageUrl"
-              :readonly="mode === 'remove'"
-              required
-              outlined
-            ></v-text-field>
-          </v-col>
-        </v-row>
 
-        <v-row>
-          <v-col cols="12" sm="12">
-            <v-textarea
-              outlined
-              name="input-7-4"
-              v-model="publicacao.chamada"
-              :readonly="mode === 'remove'"
-              label="Chamada"
-              maxlength="500"
-              counter="500"
-              hint="Máximo de 500 caracteres"
-              required
-              placeholder="Digite a chamada para sua publicação."
-            ></v-textarea>
-          </v-col>
-        </v-row>
+      <div class="cadastrar-animais-titulo">
+        <h1>Olá, {{ user.name }}.</h1>
+        <h2>Aqui se encontram todas as suas publicações!</h2>
+      </div>
 
-        <v-row>
-          <v-col cols="12" sm="12">
-            <VueEditor
-              v-model="publicacao.descricao"
-              placeholder="Informe o conteúdo da publicação"
-              :readonly="mode === 'remove'"
-            />
-          </v-col>
-        </v-row>
+      <v-row>
+        <v-dialog v-model="dialog" max-width="100vh">
+          <template v-slot:activator="{ on, attrs }">
+            <div class="nova-publicacao-header">
+              <v-btn color="success" dark v-bind="attrs" v-on="on">
+                Nova publicação
 
-        <div class="buttons">
-          <v-btn depressed v-if="mode === 'save'" @click="save" color="success">
-            Salvar
-            <v-icon dark right> mdi-content-save </v-icon>
-          </v-btn>
-          <v-divider vertical></v-divider>
-          <v-btn
-            depressed
-            v-if="mode === 'remove'"
-            @click="remove"
-            color="error"
-            >Excluir
-            <v-icon dark right> mdi-delete </v-icon>
-          </v-btn>
-          <v-divider vertical></v-divider>
-          <v-btn depressed @click="reset" class="btn-cancel" color="primary">
-            Cancelar
-            <v-icon dark right> mdi-close-thick </v-icon>
-          </v-btn>
-        </div>
-      </v-form>
+                <v-icon dark right> mdi-newspaper-plus </v-icon>
+              </v-btn>
+            </div>
+          </template>
+          <v-card>
+            <v-card-title>
+              <span
+                class="headline excluir-animal"
+                v-if="this.mode === 'remove'"
+                >Excluir a Publicação:
+                <strong> {{ publicacao.titulo }} </strong>
+              </span>
+              <span class="headline salvar-animal" v-if="!publicacao.id"
+                >Cadastrar Publicações</span
+              >
+              <span
+                class="headline atualizar-animal"
+                v-if="publicacao.id && this.mode != 'remove'"
+                >Atualizar a Publicação:
+                <strong> {{ publicacao.titulo }} </strong>
+              </span>
+            </v-card-title>
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      label="Título"
+                      v-model="publicacao.titulo"
+                      :readonly="mode === 'remove'"
+                      required
+                      outlined
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      label="URL da imagem"
+                      v-model="publicacao.imageUrl"
+                      :readonly="mode === 'remove'"
+                      required
+                      outlined
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="12">
+                    <v-textarea
+                      outlined
+                      name="input-7-4"
+                      v-model="publicacao.chamada"
+                      :readonly="mode === 'remove'"
+                      label="Chamada"
+                      maxlength="500"
+                      counter="500"
+                      hint="Máximo de 500 caracteres"
+                      required
+                      placeholder="Digite a chamada para sua publicação."
+                    ></v-textarea>
+                  </v-col>
+
+                  <v-col cols="12" sm="12">
+                    <VueEditor
+                      v-model="publicacao.descricao"
+                      placeholder="Informe o conteúdo da publicação"
+                      :readonly="mode === 'remove'"
+                    />
+                  </v-col>
+                </v-row>
+              </v-container>
+              <small>*indicates required field</small>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <div class="buttons">
+                <v-btn
+                  depressed
+                  v-if="mode === 'save'"
+                  @click="save"
+                  color="success"
+                >
+                  Salvar
+                  <v-icon dark right> mdi-content-save </v-icon>
+                </v-btn>
+                <v-divider vertical></v-divider>
+                <v-btn
+                  depressed
+                  v-if="mode === 'remove'"
+                  @click="remove"
+                  color="error"
+                  >Excluir
+                  <v-icon dark right> mdi-delete </v-icon>
+                </v-btn>
+                <v-divider vertical></v-divider>
+                <v-btn
+                  depressed
+                  @click="reset"
+                  class="btn-cancel"
+                  color="primary"
+                >
+                  Cancelar
+                  <v-icon dark right> mdi-close-thick </v-icon>
+                </v-btn>
+              </div>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
 
       <v-data-table
         :items="publicacoes"
@@ -111,15 +159,18 @@
 import { showError } from "@/global";
 import api from "../../config/api";
 import { VueEditor } from "vue2-editor";
+import { mapState } from "vuex";
 
 export default {
   name: "Publicacoes",
   components: { VueEditor },
+  computed: { ...mapState(["user"]) },
   data: function () {
     return {
       mode: "save",
       publicacao: {},
       publicacoes: [],
+      dialog: false,
 
       headers: [
         {
@@ -144,6 +195,7 @@ export default {
       this.mode = "save";
       this.publicacao = {};
       this.loadPublicacoes();
+      this.dialog = false;
     },
     save() {
       const method = this.publicacao.id ? "put" : "post";
@@ -170,6 +222,7 @@ export default {
       api
         .get(`/publicacao/${publicacao.id}`)
         .then((res) => (this.publicacao = res.data));
+      this.dialog = true;
     },
   },
   watch: {
@@ -194,5 +247,11 @@ export default {
 
 .buttons {
   margin-top: 20px;
+}
+
+.nova-publicacao-header {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 15px;
 }
 </style>

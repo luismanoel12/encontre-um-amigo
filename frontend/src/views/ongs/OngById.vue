@@ -57,10 +57,7 @@
             <v-divider></v-divider>
             <div class="ong-page-content">
               <h1 class="text-center">BIO</h1>
-              <div
-                class="publicacao-content"
-                v-html="bio.descricao"
-              ></div>
+              <div class="publicacao-content" v-html="bio.descricao"></div>
             </div>
             <v-divider></v-divider>
             <div class="ong-page-actions">
@@ -69,48 +66,59 @@
           </v-sheet>
 
           <h1 class="text-center mt-10">ÚLTIMAS PUBLICAÇÕES</h1>
-          <v-row class="ultimas-publicacoes">
-            <v-col
-              cols="12"
-              sm="12"
-              v-for="publicacao in publicacoes"
-              :key="publicacao.id"
-            >
-              <div class="card-publicacao">
-                <div class="card-publicacao-header">
-                  <router-link
-                    class="router-link"
-                    :to="{
-                      name: 'publicacoesById',
-                      params: { id: publicacao.id },
-                    }"
-                  >
-                    <h2 class="pub-titulo">{{ publicacao.titulo }}</h2>
+          <v-container>
+            <v-row class="ultimas-publicacoes">
+              <v-col
+                cols="12"
+                sm="12"
+                v-for="publicacao in publicacoes"
+                :key="publicacao.id"
+              >
+                <div class="card-publicacao-ong">
+                  <div class="card-publicacao-user">
+                    <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
+                      <Gravatar
+                        :email="publicacao.email"
+                        :alt="publicacao.name"
+                      />
+                    </v-avatar>
+                    <h3>{{ publicacao.name }}</h3>
+                  </div>
 
-                    <h5>{{ publicacao.createdAt }}</h5>
-                    <div class="img-publicacao" style="height: 200px">
-                      <img
-                        v-if="publicacao.imageUrl"
-                        :src="publicacao.imageUrl"
-                        height="100%"
-                        alt="Publicação"
-                      />
-                      <img
-                        v-else
-                        src="@/assets/publicacao.jpg"
-                        height="100%"
-                        alt="Article"
-                      />
-                    </div>
-                  </router-link>
-                  <p>Publicado por: {{ publicacao.userName }}</p>
+                  <div class="card-publicacao-ong-header">
+                    <router-link
+                      class="router-link"
+                      :to="{
+                        name: 'publicacoesById',
+                        params: { id: publicacao.id },
+                      }"
+                    >
+                      <h2 class="pub-titulo">{{ publicacao.titulo }}</h2>
+
+                      <div class="img-publicacao" style="height: 200px">
+                        <img
+                          v-if="publicacao.imageUrl"
+                          :src="publicacao.imageUrl"
+                          height="100%"
+                          alt="Publicação"
+                        />
+                        <img
+                          v-else
+                          src="@/assets/publicacao.jpg"
+                          height="100%"
+                          alt="Article"
+                        />
+                      </div>
+                    </router-link>
+                    <p>Publicado em: {{ publicacao.dataPub }}</p>
+                  </div>
+                  <div class="card-publicacao-content">
+                    <p>{{ publicacao.chamada }}</p>
+                  </div>
                 </div>
-                <div class="card-publicacao-content">
-                  <p>{{ publicacao.chamada }}</p>
-                </div>
-              </div>
-            </v-col>
-          </v-row>
+              </v-col>
+            </v-row>
+          </v-container>
         </v-col>
 
         <v-col cols="12" sm="3">
@@ -118,21 +126,6 @@
             <div class="ong-right-card">
               <h4 class="text-center">INSTAGRAM</h4>
               <v-divider class="publicacao-divider"></v-divider>
-              <!-- Em andamento -->
-              <!-- <vue-instagram
-                token="a7acf785614a7dc474222ad8e68960db"
-                username="robertdowneyjr"
-                :count="5"
-                mediaType="image"
-              >
-                <template slot="feeds" slot-scope="props">
-                  <li class="fancy-list">{{ props.feed.link }}</li>
-                </template>
-                <template slot="error" slot-scope="props">
-                  <div class="fancy-alert">{{ props.error.error_message }}</div>
-                </template>
-              </vue-instagram> -->
-              <!-- Em andamento -->
             </div>
           </v-sheet>
         </v-col>
@@ -144,12 +137,11 @@
 <script>
 import api from "../../config/api";
 import Gravatar from "vue-gravatar";
-import VueInstagram from "vue-instagram";
 import BtnDenunciar from "../../components/template/BtnDenunciar";
 
 export default {
   name: "OngById",
-  components: { Gravatar, VueInstagram, BtnDenunciar },
+  components: { Gravatar, BtnDenunciar },
   data: function () {
     return {
       ong: {},
@@ -168,10 +160,10 @@ export default {
       api.get(url).then((res) => (this.publicacoes = res.data));
     },
 
-    loadBio(){
+    loadBio() {
       const url = `/bioById/${this.$route.params.id}`;
       api.get(url).then((res) => (this.bio = res.data));
-    }
+    },
   },
   mounted() {
     this.loadOng();
@@ -220,5 +212,15 @@ export default {
   text-align: center;
   margin-top: 10px;
   padding-bottom: 20px;
+}
+
+.card-publicacao-ong {
+  background-color: white;
+  width: auto;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 5px;
+  border-left: 5px solid #57cc99;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
 }
 </style>

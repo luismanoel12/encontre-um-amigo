@@ -65,7 +65,8 @@ module.exports = app => {
         app.db('doacoes_com_metas')
             .join('users', 'doacoes_com_metas.userId', 'users.id')
             .select('doacoes_com_metas.id', 'doacoes_com_metas.titulo', 'doacoes_com_metas.imageUrl', 'doacoes_com_metas.valorEsperado', 'doacoes_com_metas.valorAtual',
-                'doacoes_com_metas.userId', 'doacoes_com_metas.createdAt', 'users.name')
+                'doacoes_com_metas.userId', 'doacoes_com_metas.createdAt', 'users.name', 'users.email')
+            .orderBy('id', 'desc')
             .limit(limit).offset(page * limit - limit)
             .then(metas => res.json({ data: metas, count, limit }))
             .catch(err => res.status(500).send(err))
@@ -76,7 +77,7 @@ module.exports = app => {
         app.db('doacoes_com_metas')
             .join('users', 'doacoes_com_metas.userId', 'users.id')
             .select('doacoes_com_metas.id', 'doacoes_com_metas.titulo', 'doacoes_com_metas.imageUrl', 'doacoes_com_metas.valorEsperado', 'doacoes_com_metas.valorAtual',
-                'doacoes_com_metas.userId', 'doacoes_com_metas.descricao', 'doacoes_com_metas.createdAt', 'users.name')
+                'doacoes_com_metas.userId', 'doacoes_com_metas.descricao', 'doacoes_com_metas.createdAt', 'users.name', 'users.email')
             .where({ 'doacoes_com_metas.id': req.params.id })
             .first()
             .then(metas => {

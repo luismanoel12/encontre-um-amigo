@@ -3,7 +3,9 @@
     <v-container>
       <div class="signup-card">
         <v-stepper v-model="e1">
-          <h1 class="text-center">Registrar-se</h1>
+          <div class="stepper-title">
+            <h1>Registrar-se</h1>
+          </div>
           <v-stepper-header>
             <v-stepper-step editable :complete="e1 > 1" step="1">
               Identificação
@@ -35,14 +37,17 @@
                 </v-form>
               </v-card>
 
-              <v-btn color="primary" @click="e1 = 2">
-                Continuar
-                <v-icon class="ml-2" dark> mdi-arrow-right </v-icon>
-              </v-btn>
+              <div class="stepper-actions">
+                <v-btn color="#036564" dark @click="e1 = 2">
+                  Continuar
+                  <v-icon class="ml-2" dark> mdi-chevron-right </v-icon>
+                </v-btn>
 
-              <v-btn to="/auth">
-                Cancelar <v-icon class="ml-2" dark> mdi-close </v-icon></v-btn
-              >
+                <v-btn color="secondary" class="ml-2" to="/auth">
+                  Cancelar
+                  <v-icon class="ml-2" dark> mdi-close </v-icon>
+                </v-btn>
+              </div>
             </v-stepper-content>
 
             <v-stepper-content step="2">
@@ -120,15 +125,17 @@
                 </v-form>
               </v-card>
 
-              <v-btn color="primary" @click="e1 = 3">
-                Continuar
-                <v-icon class="ml-2" dark> mdi-arrow-right </v-icon>
-              </v-btn>
+              <div class="stepper-actions">
+                <v-btn color="#036564" dark @click="e1 = 3">
+                  Continuar
+                  <v-icon class="ml-2" dark> mdi-chevron-right </v-icon>
+                </v-btn>
 
-              <v-btn text to="/auth">
-                Cancelar
-                <v-icon class="ml-2" dark> mdi-close </v-icon>
-              </v-btn>
+                <v-btn color="secondary" class="ml-2" to="/auth">
+                  Cancelar
+                  <v-icon class="ml-2" dark> mdi-close </v-icon>
+                </v-btn>
+              </div>
             </v-stepper-content>
 
             <v-stepper-content step="3">
@@ -183,15 +190,17 @@
                 </v-form>
               </v-card>
 
-              <v-btn color="success" @click="signup">
-                Registrar-se
-                <v-icon class="ml-2" dark> mdi-check </v-icon>
-              </v-btn>
+              <div class="stepper-actions">
+                <v-btn color="#036564" dark @click="signup">
+                  Registrar-se
+                  <v-icon class="ml-2" dark> mdi-check </v-icon>
+                </v-btn>
 
-              <v-btn text  to="/auth">
-                Cancelar
-                <v-icon class="ml-2" dark> mdi-close </v-icon>
-              </v-btn>
+                <v-btn color="secondary" class="ml-2" to="/auth">
+                  Cancelar
+                  <v-icon class="ml-2" dark> mdi-close </v-icon>
+                </v-btn>
+              </div>
             </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
@@ -265,10 +274,27 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .signup-card {
   width: 600px;
   margin: 50px auto;
+}
+
+.stepper-title {
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(110deg, #00171f 30%, #036564 60%);
+}
+
+.v-sheet.v-card:not(.v-sheet--outlined) {
+  box-shadow: none !important;
+}
+
+.stepper-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 @media only screen and (max-width: 600px) {

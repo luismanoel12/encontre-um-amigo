@@ -31,6 +31,7 @@
             <v-text-field
               label="E-mail"
               v-model="userData.email"
+              disabled
               outlined
             ></v-text-field>
           </v-col>
@@ -218,7 +219,7 @@
       </div>
     </div>
 
-    <div class="ongBio">
+    <div class="ongBio" v-if="user.ong">
       <div class="ongBio-header">
         <h1 class="text-center">Minha BIO</h1>
       </div>
@@ -412,4 +413,9 @@ export default {
 .ongBio-actions{
   margin-top: 20px;
 }
+
+.bt-carregar-mais{
+  background: linear-gradient(110deg, #036564 55%, #00171f 45%);
+}
+
 </style>

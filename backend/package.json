@@ -24,7 +24,8 @@
     "passport": "0.4.0",
     "passport-jwt": "4.0.0",
     "pg": "^8.0.3",
-    "pm2": "3.0.4"
+    "pm2": "3.0.4",
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
     "nodemon": "1.18.4"
