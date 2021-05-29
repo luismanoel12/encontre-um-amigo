@@ -7,29 +7,31 @@
     </div>
     <div class="auth-content">
       <v-form>
-        <v-text-field
-          label="E-mail"
-          prepend-inner-icon="mdi-at"
-          outlined
-          v-model="user.email"
-          autocomplete="email"
-        ></v-text-field>
+        <div @keypress.enter.prevent="signin()">
+          <v-text-field
+            label="E-mail"
+            prepend-inner-icon="mdi-at"
+            outlined
+            v-model="user.email"
+            autocomplete="email"
+          ></v-text-field>
 
-        <v-text-field
-          prepend-inner-icon="mdi-lock"
-          outlined
-          :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-          v-model="user.password"
-          autocomplete="current-password"
-          :rules="[rules.required]"
-          :type="show1 ? 'text' : 'password'"
-          name="input-10-1"
-          label="Senha"
-          @click:append="show1 = !show1"
-        ></v-text-field>
+          <v-text-field
+            prepend-inner-icon="mdi-lock"
+            outlined
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            v-model="user.password"
+            autocomplete="current-password"
+            :rules="[rules.required]"
+            :type="show1 ? 'text' : 'password'"
+            name="input-10-1"
+            label="Senha"
+            @click:append="show1 = !show1"
+          ></v-text-field>
+        </div>
       </v-form>
 
-      <v-btn tile color="success" @click="signin">
+      <v-btn color="#036564" dark @click="signin">
         <v-icon left> mdi-login </v-icon>
         Entrar
       </v-btn>
