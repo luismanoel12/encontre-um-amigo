@@ -262,6 +262,7 @@ export default {
 
 .img-card-animal img {
   max-width: 100%;
+  min-width: 200px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   object-fit: cover;

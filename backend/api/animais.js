@@ -24,18 +24,22 @@ module.exports = app => {
 
         if (animais.id) {
             app.db('animais')
-                .update({ tipo: animais.tipo, nome: animais.nome, sexo: animais.sexo, porte: animais.porte, imagem: animais.imagem,
-                     cep: animais.cep, estado: animais.estado, cidade: animais.cidade})
+                .update({
+                    tipo: animais.tipo, nome: animais.nome, sexo: animais.sexo, porte: animais.porte, imagem: animais.imagem,
+                    cep: animais.cep, estado: animais.estado, cidade: animais.cidade, deficiente: animais.deficiente, 
+                    castrado: animais.castrado, vacinado: animais.vacinado, vermifugado: animais.vermifugado, descricao: animais.descricao
+                })
                 .where({ id: animais.id })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         } else {
-            animais.userId = req.user.id;
-
-            animais.createdAt = new Date();
-
             app.db('animais')
-                .insert(animais)
+                .insert({
+                    tipo: animais.tipo, nome: animais.nome, sexo: animais.sexo, porte: animais.porte, imagem: animais.imagem,
+                    cep: animais.cep, estado: animais.estado, cidade: animais.cidade, createdAt: new Date(), userId: req.user.id,
+                    deficiente: animais.deficiente, castrado: animais.castrado, vacinado: animais.vacinado, 
+                    vermifugado: animais.vermifugado, descricao: animais.descricao
+                })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         }
