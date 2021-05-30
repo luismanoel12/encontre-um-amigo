@@ -26,6 +26,7 @@
                     }"
                   >
                     <h3>{{ publicacao.name }}</h3>
+                    <h5>{{ publicacao.dataPub }}</h5>
                   </router-link>
                 </div>
                 <div class="card-publicacao-header">
@@ -54,9 +55,9 @@
                     </div>
                   </router-link>
                 </div>
-                <h5>Publicado em {{ publicacao.dataPub }}</h5>
                 <v-divider></v-divider>
                 <div class="card-publicacao-content">
+                  <p><strong>Chamada:</strong></p>
                   <p>{{ publicacao.chamada }}</p>
                 </div>
               </div>

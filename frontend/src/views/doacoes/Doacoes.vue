@@ -52,38 +52,38 @@
                     Essa ação não poderá ser desfeita!
                   </h2>
                   <v-row>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12" sm="12" md="12">
                       <v-text-field
-                        label="Nome"
+                        label="Diga por onde irá receber esse pagamento"
                         v-model="doacao.meio_pagamento"
-                        prepend-inner-icon="mdi-paw"
+                        placeholder="Ex: Banco do Brasil"
+                        prepend-inner-icon="mdi-credit-card"
                         required
                         outlined
-                        maxlength="20"
-                        counter="20"
-                        hint="Máximo de 20 caracteres"
                         v-if="this.mode === 'save'"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-select
-                        :items="tipo"
-                        v-if="this.mode === 'save'"
-                        prepend-inner-icon="mdi-paw"
-                        v-model="doacao.tipo"
-                        label="Tipo"
+                    <v-col cols="12" sm="12" md="12">
+                      <v-textarea
                         outlined
-                      ></v-select>
+                        v-if="this.mode === 'save'"
+                        name="input-7-4"
+                        placeholder="Ex: Conta Corrente: 0000000-0, Agência: 4060, Banco: Banco do Brasil "
+                        label="Descreva os dados para necessários para receber essa doação"
+                        prepend-inner-icon="mdi-information-outline"
+                        v-model="doacao.descricao"
+                      ></v-textarea>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-select
-                        :items="sexo"
-                        v-if="this.mode === 'save'"
-                        prepend-inner-icon="mdi-gender-male-female"
-                        v-model="animdoacaoal.sexo"
-                        label="Sexo"
+                    <v-col cols="12" sm="12" md="12">
+                      <v-text-field
+                        label="Tem algum link para ajudar ou realizar o pagamento?"
+                        v-model="doacao.link"
+                        placeholder="Ex: https://picpay/usuario"
+                        prepend-inner-icon="mdi-link-variant"
+                        required
                         outlined
-                      ></v-select>
+                        v-if="this.mode === 'save'"
+                      ></v-text-field>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -130,17 +130,65 @@
         </v-row>
       </div>
 
-      <v-row>
-        <v-col
-          cols="12"
-          xl="2"
-          lg="3"
-          sm="4"
-          v-for="doacao in doacoes"
-          :key="doacao.id"
-        >
-        </v-col>
-      </v-row>
+      <v-container>
+        <v-row>
+          <v-col
+            cols="12"
+            xl="2"
+            lg="3"
+            sm="4"
+            v-for="doacao in doacoes"
+            :key="doacao.id"
+          >
+            <div class="minhas-doacoes-card">
+              <div class="minhas-doacoes-card-content">
+                <h2>{{ doacao.meio_pagamento }}</h2>
+                <p>
+                  {{ doacao.descricao }}
+                </p>
+                <div class="minhas-doacoes-card-link">
+                  <v-btn
+                    class="mx-2"
+                    dark
+                    text
+                    v-if="doacao.link"
+                    color="#036564"
+                    @click="loadDoacao(doacao, 'remove')"
+                  >
+                    Acessar
+                  </v-btn>
+                </div>
+              </div>
+              <v-divider></v-divider>
+              <div class="minhas-doacoes-card-actions">
+                <v-btn
+                  class="mx-2"
+                  fab
+                  dark
+                  small
+                  outlined
+                  color="warning"
+                  @click="loadDoacao(doacao)"
+                >
+                  <v-icon dark> mdi-pencil </v-icon>
+                </v-btn>
+
+                <v-btn
+                  class="mx-2"
+                  fab
+                  dark
+                  small
+                  outlined
+                  color="error"
+                  @click="loadDoacao(doacao, 'remove')"
+                >
+                  <v-icon dark> mdi-delete-forever </v-icon>
+                </v-btn>
+              </div>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-container>
   </div>
 </template>
@@ -158,26 +206,25 @@ export default {
       mode: "save",
       doacao: {},
       doacoes: [],
-      checkbox: false,
       dialog: false,
     };
   },
   methods: {
-    loadAnimais() {
-      api(`/animaisUsuario`).then((res) => {
-        this.animais = res.data;
+    loadDoacoes() {
+      api(`/doacoes`).then((res) => {
+        this.doacoes = res.data;
       });
     },
     reset() {
       this.mode = "save";
-      this.animal = {};
-      this.loadAnimais();
+      this.doacao = {};
+      this.loadDoacoes();
       this.dialog = false;
     },
     save() {
-      const method = this.animal.id ? "put" : "post";
-      const id = this.animal.id ? `/${this.animal.id}` : "";
-      api[method](`/animais${id}`, this.animal)
+      const method = this.doacao.id ? "put" : "post";
+      const id = this.doacao.id ? `/${this.doacao.id}` : "";
+      api[method](`/doacoes${id}`, this.doacao)
         .then(() => {
           this.$toasted.global.defaultSuccess();
           this.reset();
@@ -185,39 +232,67 @@ export default {
         .catch(showError);
     },
     remove() {
-      const id = this.animal.id;
+      const id = this.doacao.id;
       api
-        .delete(`/animais/${id}`)
+        .delete(`/doacoes/${id}`)
         .then(() => {
           this.$toasted.global.defaultSuccess();
           this.reset();
         })
         .catch(showError);
     },
-    loadAnimal(animal, mode = "save") {
+    loadDoacao(doacao, mode = "save") {
       this.mode = mode;
-      api.get(`/animais/${animal.id}`).then((res) => (this.animal = res.data));
+      api.get(`/doacoes/${doacao.id}`).then((res) => (this.doacao = res.data));
       this.dialog = true;
     },
   },
   watch: {
-    $route(to) {
-      this.animais = [];
-      this.page = 1;
-      this.loadMore = true;
-
-      this.loadAnimais();
-    },
-
     page() {
-      this.loadAnimais();
+      this.loadDoacoes();
     },
-    mounted() {
-      this.loadAnimais();
-    },
+  },
+  mounted() {
+    this.loadDoacoes();
   },
 };
 </script>
 
-<style>
+<style scoped>
+.cadastrar-doacoes-form {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+}
+
+.novo-doacao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.minhas-doacoes-card {
+  background-color: #fff;
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+    0 12px 17px 2px rgba(0, 0, 0, 0.14), 0 5px 22px 4px rgba(0, 0, 0, 0.12) !important;
+  border-left: 3px solid #036564;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.minhas-doacoes-card-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.minhas-doacoes-card-link {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 </style>
