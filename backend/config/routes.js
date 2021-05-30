@@ -10,21 +10,31 @@ module.exports = app => {
     // Public routes
 
     app.get('/user-name/:id', app.api.user.getName)
+    app.get('/carouselPublic', app.api.carousel.get)
+
+
     app.get('/ongs', app.api.user.getOngs)
     app.get('/ongs/:id', app.api.user.getOngById)
-    app.get('/carouselPublic', app.api.carousel.get)
+    app.get('/bioById/:id', app.api.bio.getById)
+
     app.get('/metasPublic', app.api.metas.get)
     app.get('/metasPublic/:id', app.api.metas.getById)
     app.get('/objetivosMetaPublic/:id', app.api.objetivos.get)
+
     app.get('/animaisPublic', app.api.animais.get)
     app.get('/animaisPublic/:id', app.api.animais.getById)
+    app.get('/allByUser/:id', app.api.animais.getAllByUser)
     app.post('/animaisSearch', app.api.animais.getCustomSearch)
+    app.get('/animais/desaparecidosPublic', app.api.animais_desaparecidos.get)
+    app.get('/animais/desaparecidosPublic/:id', app.api.animais_desaparecidos.getById)
+
     app.get('/publicacaoPublic', app.api.publicacao.get)
     app.get('/publicacaoPublic/:id', app.api.publicacao.getById)
     app.get('/ultimasPublicacoes/:id', app.api.publicacao.getLatestPublications)
-    app.get('/bioById/:id', app.api.bio.getById)
-    app.get('/animais/desaparecidosPublic', app.api.animais_desaparecidos.get)
-    app.get('/animais/desaparecidosPublic/:id', app.api.animais_desaparecidos.getById)
+
+    app.get('/doacoesByUser/:id', app.api.doacoes.getByUser)
+
+
 
 
     // User routes
@@ -177,13 +187,28 @@ module.exports = app => {
     // animais desaparecidos
 
     app.route('/animais/desaparecidos')
-    .all(app.config.passport.authenticate())
-    .post(app.api.animais_desaparecidos.save)
-    .get(app.api.animais_desaparecidos.getPorUsuario)
-  
+        .all(app.config.passport.authenticate())
+        .post(app.api.animais_desaparecidos.save)
+        .get(app.api.animais_desaparecidos.getPorUsuario)
+
     app.route('/animais/desaparecidos/:id')
-    .all(app.config.passport.authenticate())
-    .put(app.api.animais_desaparecidos.save)
-    .delete(app.api.animais_desaparecidos.remove)
+        .all(app.config.passport.authenticate())
+        .put(app.api.animais_desaparecidos.save)
+        .delete(app.api.animais_desaparecidos.remove)
+
+
+
+    // Doações
+
+    app.route('/doacoes')
+        .all(app.config.passport.authenticate())
+        .post(app.api.doacoes.save)
+        .get(app.api.doacoes.get)
+
+    app.route('/doacoes/:id')
+        .all(app.config.passport.authenticate())
+        .put(app.api.doacoes.save)
+        .get(app.api.doacoes.getById)
+        .delete(app.api.doacoes.remove)
 
 }

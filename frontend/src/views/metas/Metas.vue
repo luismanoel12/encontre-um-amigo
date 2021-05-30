@@ -25,7 +25,7 @@
                 <v-dialog v-model="dialog1" persistent max-width="1000px">
                   <template v-slot:activator="{ on, attrs }">
                     <div class="nova-meta">
-                      <v-btn color="success" dark v-bind="attrs" v-on="on">
+                      <v-btn color="#036564" dark v-bind="attrs" v-on="on">
                         Cadastrar nova meta
 
                         <v-icon dark right> mdi-plus </v-icon>
@@ -101,7 +101,8 @@
                           depressed
                           v-if="mode === 'save'"
                           @click="save"
-                          color="success"
+                          color="#036564"
+                          dark
                         >
                           Salvar
                           <v-icon dark right> mdi-content-save </v-icon>
@@ -174,7 +175,7 @@
                 <v-dialog v-model="dialog2" persistent max-width="800px">
                   <template v-slot:activator="{ on, attrs }">
                     <div class="novo-objetivo">
-                      <v-btn color="success" dark v-bind="attrs" v-on="on">
+                      <v-btn color="#036564" dark v-bind="attrs" v-on="on">
                         Cadastrar novo objetivo
 
                         <v-icon dark right> mdi-plus </v-icon>
@@ -245,7 +246,8 @@
                           depressed
                           v-if="mode === 'save'"
                           @click="saveObjetivos"
-                          color="success"
+                          color="#036564"
+                          dark
                         >
                           Salvar
                           <v-icon dark right> mdi-content-save </v-icon>

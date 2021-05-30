@@ -11,7 +11,7 @@
         <v-dialog v-model="dialog" max-width="100vh">
           <template v-slot:activator="{ on, attrs }">
             <div class="nova-publicacao-header">
-              <v-btn color="success" dark v-bind="attrs" v-on="on">
+              <v-btn color="#036564" dark v-bind="attrs" v-on="on">
                 Nova publicação
 
                 <v-icon dark right> mdi-newspaper-plus </v-icon>
@@ -90,7 +90,8 @@
                   depressed
                   v-if="mode === 'save'"
                   @click="save"
-                  color="success"
+                  color="#036564"
+                  dark
                 >
                   Salvar
                   <v-icon dark right> mdi-content-save </v-icon>

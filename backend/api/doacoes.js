@@ -4,23 +4,26 @@ module.exports = app => {
 
     const save = (req, res) => {
         const doacoes = { ...req.body }
-        if(req.params.id) doacoes.id = req.params.id
+        if (req.params.id) doacoes.id = req.params.id
 
-        try{
+        try {
             existsOrError(doacoes.meio_pagamento, 'Nome do meio de pagamento não informado')
             existsOrError(doacoes.descricao, 'Nenhuma descrição foi informada')
 
-        } catch(msg){
+        } catch (msg) {
             res.status(400).send(msg)
         }
 
-        if(doacoes.id){
+        if (doacoes.id) {
             app.db('doacoes')
                 .update(doacoes)
                 .where({ id: doacoes.id })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         } else {
+
+            doacoes.userId = req.user.id;
+
             app.db('doacoes')
                 .insert(doacoes)
                 .then(_ => res.status(204).send())
@@ -32,21 +35,22 @@ module.exports = app => {
         try {
             const rowsDeleted = await app.db('doacoes')
                 .where({ id: req.params.id }).del()
-            
+
             try {
                 existsOrError(rowsDeleted, 'Não foi possivel encontrar o meio de doação informado')
-            } catch(msg) {
-                return res.status(400).send(msg)    
+            } catch (msg) {
+                return res.status(400).send(msg)
             }
 
             res.status(204).send()
-        } catch(msg) {
+        } catch (msg) {
             res.status(500).send(msg)
         }
     }
 
     const get = async (req, res) => {
         app.db('doacoes')
+            .where({ userId: req.user.id })
             .then(doacoes => res.json(doacoes))
             .catch(err => res.status(500).send(err))
     }
@@ -61,10 +65,11 @@ module.exports = app => {
 
     const getByUser = async (req, res) => {
         app.db('doacoes')
-            .where({ userId: req.user.id })
+            .where({ userId: req.params.id })
             .then(doacoes => res.json(doacoes))
             .catch(err => res.status(500).send(err))
     }
+
 
 
     return { save, remove, get, getById, getByUser }

@@ -140,7 +140,7 @@
             ></v-text-field>
           </v-col>
         </v-row>
-        <v-btn color="success" @click="update">
+        <v-btn color="#036564" dark @click="update">
           <v-icon left> mdi-account-edit </v-icon>
           Atualizar
         </v-btn>
@@ -232,7 +232,7 @@
         </v-row>
 
         <div class="ongBio-actions">
-          <v-btn color="success" @click="bioSave">
+          <v-btn color="#036564" dark @click="bioSave">
             <v-icon left> mdi-account-edit </v-icon>
             Salvar
           </v-btn>
@@ -263,7 +263,7 @@ export default {
       loading: true,
       dialog: false,
       show1: false,
-      show2: true,
+      show2: false,
       show3: false,
       rules: {
         required: (value) => !!value || "Requerido.",

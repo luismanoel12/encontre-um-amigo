@@ -26,7 +26,7 @@ module.exports = app => {
             app.db('animais')
                 .update({
                     tipo: animais.tipo, nome: animais.nome, sexo: animais.sexo, porte: animais.porte, imagem: animais.imagem,
-                    cep: animais.cep, estado: animais.estado, cidade: animais.cidade, deficiente: animais.deficiente, 
+                    cep: animais.cep, estado: animais.estado, cidade: animais.cidade, deficiente: animais.deficiente,
                     castrado: animais.castrado, vacinado: animais.vacinado, vermifugado: animais.vermifugado, descricao: animais.descricao
                 })
                 .where({ id: animais.id })
@@ -37,7 +37,7 @@ module.exports = app => {
                 .insert({
                     tipo: animais.tipo, nome: animais.nome, sexo: animais.sexo, porte: animais.porte, imagem: animais.imagem,
                     cep: animais.cep, estado: animais.estado, cidade: animais.cidade, createdAt: new Date(), userId: req.user.id,
-                    deficiente: animais.deficiente, castrado: animais.castrado, vacinado: animais.vacinado, 
+                    deficiente: animais.deficiente, castrado: animais.castrado, vacinado: animais.vacinado,
                     vermifugado: animais.vermifugado, descricao: animais.descricao
                 })
                 .then(_ => res.status(204).send())
@@ -65,6 +65,14 @@ module.exports = app => {
     const getByUser = async (req, res) => {
         app.db('animais')
             .where({ userId: req.user.id })
+            .orderBy('createdAt', 'desc')
+            .then(animais => res.json(animais))
+            .catch(err => res.status(500).send(err))
+    }
+
+    const getAllByUser = async (req, res) => {
+        app.db('animais')
+            .where({ userId: req.params.id })
             .orderBy('createdAt', 'desc')
             .then(animais => res.json(animais))
             .catch(err => res.status(500).send(err))
@@ -120,5 +128,5 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    return { save, remove, get, getById, getByUser, getCustomSearch }
+    return { save, remove, get, getById, getByUser, getCustomSearch, getAllByUser }
 }

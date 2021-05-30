@@ -11,7 +11,7 @@
           <v-dialog v-model="dialog" persistent max-width="800px">
             <template v-slot:activator="{ on, attrs }">
               <div class="novo-animal">
-                <v-btn color="success" dark v-bind="attrs" v-on="on">
+                <v-btn color="#036564" dark v-bind="attrs" v-on="on">
                   Cadastrar novo Animal
 
                   <v-icon dark right> mdi-paw </v-icon>
@@ -36,8 +36,18 @@
               </v-card-title>
               <v-card-text>
                 <v-container>
-                      <h1 v-if="this.mode === 'remove'" class="text-center excluir-animal">Tem certeza que deseja excluir o animal: {{ animal.nome }} </h1>
-                      <h2 v-if="this.mode === 'remove'" class="text-center excluir-animal">Essa ação não poderá ser desfeita!</h2>
+                  <h1
+                    v-if="this.mode === 'remove'"
+                    class="text-center excluir-animal"
+                  >
+                    Tem certeza que deseja excluir o animal: {{ animal.nome }}
+                  </h1>
+                  <h2
+                    v-if="this.mode === 'remove'"
+                    class="text-center excluir-animal"
+                  >
+                    Essa ação não poderá ser desfeita!
+                  </h2>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
@@ -46,6 +56,9 @@
                         prepend-inner-icon="mdi-paw"
                         required
                         outlined
+                        maxlength="20"
+                        counter="20"
+                        hint="Máximo de 20 caracteres"
                         v-if="this.mode === 'save'"
                       ></v-text-field>
                     </v-col>
@@ -95,7 +108,7 @@
                       <v-checkbox
                         color="green"
                         v-model="animal.deficiente"
-                       v-if="this.mode === 'save'"
+                        v-if="this.mode === 'save'"
                         :label="'Deficiente'"
                       ></v-checkbox>
                     </v-col>
@@ -138,7 +151,7 @@
                     <v-col cols="12" sm="4">
                       <v-select
                         :items="estados"
-                       v-if="this.mode === 'save'"
+                        v-if="this.mode === 'save'"
                         prepend-inner-icon="mdi-sign-real-estate"
                         v-model="animal.estado"
                         label="Estado"
@@ -164,11 +177,16 @@
                         v-if="this.mode === 'save'"
                         prepend-inner-icon="mdi-card-text"
                         label="Descrição"
+                        maxlength="250"
+                        counter="250"
+                        hint="Máximo de 250 caracteres"
                       ></v-textarea>
                     </v-col>
                   </v-row>
                 </v-container>
-                <small v-if="this.mode === 'save'">*indicates required field</small>
+                <small v-if="this.mode === 'save'"
+                  >*indicates required field</small
+                >
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -177,7 +195,8 @@
                     depressed
                     v-if="mode === 'save'"
                     @click="save"
-                    color="success"
+                    color="#036564"
+                    dark
                   >
                     Salvar
                     <v-icon dark right> mdi-content-save </v-icon>
@@ -238,11 +257,27 @@
             <v-divider></v-divider>
 
             <div class="meus-animais-acoes">
-              <v-btn class="mx-2" fab dark medium outlined color="warning" @click="loadAnimal(animal)">
+              <v-btn
+                class="mx-2"
+                fab
+                dark
+                medium
+                outlined
+                color="warning"
+                @click="loadAnimal(animal)"
+              >
                 <v-icon dark> mdi-pencil </v-icon>
               </v-btn>
 
-              <v-btn class="mx-2" fab dark medium outlined color="error" @click="loadAnimal(animal, 'remove')">
+              <v-btn
+                class="mx-2"
+                fab
+                dark
+                medium
+                outlined
+                color="error"
+                @click="loadAnimal(animal, 'remove')"
+              >
                 <v-icon dark> mdi-delete-forever </v-icon>
               </v-btn>
             </div>
@@ -362,7 +397,7 @@ export default {
   methods: {
     loadAnimais() {
       api(`/animaisUsuario`).then((res) => {
-        this.animais = res.data
+        this.animais = res.data;
         // this.page++;
 
         // if (res.data.data.length === 0) this.loadMore = false;
@@ -401,7 +436,7 @@ export default {
     },
   },
   watch: {
-        $route(to) {
+    $route(to) {
       this.animais = [];
       this.page = 1;
       this.loadMore = true;
@@ -468,14 +503,14 @@ export default {
   margin-bottom: 5px;
 }
 
-.meus-animais-acoes{
+.meus-animais-acoes {
   display: flex;
   flex-direction: row;
   justify-content: center;
   justify-items: center;
 }
 
-.novo-animal{
+.novo-animal {
   margin: auto;
 }
 </style>
