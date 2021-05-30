@@ -23,15 +23,16 @@
                   
                   >
                     <v-badge
-                      bordered
-                      color="success"
+                      color="#036564"
                       icon="mdi-dog-side"
-                      offset-x="25"
+                      offset-x="79"
                       offset-y="20"
-                      :content="animal.estado"
+                      left
+                      :content="animal.status"
                       overlap
                       tile
                     >
+
                       <div class="img-card-animal">
                         <img
                           v-if="animal.imagem"
@@ -54,6 +55,7 @@
                       <v-row>
                         <v-col cols="12" sm="12">
                           <span>{{ animal.cidade }} <br /></span>
+                          <span>{{ animal.estado }} <br /></span>
 
                           <v-divider class="divider-animal-specs"></v-divider>
                           <v-row>

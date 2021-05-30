@@ -261,7 +261,19 @@
                 class="mx-2"
                 fab
                 dark
-                medium
+                small
+                outlined
+                color="#036564"
+                @click="adotar(animal)"
+              >
+                <v-icon dark> mdi-paw </v-icon>
+              </v-btn>
+
+              <v-btn
+                class="mx-2"
+                fab
+                dark
+                small
                 outlined
                 color="warning"
                 @click="loadAnimal(animal)"
@@ -273,7 +285,7 @@
                 class="mx-2"
                 fab
                 dark
-                medium
+                small
                 outlined
                 color="error"
                 @click="loadAnimal(animal, 'remove')"
@@ -284,38 +296,6 @@
           </v-card>
         </v-col>
       </v-row>
-
-      <!-- <v-data-table :items="animais" :headers="headers" class="elevation-10">
-        <template v-slot:[`item.actions`]="{ item }">
-          <div class="p-2">
-              <v-img :src="item.imagem" :alt="item.nome" width="80px"></v-img>
-            </div>
-
-          <v-btn
-            class="bt-actions"
-            color="primary"
-            fab
-            elevation="0"
-            small
-            @click="loadAnimal(item)"
-            dark
-          >
-            <v-icon>mdi-pencil</v-icon>
-          </v-btn>
-
-          <v-btn
-            class="bt-actions"
-            color="error"
-            fab
-            elevation="0"
-            small
-            @click="loadAnimal(item, 'remove')"
-            dark
-          >
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
-        </template>
-      </v-data-table> -->
     </v-container>
   </div>
 </template>
@@ -433,6 +413,21 @@ export default {
       this.mode = mode;
       api.get(`/animais/${animal.id}`).then((res) => (this.animal = res.data));
       this.dialog = true;
+    },
+    adotar(animal) {
+      if (animal.status === "DISPONÍVEL") {
+        animal.status = "ADOTADO";
+      } else {
+        animal.status = "DISPONÍVEL";
+      }
+
+      const method = "put";
+      api[method](`/animais/adotar/${animal.id}`, animal)
+        .then(() => {
+          this.$toasted.global.defaultSuccess();
+          this.reset();
+        })
+        .catch(showError);
     },
   },
   watch: {

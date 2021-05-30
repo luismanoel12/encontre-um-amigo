@@ -202,10 +202,20 @@
               <v-row>
                 <v-col cols="12" v-for="doacao in doacoes" :key="doacao.id">
                   <div class="ong-doacoes-card">
-                      <h3>{{doacao.meio_pagamento}}</h3>
-                      <p>
-                        {{doacao.descricao}}
-                      </p>
+                    <h3>{{ doacao.meio_pagamento }}</h3>
+                    <p>
+                      {{ doacao.descricao }}
+                    </p>
+                    <v-btn
+                      class="mx-2"
+                      dark
+                      text
+                      v-if="doacao.link"
+                      color="#036564"
+                      :href="doacao.link"
+                    >
+                      Acessar
+                    </v-btn>
                   </div>
                 </v-col>
               </v-row>
@@ -337,16 +347,16 @@ export default {
   color: #222222;
 }
 
-.ong-doacoes-card{
-  box-shadow: 0 7px 8px -4px rgba(0,0,0,.2),0 12px 17px 2px rgba(0,0,0,.14),0 5px 22px 4px rgba(0,0,0,.12)!important;
+.ong-doacoes-card {
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+    0 12px 17px 2px rgba(0, 0, 0, 0.14), 0 5px 22px 4px rgba(0, 0, 0, 0.12) !important;
   border-left: 3px solid #036564;
   border-radius: 5px;
   padding: 10px;
   transition: ease-out 0.3s;
-  
 }
 
-.ong-doacoes-card:hover{
+.ong-doacoes-card:hover {
   transform: scale(1.02);
   transition: ease-out 0.3s;
 }

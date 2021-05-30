@@ -134,6 +134,10 @@ module.exports = app => {
         .get(app.api.animais.getById)
         .delete(app.api.animais.remove)
 
+    app.route('/animais/adotar/:id')
+        .all(app.config.passport.authenticate())
+        .put(app.api.animais.adopt)
+
 
     // Cadastro de publicações e listagem
 
