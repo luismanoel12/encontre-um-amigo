@@ -21,7 +21,7 @@ module.exports = app => {
     app.post('/animaisSearch', app.api.animais.getCustomSearch)
     app.get('/publicacaoPublic', app.api.publicacao.get)
     app.get('/publicacaoPublic/:id', app.api.publicacao.getById)
-    app.get('/ultimasPublicacoes/:id', app.api.publicacao.getUltimasPublicacoes)
+    app.get('/ultimasPublicacoes/:id', app.api.publicacao.getLatestPublications)
     app.get('/bioById/:id', app.api.bio.getById)
     app.get('/animais/desaparecidosPublic', app.api.animais_desaparecidos.get)
     app.get('/animais/desaparecidosPublic/:id', app.api.animais_desaparecidos.getById)
@@ -181,8 +181,6 @@ module.exports = app => {
     .post(app.api.animais_desaparecidos.save)
     .get(app.api.animais_desaparecidos.getPorUsuario)
   
-
-    
     app.route('/animais/desaparecidos/:id')
     .all(app.config.passport.authenticate())
     .put(app.api.animais_desaparecidos.save)

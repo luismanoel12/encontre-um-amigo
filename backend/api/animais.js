@@ -62,20 +62,10 @@ module.exports = app => {
         }
     }
 
-<<<<<<< HEAD
     const getByUser = async (req, res) => {
-=======
-    // const limitPorUsuario = 10 //usado para paginação
-    const getPorUsuario = async (req, res) => {
-        // const page = req.query.page || 1
-        // const result = await app.db('animais').count('id').first()
-        // const count = parseInt(result.count)
->>>>>>> 259b31135fdb30d33e58df6c96074baf1e59502b
-
         app.db('animais')
             .where({ userId: req.user.id })
             .orderBy('createdAt', 'desc')
-            // .limit(limitPorUsuario).offset(page * limitPorUsuario - limitPorUsuario)
             .then(animais => res.json(animais))
             .catch(err => res.status(500).send(err))
     }
