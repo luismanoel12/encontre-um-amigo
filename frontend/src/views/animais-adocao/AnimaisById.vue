@@ -11,7 +11,8 @@
               <div class="animal-left-card-content">
                 <div class="animalById-responsavel">
                   <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
-                    <Gravatar :email="animal.email" :alt="animal.name" />
+                    <img :src="animal.userImage" alt="" v-if="animal.userImage">
+                    <Gravatar :email="animal.email" :alt="animal.name" v-else />
                   </v-avatar>
                   <div class="animal-info">
                     <span class="mdi mdi-account mr-2 mdi-24px"></span>

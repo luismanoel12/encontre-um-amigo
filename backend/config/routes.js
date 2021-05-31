@@ -9,7 +9,6 @@ module.exports = app => {
 
     // Public routes
 
-    app.get('/user-name/:id', app.api.user.getName)
     app.get('/carouselPublic', app.api.carousel.get)
 
 
@@ -34,6 +33,8 @@ module.exports = app => {
     app.get('/ultimasPublicacoes/:id', app.api.publicacao.getLatestPublications)
 
     app.get('/doacoesByUser/:id', app.api.doacoes.getByUser)
+
+    app.get('/userImage/:id', app.api.user.getUserImage)
 
 
 

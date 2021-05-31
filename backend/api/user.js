@@ -67,19 +67,28 @@ module.exports = app => {
 
         if (user.id) {
             app.db('users')
-                .update({ name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password })
+                .update({
+                    name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj:
+                        user.cnpj, password: user.password, userImage: user.userImage
+                })
                 .where({ id: user.id })
                 .whereNull('deletedAt')
                 .then(function (response) {
                     app.db('endereco')
-                        .update({ endereco: user.endereco, numero: user.numero, complemento: user.complemento, bairro: user.bairro, estado: user.bairro, cidade: user.cidade, cep: user.cep, userId: response[0] })
+                        .update({
+                            endereco: user.endereco, numero: user.numero, complemento: user.complemento, bairro: user.bairro,
+                            estado: user.bairro, cidade: user.cidade, cep: user.cep, userId: response[0]
+                        })
                         .where({ userId: user.id })
                         .then(_ => res.status(204).send())
                         .catch(err => res.status(500).send(err))
                 });
         } else {
             app.db("users")
-                .insert({ name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password, ong: user.ong, admin: user.admin, createdAt: new Date() })
+                .insert({
+                    name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password,
+                    ong: user.ong, admin: user.admin, createdAt: new Date(), userImage: user.userImage
+                })
                 .returning('id')
                 .then(function (response) {
                     app.db('endereco')
@@ -122,7 +131,7 @@ module.exports = app => {
     const get = (req, res) => {
         app.db('users')
             .join('endereco', 'users.id', 'endereco.userId')
-            .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.cpf', 'users.cnpj', 'users.ong', 'users.admin',
+            .select('users.id', 'users.name', 'users.userImage', 'users.email', 'users.telefone', 'users.cpf', 'users.cnpj', 'users.ong', 'users.admin',
                 'endereco.endereco', 'endereco.numero', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
             .whereNull('users.deletedAt')
             .then(users => res.json(users))
@@ -135,14 +144,21 @@ module.exports = app => {
 
         app.db('users')
             .join('endereco', 'users.id', 'endereco.userId')
-            .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.cpf', 'users.cnpj', 'users.ong', 'users.admin',
+            .select('users.id', 'users.name', 'users.email', 'users.userImage', 'users.telefone', 'users.cpf', 'users.cnpj', 'users.ong', 'users.admin',
                 'endereco.endereco', 'endereco.numero', 'endereco.complemento', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
             .where({ 'users.id': req.params.id })
             .whereNull('users.deletedAt')
             .first()
             .then(user => res.json(user))
             .catch(err => res.status(500).send(err))
+    }
 
+    const getUserImage = (req, res) => {
+        app.db('users')
+            .where({ id: req.params.id })
+            .first()
+            .then(user => res.json(user))
+            .catch(err => res.status(500).send(err))
     }
 
     const limit = 12; // limite de itens por página 
@@ -154,7 +170,7 @@ module.exports = app => {
 
         app.db('users')
             .join('endereco', 'users.id', 'endereco.userId')
-            .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.cnpj', 'users.ong',
+            .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.userImage', 'users.cnpj', 'users.ong',
                 'endereco.endereco', 'endereco.numero', 'endereco.complemento', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
             .limit(limit).offset(page * limit - limit)
             .where({ 'users.ong': true })
@@ -166,7 +182,7 @@ module.exports = app => {
 
         app.db('users')
             .join('endereco', 'users.id', 'endereco.userId')
-            .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.cnpj', 'users.ong',
+            .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.userImage', 'users.cnpj', 'users.ong',
                 'endereco.endereco', 'endereco.numero', 'endereco.complemento', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
             .where({ 'users.id': req.params.id })
             .andWhere({ 'users.ong': true })
@@ -175,16 +191,6 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
 
 
-    }
-
-
-    const getName = (req, res) => {
-        app.db('users')
-            .select('name')
-            .where({ 'id': req.params.id })
-            .first()
-            .then(user => res.json(user))
-            .catch(err => res.status(500).send(err))
     }
 
     const remove = async (req, res) => {
@@ -236,5 +242,5 @@ module.exports = app => {
 
     }
 
-    return { save, get, getById, remove, getName, getOngs, getOngById, setAdmin, getAdmins, newPassword }
+    return { save, get, getById, remove, getOngs, getOngById, setAdmin, getAdmins, newPassword, getUserImage }
 }

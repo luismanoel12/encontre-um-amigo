@@ -10,7 +10,8 @@
             <v-card class="mx-auto my-12 meta-card" max-width="374">
               <div class="card-met-user">
                 <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
-                  <Gravatar :email="meta.email" :alt="meta.userName" />
+                  <img :src="meta.userImage" alt="" v-if="meta.userImage">
+                  <Gravatar :email="meta.email" :alt="meta.userName" v-else />
                 </v-avatar>
                 <router-link
                   class="pub-router-link"
@@ -20,6 +21,20 @@
                   }"
                 >
                   <h3>{{ meta.name }}</h3>
+                  <h5 class="text-center">
+                {{
+                  new Date(meta.createdAt).toLocaleString("pt-br", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour12: true,
+                    hour: "numeric",
+                    minute: "2-digit",
+                    second: "2-digit",
+                  })
+                }}
+              </h5>
                 </router-link>
               </div>
 
@@ -64,21 +79,6 @@
                   >
                 </h3>
               </v-card-text>
-
-              <h5 class="text-center">
-                {{
-                  new Date(meta.createdAt).toLocaleString("pt-br", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    hour12: true,
-                    hour: "numeric",
-                    minute: "2-digit",
-                    second: "2-digit",
-                  })
-                }}
-              </h5>
 
               <v-divider class="mx-4"></v-divider>
 

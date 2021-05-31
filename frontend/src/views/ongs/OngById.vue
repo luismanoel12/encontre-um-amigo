@@ -50,7 +50,8 @@
           <v-sheet min-height="70vh" rounded="lg" elevation="10">
             <div class="ong-page-header">
               <v-avatar class="ma-2 avatar-img" size="124" tile>
-                <Gravatar :email="ong.email" :alt="ong.name" />
+                <img :src="ong.userImage" alt="" v-if="ong.userImage">
+                <Gravatar :email="ong.email" :alt="ong.name" v-else />
               </v-avatar>
               <h1>{{ ong.name }}</h1>
             </div>

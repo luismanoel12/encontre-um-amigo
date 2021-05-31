@@ -3,8 +3,9 @@
     <v-navigation-drawer v-model="drawer" app color="#00171f" v-if="user">
       <v-list-item v-if="user">
         <v-list-item-content>
-          <div class="user-dropdown-img">
-            <Gravatar :email="user.email" alt="User" />
+          <v-avatar class="ma-2 perfil-avatar-img" size="84" tile>
+            <img :src="user.userImage" alt="" v-if="user.userImage">
+            <Gravatar :email="user.email" alt="User" v-else />
             <v-badge
               v-if="user.admin"
               color="blue"
@@ -12,7 +13,7 @@
               bottom
               overlap
             ></v-badge>
-          </div>
+          </v-avatar>
           <v-list-item-title class="title">
             <h3>Bem-vindo</h3>
           </v-list-item-title>
@@ -273,6 +274,7 @@
 import { userKey } from "@/global";
 import { mapState } from "vuex";
 import Gravatar from "vue-gravatar";
+import api from "../../config/api";
 
 export default {
   name: "Menu",
@@ -282,6 +284,7 @@ export default {
     return {
       drawer: null,
       right: null,
+      userImage: {},
     };
   },
 
@@ -366,6 +369,11 @@ export default {
 
 .menu-bg {
   background: linear-gradient(110deg, #00171f 30%, #036564 60%);
+}
+
+.perfil-avatar-img > img{
+  border-radius: 50%!important;
+  object-fit: cover;
 }
 
 @media (max-width: 600px) {

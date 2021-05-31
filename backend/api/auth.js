@@ -28,6 +28,7 @@ module.exports = app => {
             cnpj: user.cnpj,
             ong: user.ong,
             admin: user.admin,
+            userImage: user.userImage,
             iat: now,
             exp: now + (60 * 60 * 24 * 3)
         }

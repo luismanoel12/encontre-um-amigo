@@ -34,7 +34,8 @@
           <v-sheet rounded="lg" min-height="268" class="side-content">
             <div class="card-metas-user">
               <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
-                <Gravatar :email="meta.email" :alt="meta.name" />
+                <img :src="meta.userImage" alt="" v-if="meta.userImage">
+                <Gravatar :email="meta.email" :alt="meta.name" v-else />
               </v-avatar>
               <router-link
                 class="pub-router-link"

@@ -6,8 +6,9 @@
   <v-container v-else>
     <div class="perfil-main">
       <div class="perfil-header">
-        <div class="gravatar-img">
-          <Gravatar :email="user.email" alt="User" />
+        <v-avatar class="ma-2 pub-avatar-img" size="128" tile>
+          <img :src="user.userImage" alt="" v-if="user.userImage">
+          <Gravatar :email="user.email" alt="User" v-else />
           <v-badge
             v-if="user.admin"
             color="blue"
@@ -15,7 +16,7 @@
             bottom
             overlap
           ></v-badge>
-        </div>
+        </v-avatar>
         <h1>{{ userData.name }}</h1>
       </div>
       <div class="perfil-content">
@@ -24,6 +25,7 @@
             <v-text-field
               label="Nome"
               v-model="userData.name"
+              prepend-inner-icon="mdi-account"
               outlined
             ></v-text-field>
           </v-col>
@@ -31,6 +33,7 @@
             <v-text-field
               label="E-mail"
               v-model="userData.email"
+              prepend-inner-icon="mdi-email"
               disabled
               outlined
             ></v-text-field>
@@ -41,6 +44,7 @@
               v-model="userData.cnpj"
               label="CNPJ"
               v-mask="'##.###.###/####-##'"
+              prepend-inner-icon="mdi-card-account-details-outline"
               outlined
             ></v-text-field>
             <v-text-field
@@ -48,6 +52,7 @@
               label="CPF"
               v-model="userData.cpf"
               v-mask="'###.###.###-##'"
+              prepend-inner-icon="mdi-card-account-details-outline"
               outlined
             ></v-text-field>
           </v-col>
@@ -55,7 +60,20 @@
             <v-text-field
               label="Telefone"
               v-model="userData.telefone"
+              prepend-inner-icon="mdi-phone"
               v-mask="'(##) #####-####'"
+              outlined
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="12">
+            <v-text-field
+              label="Imagem de perfil"
+              v-model="userData.userImage"
+              prepend-inner-icon="mdi-image"
+              type="imagem"
               outlined
             ></v-text-field>
           </v-col>
@@ -66,6 +84,7 @@
             <v-text-field
               label="Senha"
               v-model="userData.password"
+              prepend-inner-icon="mdi-form-textbox-password"
               type="password"
               outlined
             ></v-text-field>
@@ -74,6 +93,7 @@
             <v-text-field
               label="Confime sua Senha"
               v-model="userData.confirmPassword"
+              prepend-inner-icon="mdi-form-textbox-password"
               type="password"
               outlined
             ></v-text-field>
@@ -87,6 +107,7 @@
             <v-text-field
               label="Endereço"
               v-model="userData.endereco"
+              prepend-inner-icon="mdi-map-marker-outline"
               outlined
             ></v-text-field>
           </v-col>
@@ -94,6 +115,7 @@
             <v-text-field
               label="Bairro"
               v-model="userData.bairro"
+              prepend-inner-icon="mdi-home-map-marker"
               outlined
             ></v-text-field>
           </v-col>
@@ -101,6 +123,7 @@
             <v-text-field
               label="Número"
               v-model="userData.numero"
+              prepend-inner-icon="mdi-counter"
               type="number"
               outlined
             ></v-text-field>
@@ -109,6 +132,7 @@
             <v-text-field
               label="Complemento"
               v-model="userData.complemento"
+              prepend-inner-icon="mdi-map-marker-outline"
               outlined
             ></v-text-field>
           </v-col>
@@ -128,6 +152,7 @@
             <v-text-field
               label="Cidade"
               v-model="userData.cidade"
+              prepend-inner-icon="mdi-city"
               outlined
             ></v-text-field>
           </v-col>
@@ -135,6 +160,7 @@
             <v-text-field
               label="CEP"
               v-model="userData.cep"
+              prepend-inner-icon="mdi-map-marker-outline"
               v-mask="'#####-###'"
               outlined
             ></v-text-field>
@@ -410,12 +436,11 @@ export default {
   box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
 }
 
-.ongBio-actions{
+.ongBio-actions {
   margin-top: 20px;
 }
 
-.bt-carregar-mais{
+.bt-carregar-mais {
   background: linear-gradient(110deg, #036564 55%, #00171f 45%);
 }
-
 </style>

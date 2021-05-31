@@ -13,9 +13,11 @@
               <div class="card-publicacao">
                 <div class="card-publicacao-user">
                   <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
+                    <img :src="publicacao.userImage" alt="" v-if="publicacao.userImage">
                     <Gravatar
                       :email="publicacao.email"
                       :alt="publicacao.userName"
+                      v-else
                     />
                   </v-avatar>
                   <router-link

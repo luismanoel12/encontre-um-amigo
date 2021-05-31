@@ -75,6 +75,13 @@
                     autocomplete="email"
                   ></v-text-field>
                   <v-text-field
+                    label="Foto (Opcional)"
+                    prepend-inner-icon="mdi-image"
+                    outlined
+                    v-model="user.userImage"
+                    autocomplete="imagem"
+                  ></v-text-field>
+                  <v-text-field
                     label="CPF"
                     prepend-inner-icon="mdi-card-account-details"
                     v-mask="'###########'"

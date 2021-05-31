@@ -68,7 +68,7 @@ module.exports = app => {
         app.db('publicacao')
             .join('users', 'publicacao.userId', 'users.id')
             .select('publicacao.id', 'publicacao.titulo', 'publicacao.descricao', 'publicacao.chamada', 'publicacao.imageUrl',
-                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email', 'users.name')
+                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email', 'users.name', 'users.userImage',)
             .limit(5)
             .orderBy('id', 'desc')
             .where({ userId: req.params.id })
@@ -86,7 +86,7 @@ module.exports = app => {
         app.db('publicacao')
             .join('users', 'publicacao.userId', 'users.id')
             .select('publicacao.id', 'publicacao.titulo', 'publicacao.descricao', 'publicacao.chamada', 'publicacao.imageUrl',
-                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email', 'users.name')
+                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email', 'users.name', 'users.userImage',)
             .orderBy('id', 'desc')
             .limit(limit).offset(page * limit - limit)
             .then(publicacao => res.json({ data: publicacao, count, limit }))
@@ -97,7 +97,7 @@ module.exports = app => {
         app.db('publicacao')
             .join('users', 'publicacao.userId', 'users.id')
             .select('publicacao.id', 'publicacao.titulo', 'publicacao.descricao', 'publicacao.chamada', 'publicacao.imageUrl',
-                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email', 'users.name')
+                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email', 'users.name', 'users.userImage')
             .where({ 'publicacao.id': req.params.id })
             .first()
             .then(publicacao => {

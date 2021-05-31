@@ -119,7 +119,7 @@ module.exports = app => {
         app.db('animais')
             .join('users', 'animais.userId', 'users.id')
             .select('animais.id', 'animais.tipo', 'animais.nome', 'animais.sexo', 'animais.porte', 'animais.deficiente', 'animais.vermifugado', 'animais.vacinado', 'animais.castrado', 'animais.descricao',
-                'animais.estado', 'animais.cidade', 'animais.cep', 'animais.desaparecido', 'animais.userId', 'animais.status', 'animais.imagem', 'animais.createdAt', 'users.name', 'users.email', 'users.telefone')
+                'animais.estado', 'animais.cidade', 'animais.cep', 'animais.desaparecido', 'animais.userId', 'animais.status', 'animais.imagem', 'animais.createdAt', 'users.name', 'users.userImage', 'users.email', 'users.telefone')
             .where({ 'animais.id': req.params.id })
             .first()
             .then(animais => res.json(animais))
@@ -130,7 +130,7 @@ module.exports = app => {
         app.db('animais')
             .join('users', 'animais.userId', 'users.id')
             .select('animais.id', 'animais.tipo', 'animais.nome', 'animais.sexo', 'animais.porte', 'animais.deficiente', 'animais.vermifugado', 'animais.vacinado', 'animais.castrado', 'animais.descricao',
-                'animais.estado', 'animais.cidade', 'animais.cep', 'animais.desaparecido', 'animais.userId', 'animais.status', 'animais.imagem', 'animais.createdAt', 'users.name', 'users.email', 'users.telefone')
+                'animais.estado', 'animais.cidade', 'animais.cep', 'animais.desaparecido', 'animais.userId', 'animais.status', 'animais.imagem', 'animais.createdAt', 'users.name', 'users.userImage', 'users.email', 'users.telefone')
             .where({ 'animais.id': req.params.id })
             .andWhere({ desaparecido: true })
             .first()

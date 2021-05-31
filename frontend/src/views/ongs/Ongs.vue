@@ -12,7 +12,8 @@
             <v-card class="ong-card" color="#fff" dark>
               <div class="d-flex flex-no-wrap">
                 <v-avatar class="ma-2 avatar-img" size="100" tile>
-                  <Gravatar :email="ong.email" :alt="ong.name" />
+                  <img :src="ong.userImage" alt="" v-if="ong.userImage">
+                  <Gravatar :email="ong.email" :alt="ong.name" v-else />
                 </v-avatar>
                 <v-divider class="divider-avatar" vertical></v-divider>
                 <div>

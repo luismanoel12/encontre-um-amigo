@@ -17,9 +17,11 @@
           <v-sheet min-height="70vh" rounded="lg" elevation="10">
             <div class="publicacao-page-header">
               <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
+                <img :src="publicacao.userImage" alt="" v-if="publicacao.userImage">
                 <Gravatar
                   :email="publicacao.email"
                   :alt="publicacao.name"
+                  v-else
                 />
               </v-avatar>
               <router-link
@@ -30,12 +32,13 @@
                 }"
               >
                 <h3>{{ publicacao.name }}</h3>
+                <h5>{{ publicacao.dataPub }}</h5>
               </router-link>
             </div>
 
             <div class="publicacao-page-header-title">
               <h2>{{ publicacao.titulo }}</h2>
-              <h5>Publicado em {{ publicacao.dataPub }}</h5>
+
             </div>
 
             <v-divider></v-divider>
@@ -190,6 +193,7 @@ export default {
 
 .pub-avatar-img > img {
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .pub-router-link{
