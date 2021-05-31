@@ -28,18 +28,25 @@ module.exports = app => {
                     tipo: animais.tipo, nome: animais.nome, sexo: animais.sexo, porte: animais.porte, imagem: animais.imagem,
                     cep: animais.cep, estado: animais.estado, cidade: animais.cidade, deficiente: animais.deficiente,
                     castrado: animais.castrado, vacinado: animais.vacinado, vermifugado: animais.vermifugado,
-                    descricao: animais.descricao, status: animais.status
+                    descricao: animais.descricao, status: animais.status, desaparecido: animais.desaparecido
                 })
                 .where({ id: animais.id })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         } else {
+
+            if (animais.desaparecido == null) {
+                animais.desaparecido = false;
+            } else {
+                animais.desaparecido = true;
+            }
+
             app.db('animais')
                 .insert({
                     tipo: animais.tipo, nome: animais.nome, sexo: animais.sexo, porte: animais.porte, imagem: animais.imagem,
                     cep: animais.cep, estado: animais.estado, cidade: animais.cidade, createdAt: new Date(), userId: req.user.id,
                     deficiente: animais.deficiente, castrado: animais.castrado, vacinado: animais.vacinado,
-                    vermifugado: animais.vermifugado, descricao: animais.descricao, status: "DISPONÍVEL"
+                    vermifugado: animais.vermifugado, descricao: animais.descricao, status: "DISPONÍVEL", desaparecido: animais.desaparecido
                 })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
@@ -86,9 +93,25 @@ module.exports = app => {
         const count = parseInt(result.count)
 
         app.db('animais')
+            .where({ status: "DISPONÍVEL" })
+            .andWhere({ desaparecido: false })
             .orderBy('id', 'desc')
             .limit(limit).offset(page * limit - limit)
             .then(animais => res.json({ data: animais, count, limit }))
+            .catch(err => res.status(500).send(err))
+    }
+
+    const limitDesaparecidos = 10 //usado para paginação
+    const getLost = async (req, res) => {
+        const page = req.query.page || 1
+        const result = await app.db('animais').count('id').first()
+        const count = parseInt(result.count)
+
+        app.db('animais')
+            .where({ desaparecido: true })
+            .orderBy('id', 'desc')
+            .limit(limitDesaparecidos).offset(page * limitDesaparecidos - limitDesaparecidos)
+            .then(animais => res.json({ data: animais, count, limitDesaparecidos }))
             .catch(err => res.status(500).send(err))
     }
 
@@ -96,8 +119,20 @@ module.exports = app => {
         app.db('animais')
             .join('users', 'animais.userId', 'users.id')
             .select('animais.id', 'animais.tipo', 'animais.nome', 'animais.sexo', 'animais.porte', 'animais.deficiente', 'animais.vermifugado', 'animais.vacinado', 'animais.castrado', 'animais.descricao',
-                'animais.estado', 'animais.cidade', 'animais.cep', 'animais.userId', 'animais.status', 'animais.imagem', 'animais.createdAt', 'users.name', 'users.email', 'users.telefone')
+                'animais.estado', 'animais.cidade', 'animais.cep', 'animais.desaparecido', 'animais.userId', 'animais.status', 'animais.imagem', 'animais.createdAt', 'users.name', 'users.email', 'users.telefone')
             .where({ 'animais.id': req.params.id })
+            .first()
+            .then(animais => res.json(animais))
+            .catch(err => res.status(500).send(err))
+    }
+
+    const getLostById = (req, res) => {
+        app.db('animais')
+            .join('users', 'animais.userId', 'users.id')
+            .select('animais.id', 'animais.tipo', 'animais.nome', 'animais.sexo', 'animais.porte', 'animais.deficiente', 'animais.vermifugado', 'animais.vacinado', 'animais.castrado', 'animais.descricao',
+                'animais.estado', 'animais.cidade', 'animais.cep', 'animais.desaparecido', 'animais.userId', 'animais.status', 'animais.imagem', 'animais.createdAt', 'users.name', 'users.email', 'users.telefone')
+            .where({ 'animais.id': req.params.id })
+            .andWhere({ desaparecido: true })
             .first()
             .then(animais => res.json(animais))
             .catch(err => res.status(500).send(err))
@@ -129,6 +164,37 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
+    
+    const limitLostCustomSearch = 1 //usado para paginação
+    const getLostCustomSearch = async (req, res) => {
+
+        const page = req.query.page || 1
+        const result = await app.db('animais').count('id').first()
+        const count = parseInt(result.count)
+
+        const search = { ...req.body }
+
+        try {
+
+            existsOrError(search.cidade, 'Informe o nome da cidade')
+            existsOrError(search.estado, 'Selecione o estado')
+
+        } catch (msg) {
+            return res.status(400).send(msg)
+        }
+
+        console.log(search)
+
+        app.db('animais')
+            .where({ desaparecido: true })
+            .andWhere({ estado: search.estado })
+            .andWhere({ cidade: search.cidade })
+            .orderBy('id', 'desc')
+            .limit(limitLostCustomSearch).offset(page * limitLostCustomSearch - limitLostCustomSearch)
+            .then(animais => res.json({ data: animais, count, limitLostCustomSearch }))
+            .catch(err => res.status(500).send(err))
+    }
+
 
     const adopt = (req, res) => {
         const animais = { ...req.body }
@@ -137,8 +203,8 @@ module.exports = app => {
             .update({ status: animais.status })
             .where({ id: req.params.id })
             .then(_ => res.status(204).send())
-                .catch(err => res.status(500).send(err))
+            .catch(err => res.status(500).send(err))
     }
 
-    return { save, remove, get, getById, getByUser, getCustomSearch, getAllByUser, adopt }
+    return { save, remove, get, getById, getByUser, getCustomSearch, getAllByUser, getLost, getLostById, getLostCustomSearch, adopt }
 }

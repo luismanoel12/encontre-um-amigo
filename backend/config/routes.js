@@ -24,9 +24,10 @@ module.exports = app => {
     app.get('/animaisPublic', app.api.animais.get)
     app.get('/animaisPublic/:id', app.api.animais.getById)
     app.get('/allByUser/:id', app.api.animais.getAllByUser)
+    app.get('/animaisDesaparecidos', app.api.animais.getLost)
+    app.get('/animaisDesaparecidos/:id', app.api.animais.getLostById)
     app.post('/animaisSearch', app.api.animais.getCustomSearch)
-    app.get('/animais/desaparecidosPublic', app.api.animais_desaparecidos.get)
-    app.get('/animais/desaparecidosPublic/:id', app.api.animais_desaparecidos.getById)
+    app.post('/animaisDesaparecidosSearch', app.api.animais.getLostCustomSearch)
 
     app.get('/publicacaoPublic', app.api.publicacao.get)
     app.get('/publicacaoPublic/:id', app.api.publicacao.getById)
@@ -187,19 +188,6 @@ module.exports = app => {
         .post(app.api.bio.save)
         .get(app.api.bio.getByUser)
         .put(app.api.bio.save)
-
-    // animais desaparecidos
-
-    app.route('/animais/desaparecidos')
-        .all(app.config.passport.authenticate())
-        .post(app.api.animais_desaparecidos.save)
-        .get(app.api.animais_desaparecidos.getPorUsuario)
-
-    app.route('/animais/desaparecidos/:id')
-        .all(app.config.passport.authenticate())
-        .put(app.api.animais_desaparecidos.save)
-        .delete(app.api.animais_desaparecidos.remove)
-
 
 
     // Doações

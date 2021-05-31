@@ -15,6 +15,7 @@ exports.up = function(knex) {
         table.string('cidade').notNull()
         table.string('cep').notNull()
         table.string('status').notNull()
+        table.boolean('desaparecido')
         table.integer('userId').references('id')
             .inTable('users').notNull()
         table.string('imagem').notNull()

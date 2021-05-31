@@ -6,7 +6,7 @@
           <v-sheet rounded="lg" min-height="268" elevation="10">
             <div class="animal-left-card">
               <div class="animal-left-card-header">
-                <h2 class="text-center">Responsável Pela adoção</h2>
+                <h2 class="text-center">Responsável</h2>
               </div>
               <div class="animal-left-card-content">
                 <div class="animalById-responsavel">
@@ -29,7 +29,7 @@
                   <div class="animal-info">
                     <span class="mdi mdi-clock mdi-16px mr-2"></span>
                     <span
-                      >Anunciado em:
+                      >Publicado em:
                       {{
                         new Date(animal.createdAt).toLocaleDateString("pt-br")
                       }}
@@ -37,10 +37,8 @@
                   </div>
                   <div class="contato-responsavel">
                     <div class="contato-responsavel-header">
-                      <label class="text-center"
-                        >Para adotar ou saber mais sobre este pet, entre em
-                        contato:</label
-                      >
+                      <h3 class="text-center"
+                        >Tem alguma notícia sobre esse animal desaparecido? não perca tempo e entre em contato com a ONG responsável:</h3>
                     </div>
                     <div class="contato-responsavel-content">
                       <h4>
@@ -61,6 +59,9 @@
 
         <v-col cols="12" sm="6">
           <v-sheet min-height="70vh" rounded="lg" elevation="10">
+              <div class="animal-page-header-desaparecido">
+                  <h1>DESAPARECIDO</h1>
+              </div>
             <div class="animal-page-header">
               <h1>{{ animal.nome }}</h1>
             </div>
@@ -145,7 +146,7 @@ import api from "../../config/api";
 import Gravatar from "vue-gravatar";
 
 export default {
-  name: "AnimaisById",
+  name: "AnimaisDesaparecidosById",
   components: { Gravatar },
   data: function () {
     return {
@@ -160,7 +161,7 @@ export default {
   },
   methods: {
     loadAnimal() {
-      const url = `/animaisPublic/${this.$route.params.id}`;
+      const url = `/animaisDesaparecidos/${this.$route.params.id}`;
       api.get(url).then((res) => (this.animal = res.data));
     },
 
@@ -268,7 +269,18 @@ export default {
 }
 
 .contato-responsavel-content {
-  color: #2a9d8f;
+  color: #ff5252;
   text-align: center;
 }
+
+.contato-responsavel-header, .animal-page-header{
+    color: #ff5252;
+}
+
+.animal-page-header-desaparecido{
+    background-color: #ff5252;
+    color: #fff;
+    text-align: center;
+}
+
 </style>

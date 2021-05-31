@@ -137,6 +137,15 @@
                       ></v-checkbox>
                     </v-col>
 
+                    <v-col cols="12" sm="12">
+                      <v-checkbox
+                        color="green"
+                        v-model="animal.desaparecido"
+                        v-if="this.mode === 'save'"
+                        :label="'Desaparecido'"
+                      ></v-checkbox>
+                    </v-col>
+
                     <v-col cols="12" sm="4">
                       <v-text-field
                         label="CEP"
@@ -237,20 +246,31 @@
           :key="animal.id"
         >
           <v-card class="mx-auto my-12 animal-card" max-width="374">
-            <div class="img-card-animal">
-              <img
-                v-if="animal.imagem"
-                :src="animal.imagem"
-                height="100%"
-                alt="Animais"
-              />
-              <img
-                v-else
-                src="@/assets/article.png"
-                height="100%"
-                alt="Animais"
-              />
-            </div>
+            <v-badge
+              color="#036564"
+              icon="mdi-dog-side"
+              offset-x="78"
+              offset-y="20"
+              left
+              :content="animal.status"
+              overlap
+              tile
+            >
+              <div class="img-card-animal">
+                <img
+                  v-if="animal.imagem"
+                  :src="animal.imagem"
+                  height="100%"
+                  alt="Animais"
+                />
+                <img
+                  v-else
+                  src="@/assets/article.png"
+                  height="100%"
+                  alt="Animais"
+                />
+              </div>
+            </v-badge>
 
             <v-card-title> {{ animal.nome }}</v-card-title>
 
@@ -265,6 +285,20 @@
                 outlined
                 color="#036564"
                 @click="adotar(animal)"
+                v-if="animal.status === 'DISPONÍVEL'"
+              >
+                <v-icon dark> mdi-paw </v-icon>
+              </v-btn>
+
+              <v-btn
+                class="mx-2"
+                fab
+                dark
+                small
+                outlined
+                color="error"
+                @click="adotar(animal)"
+                v-else
               >
                 <v-icon dark> mdi-paw </v-icon>
               </v-btn>

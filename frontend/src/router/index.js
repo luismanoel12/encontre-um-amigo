@@ -15,6 +15,8 @@ import Ongs from "@/views/ongs/Ongs"
 import OngById from "@/views/ongs/OngById"
 import Animais from "@/views/animais-adocao/Animais"
 import ListaAnimais from "@/views/animais-adocao/ListaAnimais"
+import ListaAnimaisDesaparecidos from "@/views/animais-adocao/ListaAnimaisDesaparecidos"
+import AnimaisDesaparecidosById from "@/views/animais-adocao/AnimaisDesaparecidosById"
 import AnimaisById from "@/views/animais-adocao/AnimaisById"
 import Publicacoes from "@/views/publicacao/Publicacoes"
 import ListaPublicacoes from "@/views/publicacao/ListaPublicacoes"
@@ -107,6 +109,18 @@ const routes = [{
     name: 'listaAnimais',
     path: '/animais/adocao',
     component: ListaAnimais,
+    meta: { allowGuest: true }
+},
+{
+    name: 'listaAnimaisDesaparecidos',
+    path: '/animais/desaparecidos',
+    component: ListaAnimaisDesaparecidos,
+    meta: { allowGuest: true }
+},
+{
+    name: 'AnimaisDesaparecidosById',
+    path: '/animais/desaparecidos/:id',
+    component: AnimaisDesaparecidosById,
     meta: { allowGuest: true }
 },
 {

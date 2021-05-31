@@ -31,7 +31,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>Home</v-list-item-title>
+            <v-list-item-title>Início</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -44,7 +44,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>Meus Dados</v-list-item-title>
+            <v-list-item-title>Meus dados</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -54,7 +54,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>ONGs</v-list-item-title>
+            <v-list-item-title>ONG's cadastradas</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -74,7 +74,7 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title>Cadastrar Animais</v-list-item-title>
+              <v-list-item-title>Cadastrar animais</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item to="/animais/adocao">
@@ -83,7 +83,17 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title>Animais Para Adoção</v-list-item-title>
+              <v-list-item-title>Animais para adoção</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item to="/animais/desaparecidos">
+            <v-list-item-icon>
+              <v-icon> mdi-dog-side-off </v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>Animais desaparecidos</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -290,7 +300,7 @@ export default {
 
 <style>
 .main-body {
-  background-color: #DCE1E3;
+  background-color: #dce1e3;
 }
 
 .title {
@@ -354,8 +364,8 @@ export default {
   align-items: center;
 }
 
-.menu-bg{
-    background: linear-gradient(110deg, #00171f 30%, #036564 60%);
+.menu-bg {
+  background: linear-gradient(110deg, #00171f 30%, #036564 60%);
 }
 
 @media (max-width: 600px) {
