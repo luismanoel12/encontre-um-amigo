@@ -1,8 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
 var moment = require('moment');
 
-const { GOOGLE_EMAIL, GOOGLE_PASSWORD } = require('../.env')
-const nodemailer = require('nodemailer')
 
 module.exports = app => {
     const { existsOrError, notExistsOrError, equalsOrError } = app.api.validation
@@ -11,14 +9,6 @@ module.exports = app => {
         const salt = bcrypt.genSaltSync(10)
         return bcrypt.hashSync(password, salt)
     }
-
-    let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: GOOGLE_EMAIL,
-            pass: GOOGLE_PASSWORD
-        }
-    })
 
     const save = async (req, res) => {
         const user = { ...req.body }
@@ -50,13 +40,13 @@ module.exports = app => {
                 const userFromDB = await app.db('users')
                     .where({ email: user.email }).orWhere({ cnpj: user.cnpj }).first()
                 if (!user.id) {
-                    notExistsOrError(userFromDB, 'E-mail, CPF ou CNPJ já cadastrados')
+                    notExistsOrError(userFromDB, 'E-mail ou CNPJ já cadastrados')
                 }
             } else {
                 const userFromDB = await app.db('users')
                     .where({ email: user.email }).orWhere({ cpf: user.cpf }).first()
                 if (!user.id) {
-                    notExistsOrError(userFromDB, 'E-mail, CPF ou CNPJ já cadastrados')
+                    notExistsOrError(userFromDB, 'E-mail ou CPF já cadastrados')
                 }
             }
 
@@ -95,22 +85,6 @@ module.exports = app => {
                         .catch(err => res.status(500).send(err))
                 });
         } else {
-
-            let mailOptions = {
-                from: GOOGLE_EMAIL,
-                to: user.email,
-                subject: 'Confirmação de cadastro bem sucedido',
-                text: 'Olá, ' + user.name + '. Seja bem vindo ao Encontre um amigo!'
-            }
-
-            transporter.sendMail(mailOptions, function (err, data) {
-                if(err){
-                    console.log("Erro: ", err);
-                }else{
-                    console.log("E-mail enviado!");
-                }
-            })
-
             app.db("users")
                 .insert({
                     name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password,
@@ -164,7 +138,6 @@ module.exports = app => {
             .then(users => res.json(users))
             .catch(err => res.status(500).send(err))
 
-
     }
 
     const getById = (req, res) => {
@@ -203,9 +176,11 @@ module.exports = app => {
             .where({ 'users.ong': true })
             .then(user => res.json({ data: user, count, limit }))
             .catch(err => res.status(500).send(err))
+
     }
 
     const getOngById = async (req, res) => {
+
 
         app.db('users')
             .join('endereco', 'users.id', 'endereco.userId')
@@ -216,7 +191,6 @@ module.exports = app => {
             .first()
             .then(user => res.json(user))
             .catch(err => res.status(500).send(err))
-
 
     }
 
@@ -268,6 +242,7 @@ module.exports = app => {
         }
 
     }
+
 
     return { save, get, getById, remove, getOngs, getOngById, setAdmin, getAdmins, newPassword, getUserImage }
 }

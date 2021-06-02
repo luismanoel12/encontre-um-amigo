@@ -3,7 +3,7 @@
     <div class="auth-header">
       <img src="@/assets/logo.png" width="200" alt="Logo" />
       <hr />
-      <h2>{{ showSignup ? "Cadastro" : "Login" }}</h2>
+      <h2> Login </h2>
     </div>
     <div class="auth-content">
       <v-form>
@@ -54,6 +54,8 @@ export default {
       data: {},
       user: {},
       show1: false,
+      dialog: false,
+      resetPassword: {},
       rules: {
         required: (value) => !!value || "Required.",
       },

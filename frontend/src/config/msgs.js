@@ -17,3 +17,9 @@ Vue.toasted.register(
     payload => !payload.msg ? 'Oops.. Erro inesperado.' : payload.msg,
     { type: 'error', icon: 'times' }
 )
+
+Vue.toasted.register(
+    'defaulEmailSucces',
+    payload => !payload.msg ? 'Uma nova senha foi enviada para seu E-mail' : payload.msg,
+    { type: 'success', icon: 'envelope' }
+)
