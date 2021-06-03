@@ -11,7 +11,11 @@
               <div class="animal-left-card-content">
                 <div class="animalById-responsavel">
                   <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
-                    <img :src="animal.userImage" alt="" v-if="animal.userImage">
+                    <img
+                      :src="animal.userImage"
+                      alt=""
+                      v-if="animal.userImage"
+                    />
                     <Gravatar :email="animal.email" :alt="animal.name" v-else />
                   </v-avatar>
                   <div class="animal-info">
@@ -105,6 +109,65 @@
                   Localização: {{ animal.cidade }} - {{ animal.estado }}
                 </h3>
               </div>
+            </div>
+
+            <div class="quero-adotar-btn">
+              <v-row justify="space-around">
+                <v-col cols="auto">
+                  <v-dialog
+                    transition="dialog-bottom-transition"
+                    max-width="600"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        rounded
+                        color="#036564"
+                        dark
+                        v-bind="attrs"
+                        v-on="on"
+                        >Quero Adotar
+
+                        <v-icon dark class="ml-2"> mdi-paw </v-icon>
+                      </v-btn>
+                    </template>
+                    <template v-slot:default="dialog">
+                      <v-card>
+                        <v-toolbar color="#2a9d8f" dark
+                          >Oba, parece que {{ animal.nome }} vai ganhar um novo
+                          lar.
+                        </v-toolbar>
+                        <v-card-text>
+                          <div class="text-h5 pa-3">
+                            <p>
+                              Para adotar ou saber mais sobre este pet, entre em
+                              contato:
+                            </p>
+                            <p>
+                              E-mail:<strong>
+                                {{ animal.email }}
+                              </strong>
+                            </p>
+                            <p>
+                              Telefone:<strong>
+                                {{ animal.telefone }}
+                              </strong>
+                            </p>
+                          </div>
+                          <span
+                            >Não esqueça de mencionar que veio do site
+                            <strong> Encontre um Amigo </strong></span
+                          >
+                        </v-card-text>
+                        <v-card-actions class="justify-end">
+                          <v-btn text @click="dialog.value = false"
+                            >Fechar</v-btn
+                          >
+                        </v-card-actions>
+                      </v-card>
+                    </template>
+                  </v-dialog>
+                </v-col>
+              </v-row>
             </div>
 
             <div class="share-button">
@@ -271,5 +334,10 @@ export default {
 .contato-responsavel-content {
   color: #2a9d8f;
   text-align: center;
+}
+
+.quero-adotar-btn {
+  text-align: center;
+  margin-top: 10px;
 }
 </style>

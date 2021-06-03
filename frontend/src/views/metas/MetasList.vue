@@ -14,7 +14,7 @@
                   <Gravatar :email="meta.email" :alt="meta.userName" v-else />
                 </v-avatar>
                 <router-link
-                  class="pub-router-link"
+                  class="metas-router-link"
                   :to="{
                     name: 'ongById',
                     params: { id: meta.userId },
@@ -84,9 +84,10 @@
 
               <div class="progress-bar">
                 <v-progress-linear
-                  :value="valor"
+                  :value="Math.ceil((meta.valorAtual * 100) / meta.valorEsperado)"
                   rounded
                   background-color="green"
+                  background-opacity="0.3"
                   color="green"
                   height="25"
                 >
@@ -124,7 +125,6 @@ export default {
       metas: [],
       metaUser: {},
       page: 1,
-      valor: 0,
       loadMore: true,
     };
   },
@@ -206,8 +206,11 @@ export default {
   object-fit: cover;
 }
 
-.router-link {
+
+.metas-router-link{
   text-decoration: none;
+  color: #fff!important;
+
 }
 
 .meta-card {
@@ -221,6 +224,8 @@ export default {
 }
 
 .card-met-user {
+  background-color: #1c8073;
+  color: #fff;
   padding-bottom: 20px;
   display: flex;
   flex-direction: row;

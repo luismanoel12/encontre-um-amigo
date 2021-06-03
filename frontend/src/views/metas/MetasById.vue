@@ -23,7 +23,8 @@
                 </div>
 
                 <div class="view-content">
-                  <div class="meta-content" v-html="meta.descricao"></div>
+                  <span> <strong>Descrição:</strong> </span>
+                  <div class="meta-content mt-5" v-html="meta.descricao"></div>
                 </div>
               </div>
             </div>
@@ -34,11 +35,11 @@
           <v-sheet rounded="lg" min-height="268" class="side-content">
             <div class="card-metas-user">
               <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
-                <img :src="meta.userImage" alt="" v-if="meta.userImage">
+                <img :src="meta.userImage" alt="" v-if="meta.userImage" />
                 <Gravatar :email="meta.email" :alt="meta.name" v-else />
               </v-avatar>
               <router-link
-                class="pub-router-link"
+                class="metas-router-link"
                 :to="{
                   name: 'ongById',
                   params: { id: meta.userId },
@@ -48,89 +49,95 @@
               </router-link>
             </div>
 
-            <div class="text-center">
-              <h1 class="side-content-h1">
-                {{
-                  new Intl.NumberFormat("pt-br", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(meta.valorAtual)
-                }}
-              </h1>
-              <span>
-                Valor Esperado
-                {{
-                  new Intl.NumberFormat("pt-br", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(meta.valorEsperado)
-                }}
-              </span>
-            </div>
+            <div class="card-metas-byId-content">
+              <div class="text-center">
+                <h1 class="side-content-h1">
+                  {{
+                    new Intl.NumberFormat("pt-br", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(meta.valorAtual)
+                  }}
+                </h1>
+                <span>
+                  Valor Esperado
+                  {{
+                    new Intl.NumberFormat("pt-br", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(meta.valorEsperado)
+                  }}
+                </span>
+              </div>
 
-            <div class="pb">
-              <v-progress-linear
-                rounded
-                background-color="green"
-                color="green"
-                height="24"
-              >
-                <strong
-                  >{{
+              <div class="pb">
+                <v-progress-linear
+                  :value="
                     Math.ceil((meta.valorAtual * 100) / meta.valorEsperado)
-                  }}%</strong
+                  "
+                  rounded
+                  background-color="green"
+                  background-opacity="0.3"
+                  color="green"
+                  height="25"
                 >
-              </v-progress-linear>
+                  <strong
+                    >{{
+                      Math.ceil((meta.valorAtual * 100) / meta.valorEsperado)
+                    }}%</strong
+                  >
+                </v-progress-linear>
+              </div>
+              <v-divider style="padding-bottom: 10px"></v-divider>
+              <p v-for="objetivo in objetivos" :key="objetivo.id">
+                <v-card
+                  color="#4DA545"
+                  dark
+                  v-if="Math.ceil(objetivo.valor <= meta.valorAtual)"
+                >
+                  <v-card-title class="headline">
+                    {{ objetivo.titulo }}
+                  </v-card-title>
+
+                  <v-card-subtitle>
+                    <h1 class="text-center valores">
+                      R$
+                      {{
+                        objetivo.valor.toLocaleString("pt-br", {
+                          style: "currency",
+                          currency: "BRL",
+                        })
+                      }}
+                    </h1>
+                  </v-card-subtitle>
+
+                  <v-card-text class="text-center">
+                    {{ objetivo.descricao }}
+                  </v-card-text>
+                </v-card>
+
+                <v-card color="#C5C6C7" dark v-else>
+                  <v-card-title class="headline">
+                    {{ objetivo.titulo }}
+                  </v-card-title>
+
+                  <v-card-subtitle>
+                    <h1 class="text-center valores">
+                      {{
+                        objetivo.valor.toLocaleString("pt-br", {
+                          style: "currency",
+                          currency: "BRL",
+                        })
+                      }}
+                    </h1>
+                  </v-card-subtitle>
+
+                  <v-card-text class="text-center">
+                    {{ objetivo.descricao }}
+                  </v-card-text>
+                </v-card>
+              </p>
             </div>
-            <v-divider style="padding-bottom: 10px"></v-divider>
-            <p v-for="objetivo in objetivos" :key="objetivo.id">
-              <v-card
-                color="#4DA545"
-                dark
-                v-if="Math.ceil(objetivo.valor <= meta.valorAtual)"
-              >
-                <v-card-title class="headline">
-                  {{ objetivo.titulo }}
-                </v-card-title>
-
-                <v-card-subtitle>
-                  <h1 class="text-center valores">
-                    R$
-                    {{
-                      objetivo.valor.toLocaleString("pt-br", {
-                        style: "currency",
-                        currency: "BRL",
-                      })
-                    }}
-                  </h1>
-                </v-card-subtitle>
-
-                <v-card-text class="text-center">
-                  {{ objetivo.descricao }}
-                </v-card-text>
-              </v-card>
-
-              <v-card color="#C5C6C7" dark v-else>
-                <v-card-title class="headline">
-                  {{ objetivo.titulo }}
-                </v-card-title>
-
-                <v-card-subtitle>
-                  <h1 class="text-center valores">
-                    {{
-                      objetivo.valor.toLocaleString("pt-br", {
-                        style: "currency",
-                        currency: "BRL",
-                      })
-                    }}
-                  </h1>
-                </v-card-subtitle>
-
-                <v-card-text class="text-center">
-                  {{ objetivo.descricao }}
-                </v-card-text>
-              </v-card>
-            </p>
           </v-sheet>
         </v-col>
       </v-row>
@@ -230,7 +237,7 @@ export default {
   margin-bottom: 20px;
 }
 
-.side-content {
+.card-metas-byId-content {
   padding: 20px;
 }
 
@@ -244,7 +251,8 @@ export default {
 }
 
 .card-metas-user {
-  padding-bottom: 20px;
+  background-color: #1c8073;
+  padding: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;

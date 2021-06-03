@@ -28,7 +28,7 @@
                     }"
                   >
                     <h3>{{ publicacao.name }}</h3>
-                    <h5>{{ publicacao.dataPub }}</h5>
+                    <h5>{{ publicacao.dataPub }} <span class="mdi mdi-earth"></span></h5>
                   </router-link>
                 </div>
                 <div class="card-publicacao-header">

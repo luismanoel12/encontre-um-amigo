@@ -7,17 +7,18 @@
     <div class="perfil-main">
       <div class="perfil-header">
         <v-avatar class="ma-2 pub-avatar-img" size="128" tile>
-          <img :src="user.userImage" alt="" v-if="user.userImage">
+          <img :src="user.userImage" alt="" v-if="user.userImage" />
           <Gravatar :email="user.email" alt="User" v-else />
+        </v-avatar>
+        <h1>
+          {{ userData.name }}
           <v-badge
             v-if="user.admin"
             color="blue"
             icon="mdi-check-bold"
-            bottom
-            overlap
+            class="ml-2"
           ></v-badge>
-        </v-avatar>
-        <h1>{{ userData.name }}</h1>
+        </h1>
       </div>
       <div class="perfil-content">
         <v-row>

@@ -214,8 +214,11 @@
                       v-if="doacao.link"
                       color="#036564"
                       :href="doacao.link"
+                      target="_blank"
                     >
                       Acessar
+
+                      <v-icon class="ml-2">mdi-open-in-new</v-icon>
                     </v-btn>
                   </div>
                 </v-col>

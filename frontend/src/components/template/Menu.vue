@@ -5,20 +5,20 @@
         <v-list-item-content>
           <v-avatar class="ma-2 perfil-avatar-img" size="84" tile>
             <img :src="user.userImage" alt="" v-if="user.userImage">
-            <Gravatar :email="user.email" alt="User" v-else />
-            <v-badge
-              v-if="user.admin"
-              color="blue"
-              icon="mdi-check-bold"
-              bottom
-              overlap
-            ></v-badge>
+            <Gravatar :email="user.email" alt="User" v-else />           
           </v-avatar>
           <v-list-item-title class="title">
             <h3>Bem-vindo</h3>
           </v-list-item-title>
           <v-list-item-subtitle>
-            <h3 class="subtext">{{ user.name }}</h3>
+            <h3 class="subtext">{{ user.name }}
+              <v-badge
+              v-if="user.admin"
+              color="blue"
+              class="ml-2"
+              icon="mdi-check-bold"
+            ></v-badge>
+            </h3>
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>

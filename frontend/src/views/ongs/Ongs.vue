@@ -11,7 +11,7 @@
           >
             <v-card class="ong-card" color="#fff" dark>
               <div class="d-flex flex-no-wrap">
-                <v-avatar class="ma-2 avatar-img" size="100" tile>
+                <v-avatar class="ma-2 avatar-img-ongs" size="100" tile>
                   <img :src="ong.userImage" alt="" v-if="ong.userImage">
                   <Gravatar :email="ong.email" :alt="ong.name" v-else />
                 </v-avatar>
@@ -127,6 +127,10 @@ export default {
 
 .ong-card:hover{
   transform: scale(1.03);
+}
+
+.avatar-img-ongs > img{
+  object-fit: cover;
 }
 
 </style>
