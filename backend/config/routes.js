@@ -39,7 +39,7 @@ module.exports = app => {
     app.get('/getRandom', app.api.animais.getRandom)
 
 
-    
+
 
     // User routes
 
@@ -169,6 +169,10 @@ module.exports = app => {
     app.route('/getCount')
         .all(app.config.passport.authenticate())
         .get(admin(app.api.count.getCount))
+
+    app.route('/getCountLastWeek')
+        .all(app.config.passport.authenticate())
+        .get(admin(app.api.countLastWeek.getCountLastWeek))
 
     // Denúncia
 

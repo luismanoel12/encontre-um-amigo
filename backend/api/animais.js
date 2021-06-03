@@ -105,6 +105,7 @@ module.exports = app => {
         app.db('animais')
             .where({ status: "DISPONÍVEL" })
             .andWhere({ desaparecido: false })
+            .orderBy('createdAt', 'desc')
             .limit(10)
             .then(animais => res.json(animais))
             .catch(err => res.status(500).send(err))
