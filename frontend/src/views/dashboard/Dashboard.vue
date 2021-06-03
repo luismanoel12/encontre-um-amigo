@@ -50,7 +50,7 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2 class="card-title-v1">Doações com Metas Cadastradas</h2>
+          <h2 class="card-title-v1">Metas de Doações Cadastradas</h2>
           <span class="mdi mdi-bullseye-arrow mdi-48px"></span>
         </div>
         <v-divider></v-divider>
@@ -138,7 +138,7 @@
       <div class="dashboard-card">
         <div class="dashboard-card-header">
           <h2 class="card-title-v1">Denúncias</h2>
-          <span class="mdi mdi-cursor-default-click mdi-48px"></span>
+          <span class="mdi mdi-alert mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -153,67 +153,73 @@
     </div>
 
     <div class="dashboard-page-title">
-      <h1>DADOS DO MÊS</h1>
+      <h1>DADOS DOS ÚLTIMOS 7 DIAS</h1>
     </div>
 
     <div class="dashboard-2">
       <div class="dashboard-card">
         <div class="dashboard-card-header">
           <h2 class="card-title-v1">Usuários Cadastrados</h2>
+          <span class="mdi mdi-account-multiple mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
-          <h1>50</h1>
+          <h1>{{ countLastWeek.usersCountWeek ? countLastWeek.usersCountWeek : 0 }}</h1>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2 class="card-title-v1">ONGs Cadastradas</h2>
+          <span class="mdi mdi-account-group mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <h1>{{ countLastWeek.ongsCountWeek ? countLastWeek.ongsCountWeek : 0 }}</h1>
         </div>
       </div>
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
           <h2 class="card-title-v1">Animais Cadastrados</h2>
+          <span class="mdi mdi-dog-side mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
-          <h1>50</h1>
-        </div>
-      </div>
-
-      <div class="dashboard-card">
-        <div class="dashboard-card-header">
-          <h2 class="card-title-v1">Animais Adotados</h2>
-        </div>
-        <v-divider></v-divider>
-        <div class="dashboard-card-content">
-          <h1>50</h1>
+          <h1>{{ countLastWeek.animaisCountWeek ? countLastWeek.animaisCountWeek : 0 }}</h1>
         </div>
       </div>
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
           <h2 class="card-title-v1">Publicações</h2>
+          <span class="mdi mdi-newspaper-variant-outline mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
-          <h1>50</h1>
+          <h1>{{ countLastWeek.publicacoesCountWeek ? countLastWeek.publicacoesCountWeek : 0 }}</h1>
         </div>
       </div>
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2 class="card-title-v1">Doaçoes com Metas Cadastrados</h2>
+          <h2 class="card-title-v1">Metas de Doações</h2>
+          <span class="mdi mdi-bullseye-arrow mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
-          <h1>50</h1>
+          <h1>{{ countLastWeek.metasCountWeek ? countLastWeek.metasCountWeek : 0 }}</h1>
         </div>
       </div>
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2 class="card-title-v1">Usuários Cadastrados</h2>
+          <h2 class="card-title-v1">Denúncias</h2>
+          <span class="mdi mdi-alert mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
-          <h1>50</h1>
+          <h1>{{ countLastWeek.denunciasCountWeek ? countLastWeek.denunciasCountWeek : 0}}</h1>
         </div>
       </div>
     </div>
@@ -228,7 +234,8 @@
           <v-card class="admin-card" color="#34a0a4" elevation="10" dark>
             <div class="d-flex flex-no-wrap">
               <v-avatar class="ma-2 avatar-img" size="100" tile>
-                <Gravatar :email="admin.email" :alt="admin.name" />
+                <img :src="admin.userImage" alt="" v-if="admin.userImage" />
+                <Gravatar :email="admin.email" :alt="admin.name" v-else />
               </v-avatar>
               <v-divider class="divider-avatar" vertical></v-divider>
               <div>
@@ -270,6 +277,7 @@ export default {
     return {
       admins: [],
       count: [],
+      countLastWeek: [],
 
       series: [0, 0, 0],
       chartOptions: {
@@ -368,18 +376,18 @@ export default {
         ];
       });
     },
-  },
-  watch: {
-    $route(to) {
-      this.admins = [];
 
-      this.getAdmins();
-      this.getCount();
+    getCountLastWeek() {
+      api(`/getCountLastWeek`).then((res) => {
+        this.countLastWeek = res.data;
+      });
     },
   },
+
   mounted() {
     this.getAdmins();
     this.getCount();
+    this.getCountLastWeek();
   },
 };
 </script>
@@ -410,12 +418,16 @@ export default {
 }
 
 .dashboard-page-title {
-  background: linear-gradient(110deg, #036564 60%, #00171f 40%);
+  background: linear-gradient(110deg, #036564 65%, #00171f 35%);
   padding: 10px;
   border-radius: 5px;
   text-align: center;
   box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
     0 1px 5px 0 rgb(0 0 0 / 12%);
+}
+
+.dashboard-page-title > h1 {
+  color: #fff !important;
 }
 
 .dashboard-card {
