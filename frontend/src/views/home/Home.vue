@@ -70,11 +70,31 @@
       </v-container>
     </div>
 
+    <div class="home-4">
+      <v-container>
+        <div class="home-4-title">
+          <h1>Veja alguns animais cadastrados</h1>
+        </div>
+        <v-sheet class="mx-auto sheet-home-animais" max-width="80%">
+          <v-slide-group class="pa-4" show-arrows>
+            <v-slide-item v-for="animal in animais" :key="animal.id">
+              <v-card  class="ma-4" height="200" width="200">
+                <div class="img-animais-home">
+                  <img :src="animal.imagem" :alt="animal.nome" />
+                  <span>{{ animal.nome }}</span>
+                </div>
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </v-sheet>
+      </v-container>
+    </div>
+
     <div class="home-3">
       <v-container>
         <div class="home-3-title">
           <h1>Ajude</h1>
-            <v-divider class="home-3-divider"></v-divider>
+          <v-divider class="home-3-divider"></v-divider>
           <v-row>
             <v-col cols="12" sm="6">
               <div class="page-3-card">
@@ -85,9 +105,9 @@
                   massa sapien, tempor et sodales sed, congue vitae ipsum. Ut
                   vitae eros arcu. Sed sed hendrerit metus, et placerat lacus.
                   Duis fermentum eros eget risus lacinia lacinia. Donec
-                  hendrerit nibh lectus, at mollis risus pellentesque id
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-                  mi purus, ornare ac mi et, ultricies condimentum lacus. Etiam
+                  hendrerit nibh lectus, at mollis risus pellentesque id Lorem
+                  ipsum dolor sit amet, consectetur adipiscing elit. Proin mi
+                  purus, ornare ac mi et, ultricies condimentum lacus. Etiam
                 </p>
               </div>
             </v-col>
@@ -100,9 +120,9 @@
                   massa sapien, tempor et sodales sed, congue vitae ipsum. Ut
                   vitae eros arcu. Sed sed hendrerit metus, et placerat lacus.
                   Duis fermentum eros eget risus lacinia lacinia. Donec
-                  hendrerit nibh lectus, at mollis risus pellentesque id
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-                  mi purus, ornare ac mi et, ultricies condimentum lacus. Etiam
+                  hendrerit nibh lectus, at mollis risus pellentesque id Lorem
+                  ipsum dolor sit amet, consectetur adipiscing elit. Proin mi
+                  purus, ornare ac mi et, ultricies condimentum lacus. Etiam
                 </p>
               </div>
             </v-col>
@@ -121,6 +141,8 @@ export default {
   data() {
     return {
       carouselData: {},
+      model: null,
+      animais: {},
     };
   },
   mounted() {
@@ -139,6 +161,15 @@ export default {
         })
         .catch((erro) => {});
     },
+
+    getAnimais() {
+      api(`/getRandom`).then((res) => {
+        this.animais = res.data;
+      });
+    },
+  },
+  mounted() {
+    this.getAnimais();
   },
 };
 </script>
@@ -198,7 +229,7 @@ export default {
   padding-bottom: 20px;
 }
 
-.page-3-card{
+.page-3-card {
   width: auto;
   margin: auto;
   padding-top: 20px;
@@ -210,8 +241,22 @@ export default {
   text-align: justify;
 }
 
-.home-3-divider{
+.home-3-divider {
   background-color: #fff;
+}
+
+.img-animais-home > img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.sheet-home-animais{
+  background-color: transparent!important;
+}
+
+.home-4-title{
+  text-align: center;
+  margin-top: 70px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -220,5 +265,4 @@ export default {
     padding: 20px;
   }
 }
-
 </style>

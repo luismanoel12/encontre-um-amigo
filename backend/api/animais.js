@@ -101,6 +101,15 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
+    const getRandom = (req, res) => {
+        app.db('animais')
+            .where({ status: "DISPONÍVEL" })
+            .andWhere({ desaparecido: false })
+            .limit(10)
+            .then(animais => res.json(animais))
+            .catch(err => res.status(500).send(err))
+    }
+
     const limitDesaparecidos = 10 //usado para paginação
     const getLost = async (req, res) => {
         const page = req.query.page || 1
@@ -206,5 +215,5 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    return { save, remove, get, getById, getByUser, getCustomSearch, getAllByUser, getLost, getLostById, getLostCustomSearch, adopt }
+    return { save, remove, get, getById, getByUser, getCustomSearch, getAllByUser, getLost, getLostById, getLostCustomSearch, adopt, getRandom }
 }

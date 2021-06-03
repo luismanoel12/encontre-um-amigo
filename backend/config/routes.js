@@ -36,6 +36,8 @@ module.exports = app => {
 
     app.get('/userImage/:id', app.api.user.getUserImage)
 
+    app.get('/getRandom', app.api.animais.getRandom)
+
 
     
 
