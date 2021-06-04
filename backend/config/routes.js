@@ -15,6 +15,7 @@ module.exports = app => {
     app.get('/ongs', app.api.user.getOngs)
     app.get('/ongs/:id', app.api.user.getOngById)
     app.get('/bioById/:id', app.api.bio.getById)
+    app.post('/ongsSearch', app.api.user.getOngsSearch )
 
     app.get('/metasPublic', app.api.metas.get)
     app.get('/metasPublic/:id', app.api.metas.getById)
@@ -33,8 +34,6 @@ module.exports = app => {
     app.get('/ultimasPublicacoes/:id', app.api.publicacao.getLatestPublications)
 
     app.get('/doacoesByUser/:id', app.api.doacoes.getByUser)
-
-    app.get('/userImage/:id', app.api.user.getUserImage)
 
     app.get('/getRandom', app.api.animais.getRandom)
 

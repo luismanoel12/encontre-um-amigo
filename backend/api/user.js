@@ -78,7 +78,7 @@ module.exports = app => {
                     app.db('endereco')
                         .update({
                             endereco: user.endereco, numero: user.numero, complemento: user.complemento, bairro: user.bairro,
-                            estado: user.bairro, cidade: user.cidade, cep: user.cep, userId: response[0]
+                            estado: user.estado, cidade: user.cidade, cep: user.cep, userId: response[0]
                         })
                         .where({ userId: user.id })
                         .then(_ => res.status(204).send())
@@ -141,21 +141,12 @@ module.exports = app => {
     }
 
     const getById = (req, res) => {
-
         app.db('users')
             .join('endereco', 'users.id', 'endereco.userId')
             .select('users.id', 'users.name', 'users.email', 'users.userImage', 'users.telefone', 'users.cpf', 'users.cnpj', 'users.ong', 'users.admin',
                 'endereco.endereco', 'endereco.numero', 'endereco.complemento', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
             .where({ 'users.id': req.params.id })
             .whereNull('users.deletedAt')
-            .first()
-            .then(user => res.json(user))
-            .catch(err => res.status(500).send(err))
-    }
-
-    const getUserImage = (req, res) => {
-        app.db('users')
-            .where({ id: req.params.id })
             .first()
             .then(user => res.json(user))
             .catch(err => res.status(500).send(err))
@@ -176,12 +167,32 @@ module.exports = app => {
             .where({ 'users.ong': true })
             .then(user => res.json({ data: user, count, limit }))
             .catch(err => res.status(500).send(err))
+    }
 
+    const getOngsSearch = async (req, res) => {
+        const search = { ...req.body }
+
+        const page = req.query.page || 1
+        const result = await app.db('users').where({ ong: true }).count('id').first()
+        const count = parseInt(result.count)
+
+        console.log(search)
+
+        app.db('users')
+            .join('endereco', 'users.id', 'endereco.userId')
+            .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.userImage', 'users.cnpj', 'users.ong',
+                'endereco.endereco', 'endereco.numero', 'endereco.complemento', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
+            .where({ 'users.ong': true })
+            .andWhere('users.name', 'like', `%${search.name}%`)
+            // .andWhere({ 'endereco.estado': search.estado })
+            // .andWhere('endereco.cidade', 'like', `%${search.cidade}%`)
+            .orderBy('id', 'desc')
+            .limit(limit).offset(page * limit - limit)
+            .then(users => res.json({ data: users, count, limit }))
+            .catch(err => res.status(500).send(err))
     }
 
     const getOngById = async (req, res) => {
-
-
         app.db('users')
             .join('endereco', 'users.id', 'endereco.userId')
             .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.userImage', 'users.cnpj', 'users.ong',
@@ -244,5 +255,5 @@ module.exports = app => {
     }
 
 
-    return { save, get, getById, remove, getOngs, getOngById, setAdmin, getAdmins, newPassword, getUserImage }
+    return { save, get, getById, remove, getOngs, getOngById, setAdmin, getAdmins, newPassword, getOngsSearch }
 }
