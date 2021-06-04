@@ -149,7 +149,8 @@ module.exports = app => {
     }
 
 
-    const getCustomSearch = (req, res) => {
+    const limitCustomSearch = 10 //usado para paginação
+    const getCustomSearch = async (req, res) => {
         const search = { ...req.body }
 
         try {
@@ -162,20 +163,20 @@ module.exports = app => {
         }
 
         const page = req.query.page || 1
-        const result = app.db('animais').count('id').first()
+        const result = await app.db('animais').count('id').first()
         const count = parseInt(result.count)
 
         app.db('animais')
             .where({ estado: search.estado })
             .andWhere({ cidade: search.cidade })
             .orderBy('id', 'desc')
-            .limit(limit).offset(page * limit - limit)
-            .then(animais => res.json({ data: animais, count, limit }))
+            .limit(limitCustomSearch).offset(page * limitCustomSearch - limitCustomSearch)
+            .then(animais => res.json({ data: animais, count, limitCustomSearch }))
             .catch(err => res.status(500).send(err))
     }
 
     
-    const limitLostCustomSearch = 1 //usado para paginação
+    const limitLostCustomSearch = 10 //usado para paginação
     const getLostCustomSearch = async (req, res) => {
 
         const page = req.query.page || 1

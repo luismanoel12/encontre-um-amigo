@@ -8,7 +8,7 @@
       <v-row>
         <v-col cols="12" sm="9">
           <v-sheet min-height="70vh" color="transparent" rounded="lg">
-            <v-row>
+            <v-row v-if="!isSearch">
               <v-col
                 cols="12"
                 xl="3"
@@ -21,11 +21,7 @@
                   class="router-link"
                   :to="{ name: 'animaisById', params: { id: animal.id } }"
                 >
-                  <v-card
-                    class="mx-auto my-12 animal-card"
-                    max-width="374"
-                  
-                  >
+                  <v-card class="mx-auto my-12 animal-card" max-width="374">
                     <v-badge
                       color="#036564"
                       icon="mdi-dog-side"
@@ -36,7 +32,6 @@
                       overlap
                       tile
                     >
-
                       <div class="img-card-animal">
                         <img
                           v-if="animal.imagem"
@@ -64,17 +59,131 @@
                           <v-divider class="divider-animal-specs"></v-divider>
                           <v-row>
                             <v-col cols="4" sm="4">
-                                <span class="mdi mdi-cat mdi-24px" v-if="animal.tipo == 'Gato'"></span>
-                                <span class="mdi mdi-dog-side mdi-24px" v-else></span>
+                              <span
+                                class="mdi mdi-cat mdi-24px"
+                                v-if="animal.tipo == 'Gato'"
+                              ></span>
+                              <span
+                                class="mdi mdi-dog-side mdi-24px"
+                                v-else
+                              ></span>
                             </v-col>
                             <v-col cols="4" sm="4">
-                                <span class="mdi mdi-alpha-p-circle mdi-24px" v-if="animal.porte == 'Pequeno' "></span>
-                                <span class="mdi mdi-alpha-m-circle mdi-24px" v-if="animal.porte == 'Médio' "></span>
-                                <span class="mdi mdi-alpha-g-circle mdi-24px" v-if="animal.porte == 'Grande' "></span>
+                              <span
+                                class="mdi mdi-alpha-p-circle mdi-24px"
+                                v-if="animal.porte == 'Pequeno'"
+                              ></span>
+                              <span
+                                class="mdi mdi-alpha-m-circle mdi-24px"
+                                v-if="animal.porte == 'Médio'"
+                              ></span>
+                              <span
+                                class="mdi mdi-alpha-g-circle mdi-24px"
+                                v-if="animal.porte == 'Grande'"
+                              ></span>
                             </v-col>
                             <v-col cols="4" sm="4">
-                                <span class="mdi mdi-gender-male mdi-24px" v-if="animal.sexo == 'Macho' "></span>
-                                <span class="mdi mdi-gender-female mdi-24px" v-else></span>
+                              <span
+                                class="mdi mdi-gender-male mdi-24px"
+                                v-if="animal.sexo == 'Macho'"
+                              ></span>
+                              <span
+                                class="mdi mdi-gender-female mdi-24px"
+                                v-else
+                              ></span>
+                            </v-col>
+                          </v-row>
+                        </v-col>
+                      </v-row>
+                    </v-card-text>
+                  </v-card>
+                </router-link>
+              </v-col>
+            </v-row>
+
+            <v-row v-else>
+              <v-col
+                cols="12"
+                xl="3"
+                lg="4"
+                sm="6"
+                v-for="animal in animaisSearch"
+                :key="animal.id"
+              >
+                <router-link
+                  class="router-link"
+                  :to="{ name: 'animaisById', params: { id: animal.id } }"
+                >
+                  <v-card class="mx-auto my-12 animal-card" max-width="374">
+                    <v-badge
+                      color="#036564"
+                      icon="mdi-dog-side"
+                      offset-x="78"
+                      offset-y="20"
+                      left
+                      :content="animal.status"
+                      overlap
+                      tile
+                    >
+                      <div class="img-card-animal">
+                        <img
+                          v-if="animal.imagem"
+                          :src="animal.imagem"
+                          height="100%"
+                          alt="Animais"
+                        />
+                        <img
+                          v-else
+                          src="@/assets/article.png"
+                          height="100%"
+                          alt="Animais"
+                        />
+                      </div>
+                    </v-badge>
+
+                    <v-card-title> {{ animal.nome }}</v-card-title>
+
+                    <v-card-text class="text-center">
+                      <v-row>
+                        <v-col cols="12" sm="12">
+                          <span>{{ animal.cidade }} <br /></span>
+                          <span>{{ animal.estado }} <br /></span>
+
+                          <v-divider class="divider-animal-specs"></v-divider>
+                          <v-row>
+                            <v-col cols="4" sm="4">
+                              <span
+                                class="mdi mdi-cat mdi-24px"
+                                v-if="animal.tipo == 'Gato'"
+                              ></span>
+                              <span
+                                class="mdi mdi-dog-side mdi-24px"
+                                v-else
+                              ></span>
+                            </v-col>
+                            <v-col cols="4" sm="4">
+                              <span
+                                class="mdi mdi-alpha-p-circle mdi-24px"
+                                v-if="animal.porte == 'Pequeno'"
+                              ></span>
+                              <span
+                                class="mdi mdi-alpha-m-circle mdi-24px"
+                                v-if="animal.porte == 'Médio'"
+                              ></span>
+                              <span
+                                class="mdi mdi-alpha-g-circle mdi-24px"
+                                v-if="animal.porte == 'Grande'"
+                              ></span>
+                            </v-col>
+                            <v-col cols="4" sm="4">
+                              <span
+                                class="mdi mdi-gender-male mdi-24px"
+                                v-if="animal.sexo == 'Macho'"
+                              ></span>
+                              <span
+                                class="mdi mdi-gender-female mdi-24px"
+                                v-else
+                              ></span>
                             </v-col>
                           </v-row>
                         </v-col>
@@ -135,7 +244,27 @@
     </div>
 
     <div class="text-center pagination">
-      <v-btn depressed class="bt-carregar-mais" elevation="24" dark v-if="loadMore" @click="getAnimais">
+      <v-btn
+        depressed
+        class="bt-carregar-mais"
+        elevation="24"
+        dark
+        v-if="loadMore && !isSearch"
+        @click="getAnimais"
+      >
+        Carregar Mais
+
+        <v-icon dark right> mdi-reload </v-icon>
+      </v-btn>
+
+      <v-btn
+        depressed
+        class="bt-carregar-mais"
+        elevation="24"
+        dark
+        v-if="loadMoreSearch && isSearch"
+        @click="procurar"
+      >
         Carregar Mais
 
         <v-icon dark right> mdi-reload </v-icon>
@@ -153,9 +282,13 @@ export default {
   data: function () {
     return {
       animais: [],
+      animaisSearch: [],
       search: {},
       page: 1,
+      pageSearch: 1,
+      isSearch: false,
       loadMore: true,
+      loadMoreSearch: true,
       loading: true,
       estados: [
         { text: "Acre", value: "AC" },
@@ -191,6 +324,7 @@ export default {
 
   methods: {
     getAnimais() {
+      this.isSearch = false;
       api(`/animaisPublic?page=${this.page}`).then((res) => {
         this.animais = this.animais.concat(res.data.data);
         this.page++;
@@ -201,16 +335,15 @@ export default {
     },
 
     procurar() {
-      const method = "post";
-
+      this.isSearch = true;
       api
-        .post(`/animaisSearch`, this.search)
+        .post(`/animaisSearch?page=${this.pageSearch}`, this.search)
         .then((res) => {
-          this.animais = [];
-          this.animais = this.animais.concat(res.data.data);
+          this.animaisSearch = this.animaisSearch.concat(res.data.data);
+          this.pageSearch++;
           this.loading = false;
 
-          if (res.data.data.length === 0) this.loadMore = false;
+          if (res.data.data.length === 0) this.loadMoreSearch = false;
         })
         .catch(showError);
     },
@@ -225,8 +358,10 @@ export default {
       this.animais = [];
       this.page = 1;
       this.loadMore = true;
-
-      this.getAnimais();
+      (this.animaisSearch = []),
+        (this.loadMoreSearch = true),
+        this.getAnimais();
+      this.procurar();
     },
   },
   mounted() {
@@ -245,7 +380,7 @@ export default {
 .animal-card {
   background-color: #fff;
   width: 200px;
-  box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15)!important;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
 }
 
 .button-aciton {
@@ -313,10 +448,9 @@ export default {
   border-radius: 5px;
 }
 
-.divider-animal-specs{
+.divider-animal-specs {
   margin-bottom: 10px;
 }
-
 
 @media only screen and (max-width: 600px) {
   .animal-card {
