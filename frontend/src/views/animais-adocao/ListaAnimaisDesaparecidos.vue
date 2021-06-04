@@ -4,13 +4,95 @@
       <v-row>
         <v-col cols="12" sm="9">
           <v-sheet min-height="70vh" color="transparent" rounded="lg">
-            <v-row>
+            <v-row v-if="!isSearch">
               <v-col
                 cols="12"
                 xl="3"
                 lg="4"
                 sm="6"
                 v-for="animal in animais"
+                :key="animal.id"
+              >
+                <router-link
+                  class="router-link"
+                  :to="{
+                    name: 'AnimaisDesaparecidosById',
+                    params: { id: animal.id },
+                  }"
+                >
+                  <v-card class="mx-auto my-12 animal-card" max-width="374">
+                    <div class="animal-desaparecido">
+                      <span>DESAPARECIDO</span>
+                    </div>
+                    <div class="img-card-animal-desaparecido">
+                      <img
+                        v-if="animal.imagem"
+                        :src="animal.imagem"
+                        alt="Animais"
+                      />
+                      <img v-else src="@/assets/article.png" alt="Animais" />
+                    </div>
+
+                    <v-card-title> {{ animal.nome }}</v-card-title>
+
+                    <v-card-text class="text-center">
+                      <v-row>
+                        <v-col cols="12" sm="12">
+                          <span>{{ animal.cidade }} <br /></span>
+                          <span>{{ animal.estado }} <br /></span>
+
+                          <v-divider class="divider-animal-specs"></v-divider>
+                          <v-row>
+                            <v-col cols="4" sm="4">
+                              <span
+                                class="mdi mdi-cat mdi-24px"
+                                v-if="animal.tipo == 'Gato'"
+                              ></span>
+                              <span
+                                class="mdi mdi-dog-side mdi-24px"
+                                v-else
+                              ></span>
+                            </v-col>
+                            <v-col cols="4" sm="4">
+                              <span
+                                class="mdi mdi-alpha-p-circle mdi-24px"
+                                v-if="animal.porte == 'Pequeno'"
+                              ></span>
+                              <span
+                                class="mdi mdi-alpha-m-circle mdi-24px"
+                                v-if="animal.porte == 'Médio'"
+                              ></span>
+                              <span
+                                class="mdi mdi-alpha-g-circle mdi-24px"
+                                v-if="animal.porte == 'Grande'"
+                              ></span>
+                            </v-col>
+                            <v-col cols="4" sm="4">
+                              <span
+                                class="mdi mdi-gender-male mdi-24px"
+                                v-if="animal.sexo == 'Macho'"
+                              ></span>
+                              <span
+                                class="mdi mdi-gender-female mdi-24px"
+                                v-else
+                              ></span>
+                            </v-col>
+                          </v-row>
+                        </v-col>
+                      </v-row>
+                    </v-card-text>
+                  </v-card>
+                </router-link>
+              </v-col>
+            </v-row>
+
+            <v-row v-else>
+              <v-col
+                cols="12"
+                xl="3"
+                lg="4"
+                sm="6"
+                v-for="animal in animaisSearch"
                 :key="animal.id"
               >
                 <router-link
@@ -141,7 +223,7 @@
         class="bt-carregar-mais"
         elevation="24"
         dark
-        v-if="loadMore && mode === 'DEFAULT'"
+        v-if="loadMore && !isSearch"
         @click="getAnimais"
       >
         Carregar Mais
@@ -154,10 +236,10 @@
         class="bt-carregar-mais"
         elevation="24"
         dark
-        v-if="loadMore && mode === 'SEARCH'"
+        v-if="loadMoreSearch && isSearch"
         @click="procurar"
       >
-        Carregar Mais000
+        Carregar Mais
 
         <v-icon dark right> mdi-reload </v-icon>
       </v-btn>
@@ -174,8 +256,12 @@ export default {
   data: function () {
     return {
       animais: [],
+      animaisSearch: [],
       search: {},
       page: 1,
+      pageSearch: 1,
+      isSearch: false,
+      loadMoreSearch: true,
       mode: "DEFAULT",
       loadMore: true,
       estados: [
@@ -221,15 +307,17 @@ export default {
     },
 
     procurar() {
+      this.isSearch = true;
       api
-        .post(`/animaisDesaparecidosSearch?page=${this.page}`, this.search)
+        .post(
+          `/animaisDesaparecidosSearch?page=${this.pageSearch}`,
+          this.search
+        )
         .then((res) => {
-          this.mode = "SEARCH";
-          this.animais = []
-          this.animais = this.animais.concat(res.data.data);
-          this.page++;
+          this.animaisSearch = this.animaisSearch.concat(res.data.data);
+          this.pageSearch++;
 
-          if (res.data.data.length === 0) this.loadMore = false;
+          if (res.data.data.length === 0) this.loadMoreSearch = false;
         })
         .catch(showError);
     },
@@ -244,8 +332,10 @@ export default {
       this.animais = [];
       this.page = 1;
       this.loadMore = true;
-
-      this.getAnimais();
+      (this.animaisSearch = []),
+        (this.loadMoreSearch = true),
+        this.getAnimais();
+      this.procurar();
     },
   },
   mounted() {

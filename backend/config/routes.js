@@ -26,7 +26,7 @@ module.exports = app => {
     app.get('/animaisDesaparecidos', app.api.animais.getLost)
     app.get('/animaisDesaparecidos/:id', app.api.animais.getLostById)
     app.post('/animaisSearch', app.api.animais.getCustomSearch)
-    app.post('/animaisDesaparecidosSearch', app.api.animais.getLostCustomSearch)
+    app.post('/animaisDesaparecidosSearch', app.api.animais.getCustomSearchLost)
 
     app.get('/publicacaoPublic', app.api.publicacao.get)
     app.get('/publicacaoPublic/:id', app.api.publicacao.getById)

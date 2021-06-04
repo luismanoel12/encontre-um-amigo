@@ -3,6 +3,8 @@ var moment = require('moment');
 module.exports = app => {
     const { existsOrError, notExistsOrError } = app.api.validation
 
+    const limit = 1 //usado para paginação
+
     const save = (req, res) => {
         const animais = { ...req.body }
         if (req.params.id) animais.id = req.params.id
@@ -86,7 +88,6 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    const limit = 10 //usado para paginação
     const get = async (req, res) => {
         const page = req.query.page || 1
         const result = await app.db('animais').count('id').first()
@@ -111,7 +112,6 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    const limitDesaparecidos = 10 //usado para paginação
     const getLost = async (req, res) => {
         const page = req.query.page || 1
         const result = await app.db('animais').count('id').first()
@@ -120,8 +120,8 @@ module.exports = app => {
         app.db('animais')
             .where({ desaparecido: true })
             .orderBy('id', 'desc')
-            .limit(limitDesaparecidos).offset(page * limitDesaparecidos - limitDesaparecidos)
-            .then(animais => res.json({ data: animais, count, limitDesaparecidos }))
+            .limit(limit).offset(page * limit - limit)
+            .then(animais => res.json({ data: animais, count, limit }))
             .catch(err => res.status(500).send(err))
     }
 
@@ -149,7 +149,7 @@ module.exports = app => {
     }
 
 
-    const limitCustomSearch = 10 //usado para paginação
+    // Pesquisa na página de animais
     const getCustomSearch = async (req, res) => {
         const search = { ...req.body }
 
@@ -163,26 +163,22 @@ module.exports = app => {
         }
 
         const page = req.query.page || 1
-        const result = await app.db('animais').count('id').first()
+        const result = await app.db('animais').where({ status: "DISPONÍVEL" }).andWhere({ desaparecido: false }).count('id').first()
         const count = parseInt(result.count)
 
         app.db('animais')
             .where({ estado: search.estado })
             .andWhere({ cidade: search.cidade })
+            .andWhere({ status: "DISPONÍVEL" })
+            .andWhere({ desaparecido: false })
             .orderBy('id', 'desc')
-            .limit(limitCustomSearch).offset(page * limitCustomSearch - limitCustomSearch)
-            .then(animais => res.json({ data: animais, count, limitCustomSearch }))
+            .limit(limit).offset(page * limit - limit)
+            .then(animais => res.json({ data: animais, count, limit }))
             .catch(err => res.status(500).send(err))
     }
 
-    
-    const limitLostCustomSearch = 10 //usado para paginação
-    const getLostCustomSearch = async (req, res) => {
-
-        const page = req.query.page || 1
-        const result = await app.db('animais').count('id').first()
-        const count = parseInt(result.count)
-
+    // Pesquisa na página de animais desaparecidos
+    const getCustomSearchLost = async (req, res) => {
         const search = { ...req.body }
 
         try {
@@ -194,19 +190,23 @@ module.exports = app => {
             return res.status(400).send(msg)
         }
 
-        console.log(search)
+        const page = req.query.page || 1
+        const result = await app.db('animais').where({ desaparecido: true }).count('id').first()
+        const count = parseInt(result.count)
 
         app.db('animais')
-            .where({ desaparecido: true })
-            .andWhere({ estado: search.estado })
+            .where({ estado: search.estado })
             .andWhere({ cidade: search.cidade })
+            .andWhere({ desaparecido: true })
             .orderBy('id', 'desc')
-            .limit(limitLostCustomSearch).offset(page * limitLostCustomSearch - limitLostCustomSearch)
-            .then(animais => res.json({ data: animais, count, limitLostCustomSearch }))
+            .limit(limit).offset(page * limit - limit)
+            .then(animais => res.json({ data: animais, count, limit }))
             .catch(err => res.status(500).send(err))
     }
 
 
+
+    // Muda o status de disponivel para indisponivel e virse versa
     const adopt = (req, res) => {
         const animais = { ...req.body }
 
@@ -217,5 +217,9 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    return { save, remove, get, getById, getByUser, getCustomSearch, getAllByUser, getLost, getLostById, getLostCustomSearch, adopt, getRandom }
+    return {
+        save, remove, get, getById, getByUser, getCustomSearch,
+        getAllByUser, getLost, getLostById, getCustomSearchLost,
+        adopt, getRandom
+    }
 }
