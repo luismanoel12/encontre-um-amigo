@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div id="app" :class="{ 'hide-menu': !isMenuVisible || !user }">
+    <div id="app" :class="{ 'hide-menu': !user }">
       <Menu />
       <Loading v-if="validatingToken" />
       <!-- <Content v-else /> -->

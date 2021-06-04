@@ -1,6 +1,10 @@
 <template>
   <div class="animais-page">
-    <v-container>
+    <v-container v-if="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-container>
+
+    <v-container v-else>
       <div class="cadastrar-animais-form">
         <div class="cadastrar-animais-titulo">
           <h1>Olá, {{ user.name }}.</h1>
@@ -351,6 +355,7 @@ export default {
       dialog: false,
       page: 1,
       loadMore: true,
+      loading: true,
       tipo: [
         { text: "Cachorro", value: "Cachorro" },
         { text: "Gato", value: "Gato" },
@@ -412,6 +417,7 @@ export default {
     loadAnimais() {
       api(`/animaisUsuario`).then((res) => {
         this.animais = res.data;
+        this.loading = false;
         // this.page++;
 
         // if (res.data.data.length === 0) this.loadMore = false;

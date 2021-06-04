@@ -338,16 +338,16 @@ export default {
         })
         .catch((erro) => {});
     },
-    update() {
-      api
+    async update() {
+      await api
         .put(`/users/${this.user.id}`, this.userData)
         .then(() => {
           this.$toasted.global.defaultSuccess();
         })
         .catch(showError);
     },
-    newUserPassword() {
-      api
+    async newUserPassword() {
+     await api
         .put(`/newPassword`, this.userPassword)
         .then(() => {
           this.$toasted.global.defaultSuccess();

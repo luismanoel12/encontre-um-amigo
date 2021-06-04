@@ -1,6 +1,10 @@
 <template>
   <div class="ong-page">
-    <v-container>
+    <v-container v-if="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-container>
+
+    <v-container v-else>
       <v-row>
         <v-col cols="12" sm="3">
           <v-sheet rounded="lg" min-height="268" elevation="10">
@@ -50,7 +54,7 @@
           <v-sheet min-height="70vh" rounded="lg" elevation="10">
             <div class="ong-page-header">
               <v-avatar class="ma-2 avatar-img" size="124" tile>
-                <img :src="ong.userImage" alt="" v-if="ong.userImage">
+                <img :src="ong.userImage" alt="" v-if="ong.userImage" />
                 <Gravatar :email="ong.email" :alt="ong.name" v-else />
               </v-avatar>
               <h1>{{ ong.name }}</h1>
@@ -247,32 +251,38 @@ export default {
       animais: {},
       doacoes: {},
       bio: {},
+      loading: true,
     };
   },
   methods: {
     async loadOng() {
       const url = `/ongs/${this.$route.params.id}`;
       await api.get(url).then((res) => (this.ong = res.data));
+      this.loading = false;
     },
 
     loadPublicacoes() {
       const url = `/ultimasPublicacoes/${this.$route.params.id}`;
       api.get(url).then((res) => (this.publicacoes = res.data));
+      this.loading = false;
     },
 
     loadBio() {
       const url = `/bioById/${this.$route.params.id}`;
       api.get(url).then((res) => (this.bio = res.data));
+      this.loading = false;
     },
 
     loadAnimals() {
       const url = `/allByUser/${this.$route.params.id}`;
       api.get(url).then((res) => (this.animais = res.data));
+      this.loading = false;
     },
 
     loadDoacoes() {
       const url = `/doacoesByUser/${this.$route.params.id}`;
       api.get(url).then((res) => (this.doacoes = res.data));
+      this.loading = false;
     },
   },
   mounted() {

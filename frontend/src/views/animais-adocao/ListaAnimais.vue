@@ -1,5 +1,9 @@
 <template>
-  <v-container>
+  <v-container v-if="loading">
+    <v-progress-circular indeterminate color="primary"></v-progress-circular>
+  </v-container>
+
+  <v-container v-else>
     <div class="lista-animais-page">
       <v-row>
         <v-col cols="12" sm="9">
@@ -152,6 +156,7 @@ export default {
       search: {},
       page: 1,
       loadMore: true,
+      loading: true,
       estados: [
         { text: "Acre", value: "AC" },
         { text: "Alagoas", value: "AL" },
@@ -189,6 +194,7 @@ export default {
       api(`/animaisPublic?page=${this.page}`).then((res) => {
         this.animais = this.animais.concat(res.data.data);
         this.page++;
+        this.loading = false;
 
         if (res.data.data.length === 0) this.loadMore = false;
       });
@@ -202,6 +208,7 @@ export default {
         .then((res) => {
           this.animais = [];
           this.animais = this.animais.concat(res.data.data);
+          this.loading = false;
 
           if (res.data.data.length === 0) this.loadMore = false;
         })

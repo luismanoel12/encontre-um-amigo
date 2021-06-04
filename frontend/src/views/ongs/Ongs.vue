@@ -1,5 +1,9 @@
 <template>
-  <v-container>
+  <v-container v-if="loading">
+    <v-progress-circular indeterminate color="primary"></v-progress-circular>
+  </v-container>
+
+  <v-container v-else>
     <div class="ongs-page">
       <h1 class="text-center">ONGs Cadastradas no sistema</h1>
       <v-divider class="mb-5"></v-divider>
@@ -58,6 +62,7 @@ export default {
       ongs: [],
       page: 1,
       loadMore: true,
+      loading: true,
     };
   },
 
@@ -66,6 +71,7 @@ export default {
       api(`/ongs?page=${this.page}`).then((res) => {
         this.ongs = this.ongs.concat(res.data.data);
         this.page++;
+        this.loading = false;
 
         if (res.data.data.length === 0) this.loadMore = false;
       });

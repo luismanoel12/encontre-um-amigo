@@ -166,7 +166,7 @@ const routes = [{
 },
 {
     name: 'error404',
-    path: '/*',
+    path: '*',
     component: Error404
 }]
 
