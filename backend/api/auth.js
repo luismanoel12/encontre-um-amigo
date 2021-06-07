@@ -16,7 +16,7 @@ module.exports = app => {
 
         const isMatch = bcrypt.compareSync(req.body.password, user.password)
         if (!isMatch) return res.status(401).send('E-mail ou Senha inválidos!')
-
+        
         const now = Math.floor(Date.now() / 1000)
 
         const payload = {

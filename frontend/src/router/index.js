@@ -40,6 +40,7 @@ const routes = [{
     name: 'auth',
     path: '/auth',
     component: Auth,
+    // meta: { requiresOff: true }
 },
 {
     name: 'signup',
@@ -79,25 +80,25 @@ const routes = [{
     name: 'metasList',
     path: '/metas',
     component: MetasList,
-    meta: { allowGuest: true }
+    // meta: { allowGuest: true }
 },
 {
     name: 'metasById',
     path: '/metas/:id',
     component: MetasById,
-    meta: { allowGuest: true }
+    // meta: { allowGuest: true }
 },
 {
     name: 'ongs',
     path: '/ongs',
     component: Ongs,
-    meta: { allowGuest: true }
+    // meta: { allowGuest: true }
 },
 {
     name: 'ongById',
     path: '/ongs/:id',
     component: OngById,
-    meta: { allowGuest: true }
+    // meta: { allowGuest: true }
 },
 {
     name: 'animais',
@@ -109,25 +110,25 @@ const routes = [{
     name: 'listaAnimais',
     path: '/animais/adocao',
     component: ListaAnimais,
-    meta: { allowGuest: true }
+    // meta: { allowGuest: true }
 },
 {
     name: 'listaAnimaisDesaparecidos',
     path: '/animais/desaparecidos',
     component: ListaAnimaisDesaparecidos,
-    meta: { allowGuest: true }
+    // meta: { allowGuest: true }
 },
 {
     name: 'AnimaisDesaparecidosById',
     path: '/animais/desaparecidos/:id',
     component: AnimaisDesaparecidosById,
-    meta: { allowGuest: true }
+    // meta: { allowGuest: true }
 },
 {
     name: 'animaisById',
     path: '/animais/:id',
     component: AnimaisById,
-    meta: { allowGuest: true }
+    // meta: { allowGuest: true }
 },
 {
     name: 'publicacoes',
@@ -139,19 +140,19 @@ const routes = [{
     name: 'listaPublicacoes',
     path: '/publicacoes',
     component: ListaPublicacoes,
-    meta: { allowGuest: true }
+    // meta: { allowGuest: true }
 },
 {
     name: 'publicacoesById',
     path: '/publicacao/:id',
     component: PublicacoesById,
-    meta: { allowGuest: true }
+    // meta: { allowGuest: true }
 },
 {
     name: 'denuncia',
     path: '/denuncia',
     component: Denuncia,
-    meta: { requiresAdmin: true }
+    // meta: { requiresAdmin: true }
 },
 {
     name: 'doacoes',
@@ -162,7 +163,7 @@ const routes = [{
     name: 'home',
     path: '/',
     component: Home,
-    meta: { allowGuest: true }
+    // meta: { allowGuest: true }
 },
 {
     name: 'error404',
@@ -193,19 +194,25 @@ router.beforeEach((to, from, next) => {
         next()
     }
 
-    if(to.matched.some(record => record.meta.requiresOff)){
-        const user = JSON.parse(json)
-        !user ? next() : next({ path: '/home' })
-    } else {
-        next()
-    }
+    // if(to.matched.some(record => record.meta.requiresOff)){
+    //     if(json){
+    //         const user = JSON.parse(json)
+    //         console.log(user)
+    //         !user ? next() : next({ path: '/home' })
+    //     }else{
+    //         console.log("Não existe")
+    //     }
 
-    if(to.matched.some(record => record.meta.allowGuest)){
-        const user = JSON.parse(json)
-        user || !user ? next() : next({ path: '/home' })
-    } else {
-        next()
-    }
+    // } else {
+    //     next()
+    // }
+
+    // if(to.matched.some(record => record.meta.allowGuest)){
+    //     const user = JSON.parse(json)
+    //     !user || user ? next() : next({ path: '/home' })
+    // } else {
+    //     next()
+    // }
 
     
 })

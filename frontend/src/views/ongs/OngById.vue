@@ -313,6 +313,7 @@ export default {
 
 .avatar-img > img {
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .ong-page-content,

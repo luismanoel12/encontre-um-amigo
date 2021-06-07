@@ -73,17 +73,27 @@
     <div class="home-4">
       <v-container>
         <div class="home-4-title">
-          <h1>Veja alguns animais cadastrados</h1>
+          <h1>Veja os últimos animais cadastrados</h1>
         </div>
         <v-sheet class="mx-auto sheet-home-animais" max-width="80%">
           <v-slide-group class="pa-4" show-arrows>
             <v-slide-item v-for="animal in animais" :key="animal.id">
-              <v-card  class="ma-4" height="200" width="200">
-                <div class="img-animais-home">
-                  <img :src="animal.imagem" :alt="animal.nome" />
-                  <span>{{ animal.nome }}</span>
+              <router-link
+                class="router-link"
+                :to="{ name: 'animaisById', params: { id: animal.id } }"
+              >
+                <div class="animais-home-card">
+                  <v-avatar
+                    bordered
+                    class="ma-2 home-avatar-img"
+                    size="128"
+                    tile
+                  >
+                    <img :src="animal.imagem" :alt="animal.nome" />
+                  </v-avatar>
+                  <span class="animal-nome-badge">{{ animal.nome }}</span>
                 </div>
-              </v-card>
+              </router-link>
             </v-slide-item>
           </v-slide-group>
         </v-sheet>
@@ -170,6 +180,7 @@ export default {
   },
   mounted() {
     this.getAnimais();
+    this.loadCarousel();
   },
 };
 </script>
@@ -245,18 +256,39 @@ export default {
   background-color: #fff;
 }
 
+.animais-home-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .img-animais-home > img {
-  width: 100%;
+  width: 100px;
+  border-radius: 50%;
   object-fit: cover;
 }
 
-.sheet-home-animais{
-  background-color: transparent!important;
+.sheet-home-animais {
+  background-color: transparent !important;
 }
 
-.home-4-title{
+.home-4-title {
   text-align: center;
   margin-top: 70px;
+}
+
+.home-avatar-img > img {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #52b69a;
+}
+
+.animal-nome-badge {
+  background-color: #52b69a;
+  padding: 10px;
+  color: #fff;
+  border-radius: 50px;
 }
 
 @media only screen and (max-width: 600px) {

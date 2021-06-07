@@ -21,30 +21,37 @@ import Loading from "@/components/template/Loading";
 export default {
   name: "App",
   components: { Menu, Content, Footer, Loading },
-  computed: mapState(["isMenuVisible", "user"]),
+  computed: mapState(["user"]),
   data: function () {
     return {
       validatingToken: true,
+      json: null,
+      userData: null,
     };
   },
   methods: {
     async validateToken() {
       this.validatingToken = true;
 
-      const json = localStorage.getItem(userKey);
-      const userData = JSON.parse(json);
+      this.json = localStorage.getItem(userKey);
+      this.userData = JSON.parse(this.json);
       this.$store.commit("setUser", null);
 
-      if (!userData) {
+      if (!this.userData) {
         this.validatingToken = false;
-        this.$router.push({ name: "auth" });
+        this.$router.push({ path: "/auth" });
         return;
       }
 
-      const res = await axios.post(`${baseApiUrl}/validateToken`, userData);
+      const res = await axios.post(
+        `${baseApiUrl}/validateToken`,
+        this.userData
+      );
+
+      console.log(res.userData)
 
       if (res.data) {
-        this.$store.commit("setUser", userData);
+        this.$store.commit("setUser", this.userData);
         this.$root.$emit("user-updated");
         this.$root.$emit("carousel-get");
         this.$root.$emit("metas-by-id");
