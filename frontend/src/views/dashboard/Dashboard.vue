@@ -17,12 +17,12 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2 class="card-title-v1">Animais Cadastrados</h2>
-          <span class="mdi mdi-dog-side mdi-48px"></span>
+          <h2 class="card-title-v1">Publicações</h2>
+          <span class="mdi mdi-newspaper-variant-outline mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
-          <h1>{{ count.animaisCount }}</h1>
+          <h1>{{ count.publicacoesCount }}</h1>
         </div>
       </div>
 
@@ -39,12 +39,34 @@
 
       <div class="dashboard-card">
         <div class="dashboard-card-header">
-          <h2 class="card-title-v1">Publicações</h2>
-          <span class="mdi mdi-newspaper-variant-outline mdi-48px"></span>
+          <h2 class="card-title-v1">Animais Cadastrados</h2>
+          <span class="mdi mdi-dog-side mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
-          <h1>{{ count.publicacoesCount }}</h1>
+          <h1>{{ count.animaisCount }}</h1>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2 class="card-title-v1">Animais Adotados</h2>
+          <span class="mdi mdi-dog-side mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <h1>{{ count.animaisAdotadosCount }}</h1>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2 class="card-title-v1">Animais Desaparecidos</h2>
+          <span class="mdi mdi-dog-side mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <h1>{{ count.animaisDesaparecidosCount }}</h1>
         </div>
       </div>
 
@@ -56,17 +78,6 @@
         <v-divider></v-divider>
         <div class="dashboard-card-content">
           <h1>{{ count.metasCount }}</h1>
-        </div>
-      </div>
-
-      <div class="dashboard-card">
-        <div class="dashboard-card-header">
-          <h2 class="card-title-v1">Animais Adotados</h2>
-          <span class="mdi mdi-dog-side mdi-48px"></span>
-        </div>
-        <v-divider></v-divider>
-        <div class="dashboard-card-content">
-          <h1>50</h1>
         </div>
       </div>
 
@@ -164,7 +175,11 @@
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
-          <h1>{{ countLastWeek.usersCountWeek ? countLastWeek.usersCountWeek : 0 }}</h1>
+          <h1>
+            {{
+              countLastWeek.usersCountWeek ? countLastWeek.usersCountWeek : 0
+            }}
+          </h1>
         </div>
       </div>
 
@@ -175,18 +190,9 @@
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
-          <h1>{{ countLastWeek.ongsCountWeek ? countLastWeek.ongsCountWeek : 0 }}</h1>
-        </div>
-      </div>
-
-      <div class="dashboard-card">
-        <div class="dashboard-card-header">
-          <h2 class="card-title-v1">Animais Cadastrados</h2>
-          <span class="mdi mdi-dog-side mdi-48px"></span>
-        </div>
-        <v-divider></v-divider>
-        <div class="dashboard-card-content">
-          <h1>{{ countLastWeek.animaisCountWeek ? countLastWeek.animaisCountWeek : 0 }}</h1>
+          <h1>
+            {{ countLastWeek.ongsCountWeek ? countLastWeek.ongsCountWeek : 0 }}
+          </h1>
         </div>
       </div>
 
@@ -197,7 +203,64 @@
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
-          <h1>{{ countLastWeek.publicacoesCountWeek ? countLastWeek.publicacoesCountWeek : 0 }}</h1>
+          <h1>
+            {{
+              countLastWeek.publicacoesCountWeek
+                ? countLastWeek.publicacoesCountWeek
+                : 0
+            }}
+          </h1>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2 class="card-title-v1">Animais Cadastrados</h2>
+          <span class="mdi mdi-dog-side mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <h1>
+            {{
+              countLastWeek.animaisCountWeek
+                ? countLastWeek.animaisCountWeek
+                : 0
+            }}
+          </h1>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2 class="card-title-v1">Animais Adotados</h2>
+          <span class="mdi mdi-dog-side mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <h1>
+            {{
+              countLastWeek.animaisAdotadosCountWeek
+                ? countLastWeek.animaisAdotadosCountWeek
+                : 0
+            }}
+          </h1>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2 class="card-title-v1">Animais Desaparecidos</h2>
+          <span class="mdi mdi-dog-side mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <h1>
+            {{
+              countLastWeek.animaisDesaparecidosCountWeek
+                ? countLastWeek.animaisDesaparecidosCountWeek
+                : 0
+            }}
+          </h1>
         </div>
       </div>
 
@@ -208,7 +271,11 @@
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
-          <h1>{{ countLastWeek.metasCountWeek ? countLastWeek.metasCountWeek : 0 }}</h1>
+          <h1>
+            {{
+              countLastWeek.metasCountWeek ? countLastWeek.metasCountWeek : 0
+            }}
+          </h1>
         </div>
       </div>
 
@@ -219,7 +286,78 @@
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
-          <h1>{{ countLastWeek.denunciasCountWeek ? countLastWeek.denunciasCountWeek : 0}}</h1>
+          <h1>
+            {{
+              countLastWeek.denunciasCountWeek
+                ? countLastWeek.denunciasCountWeek
+                : 0
+            }}
+          </h1>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2 class="card-title-v1">Denúncias Abertas</h2>
+          <span class="mdi mdi-alert mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <h1>
+            {{
+              countLastWeek.denunciasCountWeek
+                ? countLastWeek.denunciasCountWeek
+                : 0
+            }}
+          </h1>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2 class="card-title-v1">Tipos de Usuários</h2>
+          <span class="mdi mdi-account mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <apexchart
+            type="pie"
+            width="380"
+            :options="chartOptions4"
+            :series="series4"
+          ></apexchart>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2 class="card-title-v1">Principais interações</h2>
+          <span class="mdi mdi-cursor-default-click mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <apexchart
+            type="pie"
+            width="380"
+            :options="chartOptions5"
+            :series="series5"
+          ></apexchart>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <h2 class="card-title-v1">Denúncias</h2>
+          <span class="mdi mdi-alert mdi-48px"></span>
+        </div>
+        <v-divider></v-divider>
+        <div class="dashboard-card-content">
+          <apexchart
+            type="pie"
+            width="380"
+            :options="chartOptions6"
+            :series="series6"
+          ></apexchart>
         </div>
       </div>
     </div>
@@ -344,6 +482,72 @@ export default {
           },
         ],
       },
+
+      series4: [0, 0, 0],
+      chartOptions4: {
+        chart: {
+          width: 380,
+          type: "pie",
+        },
+        labels: ["Usuários", "ONGs"],
+        responsive: [
+          {
+            breakpoint: 600,
+            options: {
+              chart: {
+                width: 350,
+              },
+              legend: {
+                position: "bottom",
+              },
+            },
+          },
+        ],
+      },
+
+      series5: [0, 0, 0],
+      chartOptions5: {
+        chart: {
+          width: 380,
+          type: "pie",
+        },
+        labels: ["Publicações", "Animais", "Metas"],
+        responsive: [
+          {
+            breakpoint: 600,
+            options: {
+              chart: {
+                width: 350,
+              },
+              legend: {
+                position: "bottom",
+              },
+            },
+          },
+        ],
+      },
+
+      series6: [0, 0, 0],
+      chartOptions6: {
+        chart: {
+          width: 380,
+          type: "pie",
+        },
+        labels: ["Abertas", "Finalizadas", "Total"],
+        responsive: [
+          {
+            breakpoint: 600,
+            options: {
+              chart: {
+                width: 350,
+              },
+              legend: {
+                position: "bottom",
+              },
+            },
+          },
+        ],
+      },
     };
   },
 
@@ -380,6 +584,22 @@ export default {
     getCountLastWeek() {
       api(`/getCountLastWeek`).then((res) => {
         this.countLastWeek = res.data;
+        this.series4 = [
+          res.data.usersWeekCount,
+          res.data.ongsCountWeek,
+        ];
+
+        this.series5 = [
+          res.data.publicacoesCountWeek,
+          res.data.animaisCountWeek,
+          res.data.metasCountWeek,
+        ];
+
+        this.series6 = [
+          res.data.denunciasAbertasCountWeek,
+          res.data.denunciasFinalizadasCountWeek,
+          res.data.denunciasCountWeek,
+        ];
       });
     },
   },

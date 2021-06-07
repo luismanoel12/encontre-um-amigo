@@ -16,6 +16,12 @@ module.exports = app => {
         const animais = await app.db('animais').count('id').first()
         const animaisCount = parseInt(animais.count)
 
+        const animaisAdotados = await app.db('animais').where({ status: 'ADOTADO' }).count('id').first()
+        const animaisAdotadosCount = parseInt(animaisAdotados.count)
+
+        const animaisDesaparecidos = await app.db('animais').where({ desaparecido: true }).count('id').first()
+        const animaisDesaparecidosCount = parseInt(animaisDesaparecidos.count)
+
         const metas = await app.db('doacoes_com_metas').count('id').first()
         const metasCount = parseInt(metas.count)
 
@@ -37,7 +43,8 @@ module.exports = app => {
         app.db('users')
         .where({ 'id': 0 })
         .then(count => res.json({ data: count, usersCount, ongsCount, publicacoesCount, animaisCount, metasCount, 
-            adminsCount, tutoresCount, denunciasCount, denunciasAbertasCount, denunciasFinalizadasCount }))
+            adminsCount, tutoresCount, denunciasCount, denunciasAbertasCount, denunciasFinalizadasCount, animaisAdotadosCount,
+            animaisDesaparecidosCount }))
         .catch(err => res.status(500).send(err))
     }
 
