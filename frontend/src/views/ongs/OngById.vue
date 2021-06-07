@@ -229,6 +229,20 @@
               </v-row>
             </div>
           </v-sheet>
+
+          <v-sheet rounded="lg" class="mt-3" min-height="268" elevation="10">
+            <div class="ong-right-card-tag">
+              <h4 class="text-center">MINHAS TAGS:</h4>
+              <v-divider class="publicacao-divider"></v-divider>
+              <div class="ong-tags-card" v-for="tag in tags" :key="tag.id">
+                <v-chip class="ma-1" color="#036666" outlined small>
+                  {{ tag.nome_tag }}
+
+                  <v-icon right x-small> mdi-tag </v-icon>
+                </v-chip>
+              </div>
+            </div>
+          </v-sheet>
         </v-col>
       </v-row>
     </v-container>
@@ -250,6 +264,7 @@ export default {
       publicacoes: {},
       animais: {},
       doacoes: {},
+      tags: {},
       bio: {},
       loading: true,
     };
@@ -284,6 +299,12 @@ export default {
       api.get(url).then((res) => (this.doacoes = res.data));
       this.loading = false;
     },
+
+    loadTags() {
+      const url = `/getOngTags/${this.$route.params.id}`;
+      api.get(url).then((res) => (this.tags = res.data));
+      this.loading = false;
+    },
   },
   mounted() {
     this.loadOng();
@@ -291,6 +312,7 @@ export default {
     this.loadBio();
     this.loadAnimals();
     this.loadDoacoes();
+    this.loadTags();
     this.$root.$once("ong-by-id", () => {
       this.loadOng();
     });
@@ -374,5 +396,13 @@ export default {
 .ong-doacoes-card:hover {
   transform: scale(1.02);
   transition: ease-out 0.3s;
+}
+
+.ong-right-card-tag {
+  padding: 5px;
+}
+
+.ong-tags-card {
+  display: inline-table;
 }
 </style>
