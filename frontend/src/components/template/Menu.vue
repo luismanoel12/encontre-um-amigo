@@ -4,20 +4,21 @@
       <v-list-item v-if="user">
         <v-list-item-content>
           <v-avatar class="ma-2 perfil-avatar-img" size="84" tile>
-            <img :src="user.userImage" alt="" v-if="user.userImage">
-            <Gravatar :email="user.email" alt="User" v-else />           
+            <img :src="user.userImage" alt="" v-if="user.userImage" />
+            <Gravatar :email="user.email" alt="User" v-else />
           </v-avatar>
           <v-list-item-title class="title">
             <h3>Bem-vindo</h3>
           </v-list-item-title>
           <v-list-item-subtitle>
-            <h3 class="subtext">{{ user.name }}
+            <h3 class="subtext">
+              {{ user.name }}
               <v-badge
-              v-if="user.admin"
-              color="blue"
-              class="ml-2"
-              icon="mdi-check-bold"
-            ></v-badge>
+                v-if="user.admin"
+                color="blue"
+                class="ml-2"
+                icon="mdi-check-bold"
+              ></v-badge>
             </h3>
           </v-list-item-subtitle>
         </v-list-item-content>
@@ -168,6 +169,16 @@
 
           <v-list-item-content>
             <v-list-item-title>Doações</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item to="/tags">
+          <v-list-item-icon>
+            <v-icon> mdi-tag </v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>tags</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -371,8 +382,8 @@ export default {
   background: linear-gradient(110deg, #00171f 30%, #036564 60%);
 }
 
-.perfil-avatar-img > img{
-  border-radius: 50%!important;
+.perfil-avatar-img > img {
+  border-radius: 50% !important;
   object-fit: cover;
 }
 

@@ -15,7 +15,7 @@ module.exports = app => {
     app.get('/ongs', app.api.user.getOngs)
     app.get('/ongs/:id', app.api.user.getOngById)
     app.get('/bioById/:id', app.api.bio.getById)
-    app.post('/ongsSearch', app.api.user.getOngsSearch )
+    app.post('/ongsSearch', app.api.user.getOngsSearch)
 
     app.get('/metasPublic', app.api.metas.get)
     app.get('/metasPublic/:id', app.api.metas.getById)
@@ -34,6 +34,7 @@ module.exports = app => {
     app.get('/ultimasPublicacoes/:id', app.api.publicacao.getLatestPublications)
 
     app.get('/doacoesByUser/:id', app.api.doacoes.getByUser)
+    app.get('/getOngTags/:id', app.api.tags.getByUser)
 
     app.get('/getRandom', app.api.animais.getRandom)
 
@@ -208,5 +209,20 @@ module.exports = app => {
         .put(app.api.doacoes.save)
         .get(app.api.doacoes.getById)
         .delete(app.api.doacoes.remove)
+
+
+    // TAGS
+
+
+    app.route('/tags')
+        .all(app.config.passport.authenticate())
+        .post(app.api.tags.save)
+        .get(app.api.tags.get)
+
+    app.route('/tags/:id')
+        .all(app.config.passport.authenticate())
+        .put(app.api.tags.save)
+        .get(app.api.tags.getById)
+        .delete(app.api.tags.remove)
 
 }

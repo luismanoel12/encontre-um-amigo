@@ -25,6 +25,7 @@ import Users from "@/views/users/Users"
 import Dashboard from "@/views/dashboard/Dashboard"
 import Denuncia from "@/views/denuncia/Denuncia"
 import Doacoes from "@/views/doacoes/Doacoes"
+import Tags from "@/views/tags/Tags"
 
 
 import { userKey } from "@/global"
@@ -158,6 +159,11 @@ const routes = [{
     name: 'doacoes',
     path: '/doacoes',
     component: Doacoes,
+},
+{
+    name: 'tags',
+    path: '/tags',
+    component: Tags,
 },
 {
     name: 'home',
