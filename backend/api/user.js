@@ -176,7 +176,6 @@ module.exports = app => {
         const result = await app.db('users').where({ ong: true }).count('id').first()
         const count = parseInt(result.count)
 
-        console.log(search)
 
         app.db('users')
             .join('endereco', 'users.id', 'endereco.userId')
@@ -203,6 +202,18 @@ module.exports = app => {
             .then(user => res.json(user))
             .catch(err => res.status(500).send(err))
 
+    }
+
+    const searchUser = async (req, res) => {
+        const search = { ...req.body }
+        console.log(search)
+        app.db('users')
+            .join('endereco', 'users.id', 'endereco.userId')
+            .select('users.id', 'users.name', 'users.email', 'users.admin', 'users.deletedAt', 'endereco.estado')
+            .where('users.name', 'like', `%${search.name}%`)
+            .orderBy('id', 'desc')
+            .then(user => res.json(user))
+            .catch(err => res.status(500).send(err))
     }
 
     const remove = async (req, res) => {
@@ -255,5 +266,5 @@ module.exports = app => {
     }
 
 
-    return { save, get, getById, remove, getOngs, getOngById, setAdmin, getAdmins, newPassword, getOngsSearch }
+    return { save, get, getById, remove, getOngs, getOngById, setAdmin, getAdmins, newPassword, getOngsSearch, searchUser }
 }

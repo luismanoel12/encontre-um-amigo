@@ -38,6 +38,8 @@ module.exports = app => {
 
     app.get('/getRandom', app.api.animais.getRandom)
 
+    app.post('/searchUsers', app.api.user.searchUser)
+
 
 
 

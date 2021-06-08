@@ -1,86 +1,130 @@
 <template>
   <div class="carousel-page">
     <v-container>
-      <v-form class="form elevation-10">
-        <h2 class="atencao">Usuários</h2>
-        <v-row>
-          <v-col cols="12" sm="6">
-            <v-text-field
-              label="Nome"
-              v-model="user.name"
-              readonly
-              required
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-text-field
-              label="E-mail"
-              v-model="user.email"
-              readonly
-              required
-              outlined
-            ></v-text-field>
-          </v-col>
-        </v-row>
+      <div class="users-search">
+        <h1>Pesquisar Usuários</h1>
+        <form>
+          <v-row>
+            <v-col cols="12">
+              <v-text-field
+                label="Nome"
+                v-model="search.name"
+                outlined
+              ></v-text-field>
+            </v-col>
+          </v-row>
 
-        <v-row>
-          <v-col cols="12" sm="6">
-            <v-text-field
-              label="Administrador"
-              v-model="user.admin"
-              readonly
-              required
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-text-field
-              label="ONG"
-              v-model="user.ong"
-              readonly
-              required
-              outlined
-            ></v-text-field>
-          </v-col>
-        </v-row>
+          <v-btn depressed @click="searchUsers" color="success">
+            Pesquisar
+            <v-icon dark right> mdi-account-search </v-icon>
+          </v-btn>
 
-        <div class="buttons">
-          <v-btn
-            depressed
-            v-if="user.admin"
-            @click="setAdmin"
-            color="error"
-          >
-            Remover Admin
-            <v-icon dark right> mdi-account-remove </v-icon>
-          </v-btn>
-          <v-btn
-            depressed
-            v-else
-            @click="setAdmin"
-            color="success"
-          >
-            Adicionar Admin
-            <v-icon dark right> mdi-account-lock </v-icon>
-          </v-btn>
-          <v-divider vertical></v-divider>
-          <v-btn
-            depressed
-            v-if="mode === 'remove'"
-            @click="remove"
-            color="error"
-          >
-            Excluir
-            <v-icon dark right> mdi-delete </v-icon>
-          </v-btn>
-          <v-divider vertical></v-divider>
-          <v-btn depressed @click="reset" class="btn-cancel" color="primary">
+          <v-btn depressed @click="cancelar" class="ml-2" color="primary">
             Cancelar
-            <v-icon dark right> mdi-close-thick </v-icon>
+            <v-icon dark right> mdi-close </v-icon>
           </v-btn>
-        </div>
-      </v-form>
+        </form>
+      </div>
+      <div class="users-modal">
+        <v-row justify="center">
+          <v-dialog v-model="dialog" persistent max-width="600px">
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">User Profile</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-form>
+                    <v-row>
+                      <v-col cols="12" sm="12">
+                        <v-text-field
+                          label="Nome"
+                          v-model="user.name"
+                          readonly
+                          required
+                          outlined
+                        ></v-text-field>
+                      </v-col>
+
+                      <v-col cols="12" sm="12">
+                        <v-text-field
+                          label="E-mail"
+                          v-model="user.email"
+                          readonly
+                          required
+                          outlined
+                        ></v-text-field>
+                      </v-col>
+
+                      <v-col cols="12" sm="12">
+                        <v-text-field
+                          label="Administrador"
+                          v-model="user.admin"
+                          readonly
+                          required
+                          outlined
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="12">
+                        <v-text-field
+                          label="ONG"
+                          v-model="user.ong"
+                          readonly
+                          required
+                          outlined
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                  </v-form>
+                </v-container>
+                <small>*indicates required field</small>
+              </v-card-text>
+              <div class="buttons">
+                <v-btn
+                  depressed
+                  v-if="user.admin"
+                  @click="setAdmin"
+                  color="error"
+                  class="mr-2"
+                >
+                  Remover Admin
+                  <v-icon dark right> mdi-account-remove </v-icon>
+                </v-btn>
+                <v-btn
+                  depressed
+                  v-if="!user.admin && mode != 'remove'"
+                  @click="setAdmin"
+                  class="mr-2"
+                  color="success"
+                >
+                  Adicionar Admin
+                  <v-icon dark right> mdi-account-lock </v-icon>
+                </v-btn>
+                <v-divider vertical></v-divider>
+                <v-btn
+                  depressed
+                  v-if="mode === 'remove'"
+                  @click="remove"
+                  color="error"
+                >
+                  Excluir
+                  <v-icon dark right> mdi-delete </v-icon>
+                </v-btn>
+                <v-divider vertical></v-divider>
+                <v-btn
+                  depressed
+                  @click="reset"
+                  class="btn-cancel"
+                  color="primary"
+                >
+                  Cancelar
+                  <v-icon dark right> mdi-close-thick </v-icon>
+                </v-btn>
+              </div>
+            </v-card>
+          </v-dialog>
+        </v-row>
+      </div>
 
       <v-data-table :items="users" :headers="headers" class="elevation-10">
         <template v-slot:[`item.actions`]="{ item }">
@@ -124,6 +168,8 @@ export default {
       mode: "save",
       user: {},
       users: [],
+      search: {},
+      dialog: false,
       headers: [
         {
           align: "start",
@@ -149,6 +195,7 @@ export default {
     reset() {
       this.mode = "save";
       this.user = {};
+      this.dialog = false;
       this.loadUsers();
     },
     setAdmin() {
@@ -172,8 +219,22 @@ export default {
         .catch(showError);
     },
     loadUser(user, mode = "save") {
+      this.dialog = true;
       this.mode = mode;
       api.get(`/users/${user.id}`).then((res) => (this.user = res.data));
+    },
+
+    searchUsers() {
+      api
+        .post(`/searchUsers`, this.search)
+        .then((res) => {
+          this.users = res.data;
+        })
+        .catch(showError);  
+    },
+
+    cancelar() {
+      location.reload();
     },
   },
   watch: {
@@ -188,4 +249,16 @@ export default {
 </script>
 
 <style>
+.users-modal {
+  padding: 20px;
+}
+
+.users-search {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 600px;
+  margin: auto;
+  text-align: center;
+}
 </style>
