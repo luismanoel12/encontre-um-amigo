@@ -79,7 +79,7 @@
       </v-form>
 
       <v-data-table :items="denuncias" :headers="headers" class="elevation-10">
-        <template v-slot:[`denuncias.actions`]="{ item }">
+        <template v-slot:[`item.actions`]="{ item }">
           
           <v-btn
             class="bt-actions"

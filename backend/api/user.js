@@ -210,7 +210,7 @@ module.exports = app => {
         app.db('users')
             .join('endereco', 'users.id', 'endereco.userId')
             .select('users.id', 'users.name', 'users.email', 'users.admin', 'users.deletedAt', 'endereco.estado')
-            .where('users.name', 'like', `%${search.name}%`)
+            .where('users.name', 'ilike', `%${search.name}%`)
             .orderBy('id', 'desc')
             .then(user => res.json(user))
             .catch(err => res.status(500).send(err))
