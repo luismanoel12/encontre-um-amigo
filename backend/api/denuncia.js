@@ -3,17 +3,18 @@ module.exports = app => {
 
     const save = (req, res) => {
         const denuncia = { ...req.body }
-        if(req.params.id) denuncia.id = req.params.id
+        if (req.params.id) denuncia.id = req.params.id
 
-        try{
+        try {
             existsOrError(denuncia.tipoDenuncia, 'O tipo da denúncia não foi informado')
             existsOrError(denuncia.descricao, 'A descrição da denúncia não foi informada')
 
-        } catch(msg){
+        } catch (msg) {
             res.status(400).send(msg)
         }
 
-        if(denuncia.id){
+        if (denuncia.id) {
+            delete denuncia.name
             app.db('denuncia')
                 .update(denuncia)
                 .where({ id: denuncia.id })
@@ -32,30 +33,34 @@ module.exports = app => {
     }
 
     const remove = async (req, res) => {
-       try {
-           const rowsDeleted = await app.db('denuncia')
-            .where({ id: req.params.id}).del()
-           notExistsOrError(rowsDeleted, "A sua denuncia nunca existiu no nosso sistema")
-           
-           res.status(204).send()       
-        
-        }catch(msg) {
+        try {
+            const rowsDeleted = await app.db('denuncia')
+                .where({ id: req.params.id }).del()
+            notExistsOrError(rowsDeleted, "Denúncia não encontrada no sistema")
+
+            res.status(204).send()
+
+        } catch (msg) {
             res.status(500).send(msg)
         }
     }
 
-    const get = (req, res) => { 
-       app.db('denuncia')
+    const get = (req, res) => {
+        app.db('denuncia')
+            .join('users', 'denuncia.userId', 'users.id')
+            .select('users.name', 'denuncia.tipoDenuncia', 'denuncia.status', 'denuncia.descricao', 'denuncia.id')
             .then(denuncia => res.json(denuncia))
             .catch(err => res.status(500).send(err))
     }
 
     const getById = (req, res) => {
         app.db('denuncia')
-        .where({ id: req.params.id })
-        .first()
-        .then(denuncia => res.json(denuncia))
-        .catch(err => res.status(500).send(err))
+            .join('users', 'denuncia.userId', 'users.id')
+            .select('users.name', 'denuncia.tipoDenuncia', 'denuncia.status', 'denuncia.descricao', 'denuncia.id')
+            .where({ 'denuncia.id': req.params.id })
+            .first()
+            .then(denuncia => res.json(denuncia))
+            .catch(err => res.status(500).send(err))
     }
 
 

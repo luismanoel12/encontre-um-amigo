@@ -1,6 +1,10 @@
 <template>
   <div class="carousel-page">
-    <v-container>
+    <v-container v-if="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-container>
+
+    <v-container v-else>
       <div class="users-search">
         <h1>Pesquisar Usuários</h1>
         <form>
@@ -170,6 +174,7 @@ export default {
       users: [],
       search: {},
       dialog: false,
+      loading: true,
       headers: [
         {
           align: "start",
@@ -190,6 +195,7 @@ export default {
       const url = `/users`;
       api.get(url).then((res) => {
         this.users = res.data;
+        this.loading = false;
       });
     },
     reset() {
@@ -230,7 +236,7 @@ export default {
         .then((res) => {
           this.users = res.data;
         })
-        .catch(showError);  
+        .catch(showError);
     },
 
     cancelar() {

@@ -1,6 +1,10 @@
 <template>
   <v-main class="grey lighten-3" style="padding: 0px">
-    <v-container>
+        <v-container v-if="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-container>
+
+    <v-container v-else>
       <v-row>
         <v-col cols="12" sm="8">
           <v-sheet min-height="70vh" rounded="lg">
@@ -158,17 +162,20 @@ export default {
     return {
       meta: {},
       objetivos: [],
+       loading: true,
     };
   },
   methods: {
     async loadMeta() {
       const url = `/metasPublic/${this.$route.params.id}`;
       await api.get(url).then((res) => (this.meta = res.data));
+       this.loading = false;
     },
 
     async loadObjetivos() {
       const url = `/objetivosMetaPublic/${this.$route.params.id}`;
       await api.get(url).then((res) => (this.objetivos = res.data));
+       this.loading = false;
     },
   },
   mounted() {

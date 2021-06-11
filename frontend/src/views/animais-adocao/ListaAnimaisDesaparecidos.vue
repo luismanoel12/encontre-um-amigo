@@ -1,5 +1,9 @@
 <template>
-  <v-container>
+  <v-container v-if="loading">
+    <v-progress-circular indeterminate color="primary"></v-progress-circular>
+  </v-container>
+
+  <v-container v-else>
     <div class="lista-animais-page">
       <v-row>
         <v-col cols="12" sm="9">
@@ -263,6 +267,7 @@ export default {
       isSearch: false,
       loadMoreSearch: true,
       mode: "DEFAULT",
+      loading: true,
       loadMore: true,
       estados: [
         { text: "Acre", value: "AC" },
@@ -301,7 +306,7 @@ export default {
       api(`/animaisDesaparecidos?page=${this.page}`).then((res) => {
         this.animais = this.animais.concat(res.data.data);
         this.page++;
-
+        this.loading = false;
         if (res.data.data.length === 0) this.loadMore = false;
       });
     },
@@ -316,6 +321,7 @@ export default {
         .then((res) => {
           this.animaisSearch = this.animaisSearch.concat(res.data.data);
           this.pageSearch++;
+           this.loading = false;
 
           if (res.data.data.length === 0) this.loadMoreSearch = false;
         })

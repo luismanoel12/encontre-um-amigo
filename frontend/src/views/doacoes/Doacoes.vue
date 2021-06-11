@@ -1,6 +1,10 @@
 <template>
   <div class="doacoes-page">
-    <v-container>
+    <v-container v-if="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-container>
+
+    <v-container v-else>
       <div class="cadastrar-doacoes-form">
         <div class="cadastrar-doacoes-titulo">
           <h1>Olá, {{ user.name }}.</h1>
@@ -210,12 +214,14 @@ export default {
       doacao: {},
       doacoes: [],
       dialog: false,
+       loading: true,
     };
   },
   methods: {
     loadDoacoes() {
       api(`/doacoes`).then((res) => {
         this.doacoes = res.data;
+         this.loading = false;
       });
     },
     reset() {
@@ -299,7 +305,7 @@ export default {
   align-items: center;
 }
 
-.descricao-doacao-card{
+.descricao-doacao-card {
   word-break: break-all;
 }
 </style>

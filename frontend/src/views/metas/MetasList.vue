@@ -1,5 +1,9 @@
 <template>
-  <v-container>
+  <v-container v-if="loading">
+    <v-progress-circular indeterminate color="primary"></v-progress-circular>
+  </v-container>
+
+  <v-container v-else>
     <div class="metas-page">
       <v-row>
         <v-col cols="12" sm="3" v-for="meta in metas" :key="meta.id">
@@ -10,7 +14,7 @@
             <v-card class="mx-auto my-12 meta-card" max-width="374">
               <div class="card-met-user">
                 <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
-                  <img :src="meta.userImage" alt="" v-if="meta.userImage">
+                  <img :src="meta.userImage" alt="" v-if="meta.userImage" />
                   <Gravatar :email="meta.email" :alt="meta.userName" v-else />
                 </v-avatar>
                 <router-link
@@ -22,19 +26,19 @@
                 >
                   <h3>{{ meta.name }}</h3>
                   <h5 class="text-center">
-                {{
-                  new Date(meta.createdAt).toLocaleString("pt-br", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    hour12: true,
-                    hour: "numeric",
-                    minute: "2-digit",
-                    second: "2-digit",
-                  })
-                }}
-              </h5>
+                    {{
+                      new Date(meta.createdAt).toLocaleString("pt-br", {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                        hour12: true,
+                        hour: "numeric",
+                        minute: "2-digit",
+                        second: "2-digit",
+                      })
+                    }}
+                  </h5>
                 </router-link>
               </div>
 
@@ -84,7 +88,9 @@
 
               <div class="progress-bar">
                 <v-progress-linear
-                  :value="Math.ceil((meta.valorAtual * 100) / meta.valorEsperado)"
+                  :value="
+                    Math.ceil((meta.valorAtual * 100) / meta.valorEsperado)
+                  "
                   rounded
                   background-color="green"
                   background-opacity="0.3"
@@ -105,7 +111,14 @@
     </div>
 
     <div class="text-center pagination">
-      <v-btn depressed class="bt-carregar-mais" elevation="24" dark v-if="loadMore" @click="getMetas">
+      <v-btn
+        depressed
+        class="bt-carregar-mais"
+        elevation="24"
+        dark
+        v-if="loadMore"
+        @click="getMetas"
+      >
         Carregar Mais
         <v-icon dark right> mdi-reload </v-icon>
       </v-btn>
@@ -126,6 +139,7 @@ export default {
       metaUser: {},
       page: 1,
       loadMore: true,
+      loading: true,
     };
   },
 
@@ -134,6 +148,7 @@ export default {
       api(`/metasPublic?page=${this.page}`).then((res) => {
         this.metas = this.metas.concat(res.data.data);
         this.page++;
+        this.loading = false;
 
         if (res.data.data.length === 0) this.loadMore = false;
       });
@@ -206,11 +221,9 @@ export default {
   object-fit: cover;
 }
 
-
-.metas-router-link{
+.metas-router-link {
   text-decoration: none;
-  color: #fff!important;
-
+  color: #fff !important;
 }
 
 .meta-card {

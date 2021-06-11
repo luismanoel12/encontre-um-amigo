@@ -383,15 +383,22 @@ export default {
   width: 130px;
   box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
   border-radius: 3px;
+  background-color: #036564;
+  transition: ease 0.5s;
+}
+
+.animal-ong-card:hover {
+  transform: scale(1.05);
 }
 
 .aoc-header > img {
   max-width: 130px;
+  border-radius: 3px;
 }
 
 .aoc-content {
   text-align: center;
-  color: #222222;
+  color: #fff;
 }
 
 .ong-doacoes-card {

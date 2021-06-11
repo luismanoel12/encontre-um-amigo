@@ -1,6 +1,10 @@
 <template>
   <div class="publicacao-page">
-    <v-container>
+    <v-container v-if="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-container>
+
+    <v-container v-else>
       <v-row>
         <v-col cols="12" sm="3">
           <v-sheet rounded="lg" min-height="268" elevation="10">
@@ -17,7 +21,11 @@
           <v-sheet min-height="70vh" rounded="lg" elevation="10">
             <div class="publicacao-page-header">
               <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
-                <img :src="publicacao.userImage" alt="" v-if="publicacao.userImage">
+                <img
+                  :src="publicacao.userImage"
+                  alt=""
+                  v-if="publicacao.userImage"
+                />
                 <Gravatar
                   :email="publicacao.email"
                   :alt="publicacao.name"
@@ -38,7 +46,6 @@
 
             <div class="publicacao-page-header-title">
               <h2>{{ publicacao.titulo }}</h2>
-
             </div>
 
             <v-divider></v-divider>
@@ -93,6 +100,7 @@ export default {
   data: function () {
     return {
       publicacao: {},
+       loading: true,
       pageConfig: {
         identifier: this.$route.params.id,
       },
@@ -102,6 +110,7 @@ export default {
     async loadPublicacao() {
       const url = `/publicacaoPublic/${this.$route.params.id}`;
       await api.get(url).then((res) => (this.publicacao = res.data));
+       this.loading = false;
     },
   },
   mounted() {
@@ -196,12 +205,12 @@ export default {
   object-fit: cover;
 }
 
-.pub-router-link{
+.pub-router-link {
   text-decoration: none;
-  color: #2a9d8f!important;
+  color: #2a9d8f !important;
 }
 
-.pub-router-link:hover{
-  color: #264653!important;
+.pub-router-link:hover {
+  color: #264653 !important;
 }
 </style>

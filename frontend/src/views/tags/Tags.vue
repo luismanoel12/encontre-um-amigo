@@ -1,6 +1,10 @@
 <template>
   <div class="tags-page">
-    <v-container>
+    <v-container v-if="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-container>
+
+    <v-container v-else>
       <div class="cadastrar-tags-form">
         <div class="cadastrar-tags-titulo">
           <h1>Olá, {{ user.name }}.</h1>
@@ -184,12 +188,14 @@ export default {
       tags: [],
       tag: {},
       dialog: false,
+       loading: true,
     };
   },
   methods: {
     loadTags() {
       api(`/tags`).then((res) => {
         this.tags = res.data;
+         this.loading = false;
       });
     },
     reset() {

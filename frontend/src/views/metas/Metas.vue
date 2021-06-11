@@ -1,5 +1,9 @@
 <template>
-  <v-container>
+    <v-container v-if="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-container>
+
+  <v-container v-else>
     <div class="metas-page">
       <v-card color="#2a9d8f">
         <v-card-title class="text-center justify-center py-6">
@@ -338,6 +342,7 @@ export default {
       objetivos: [],
       dialog1: false,
       dialog2: false,
+       loading: true,
       headers: [
         {
           align: "start",
@@ -368,6 +373,7 @@ export default {
       const url = `/metasUsuario`;
       api.get(url).then((res) => {
         this.metas = res.data;
+         this.loading = false;
       });
     },
     reset() {

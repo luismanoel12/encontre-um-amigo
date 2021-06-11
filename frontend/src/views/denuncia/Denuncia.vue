@@ -1,86 +1,90 @@
 <template>
   <div class="carousel-page">
-    <v-container>
-      <v-form class="form elevation-10">
-        <h2 class="atencao">Denúncias</h2>
-        <v-row>
-          <v-col cols="12" sm="4">
-            <v-text-field
-              label="Tipo da Denúncia"
-              v-model="denuncia.tipoDenuncia"
-              readonly
-              required
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="4">
-            <v-text-field
-              label="Status"
-              v-model="denuncia.status"
-              readonly
-              required
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="4">
-            <v-text-field
-              label="Id do Usuário"
-              v-model="denuncia.userId"
-              readonly
-              required
-              outlined
-            ></v-text-field>
-          </v-col>
+    <v-container v-if="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-container>
+
+    <v-container v-else>
+      <div class="denuncias-modal">
+        <v-row justify="center">
+          <v-dialog v-model="dialog" persistent max-width="600px">
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Denúncia</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-form>
+                    <v-row>
+                      <v-col cols="12" sm="12">
+                        <h3 class="text-center">{{ denuncia.tipoDenuncia }}</h3>
+                      </v-col>
+                      <v-col cols="12" sm="12">
+                        <h3>Quem foi denúnciado: {{ denuncia.name }}</h3>
+                      </v-col>
+                      <v-col cols="12" sm="12">
+                        <span>Motivo</span>
+                        <p class="descricao-denuncia">
+                          {{ denuncia.descricao }}
+                        </p>
+                      </v-col>
+
+                      <v-col cols="12" sm="12">
+                        <span>Status</span>
+                        <h3>{{ denuncia.status }}</h3>
+                      </v-col>
+                    </v-row>
+                  </v-form>
+                </v-container>
+              </v-card-text>
+              <div class="buttons">
+                <v-btn
+                  depressed
+                  v-if="denuncia.status == 'Aberto' && mode != 'remove'"
+                  @click="setStatus"
+                  color="success"
+                >
+                  Finalizar Denúncia
+                  <v-icon dark right> mdi-check-bold </v-icon>
+                </v-btn>
+                <v-btn
+                  depressed
+                  v-if="denuncia.status != 'Aberto' && mode != 'remove'"
+                  @click="setStatus"
+                  color="warning"
+                >
+                  Reabrir Denúncia
+                  <v-icon dark right> mdi-folder-open-outline </v-icon>
+                </v-btn>
+
+                <v-divider vertical></v-divider>
+                <v-btn
+                  depressed
+                  v-if="mode === 'remove'"
+                  @click="remove"
+                  color="error"
+                >
+                  Excluir
+                  <v-icon dark right> mdi-delete </v-icon>
+                </v-btn>
+                <v-divider vertical></v-divider>
+                <v-btn
+                  depressed
+                  @click="reset"
+                  class="btn-cancel"
+                  color="primary"
+                >
+                  Cancelar
+                  <v-icon dark right> mdi-close-thick </v-icon>
+                </v-btn>
+              </div>
+            </v-card>
+          </v-dialog>
         </v-row>
-
-        <v-row>
-          <v-col cols="12" sm="12">
-            <v-textarea
-              outlined
-              name="input-7-4"
-              v-model="denuncia.descricao"
-              readonly
-              label="Descrição da Denúncia"
-            ></v-textarea>
-          </v-col>
-        </v-row>
-
-        <div class="buttons">
-          <v-btn
-            depressed
-            v-if="denuncia.status == 'Aberto'"
-            @click="setStatus"
-            color="success"
-          >
-            Finalizar Denúncia
-            <v-icon dark right> mdi-check-bold </v-icon>
-          </v-btn>
-          <v-btn depressed v-else @click="setStatus" color="warning">
-            Reabrir Denúncia
-            <v-icon dark right> mdi-folder-open-outline </v-icon>
-          </v-btn>
-
-          <v-divider vertical></v-divider>
-          <v-btn
-            depressed
-            v-if="mode === 'remove'"
-            @click="remove"
-            color="error"
-          >
-            Excluir
-            <v-icon dark right> mdi-delete </v-icon>
-          </v-btn>
-          <v-divider vertical></v-divider>
-          <v-btn depressed @click="reset" class="btn-cancel" color="primary">
-            Cancelar
-            <v-icon dark right> mdi-close-thick </v-icon>
-          </v-btn>
-        </div>
-      </v-form>
+      </div>
 
       <v-data-table :items="denuncias" :headers="headers" class="elevation-10">
         <template v-slot:[`item.actions`]="{ item }">
-          
           <v-btn
             class="bt-actions"
             color="green"
@@ -121,6 +125,8 @@ export default {
       mode: "save",
       denuncia: {},
       denuncias: [],
+      loading: true,
+      dialog: false,
       headers: [
         {
           align: "start",
@@ -129,7 +135,7 @@ export default {
         { text: "Código", value: "id" },
         { text: "Tipo da Denúncia", value: "tipoDenuncia" },
         { text: "Status", value: "status" },
-        { text: "Id do Usuário", value: "userId" },
+        { text: "Usuário denúnciado", value: "name" },
         { text: "Data", value: "createdAt" },
         { text: "Ações", value: "actions" },
       ],
@@ -140,16 +146,19 @@ export default {
       const url = `/denuncia`;
       api.get(url).then((res) => {
         this.denuncias = res.data;
+        this.loading = false;
       });
     },
     reset() {
       this.mode = "save";
       this.denuncia = {};
       this.loadDenuncias();
+      this.dialog = false;
     },
     setStatus() {
       const method = "put";
       const id = this.denuncia.id;
+
 
       if (this.denuncia.status == "Aberto") {
         this.denuncia.status = "Finalizado";
@@ -179,8 +188,8 @@ export default {
       api
         .get(`/denuncia/${denuncia.id}`)
         .then((res) => (this.denuncia = res.data));
+      this.dialog = true;
     },
-
   },
   watch: {
     page() {
@@ -194,4 +203,14 @@ export default {
 </script>
 
 <style>
+.denuncias-modal {
+  margin-top: 60px;
+}
+
+.descricao-denuncia{
+  border: 1px solid #212121;
+  padding: 10px;
+  border-radius: 5px;
+  word-break: break-all;
+}
 </style>

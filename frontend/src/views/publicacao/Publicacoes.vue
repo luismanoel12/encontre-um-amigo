@@ -1,7 +1,10 @@
 <template>
   <div class="animais-page">
-    <v-container>
+    <v-container v-if="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-container>
 
+    <v-container v-else>
       <div class="cadastrar-animais-titulo">
         <h1>Olá, {{ user.name }}.</h1>
         <h2>Aqui se encontram todas as suas publicações!</h2>
@@ -172,6 +175,7 @@ export default {
       publicacao: {},
       publicacoes: [],
       dialog: false,
+      loading: true,
 
       headers: [
         {
@@ -190,6 +194,7 @@ export default {
       const url = `/publicacaoUsuario`;
       api.get(url).then((res) => {
         this.publicacoes = res.data;
+        this.loading = false;
       });
     },
     reset() {

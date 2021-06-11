@@ -1,5 +1,9 @@
 <template>
-  <v-container>
+  <v-container v-if="loading">
+    <v-progress-circular indeterminate color="primary"></v-progress-circular>
+  </v-container>
+
+  <v-container v-else>
     <div class="dashboard-page-title">
       <h1>DADOS BRUTOS</h1>
     </div>
@@ -416,6 +420,7 @@ export default {
       admins: [],
       count: [],
       countLastWeek: [],
+      loading: true,
 
       series: [0, 0, 0],
       chartOptions: {
@@ -578,16 +583,15 @@ export default {
           res.data.denunciasFinalizadasCount,
           res.data.denunciasCount,
         ];
+
+         this.loading = false;
       });
     },
 
     getCountLastWeek() {
       api(`/getCountLastWeek`).then((res) => {
         this.countLastWeek = res.data;
-        this.series4 = [
-          res.data.usersWeekCount,
-          res.data.ongsCountWeek,
-        ];
+        this.series4 = [res.data.usersWeekCount, res.data.ongsCountWeek];
 
         this.series5 = [
           res.data.publicacoesCountWeek,

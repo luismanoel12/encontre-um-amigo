@@ -1,6 +1,10 @@
 <template>
   <div class="animal-page">
-    <v-container>
+        <v-container v-if="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-container>
+
+    <v-container v-else>
       <v-row>
         <v-col cols="12" sm="4">
           <v-sheet rounded="lg" min-height="268" elevation="10">
@@ -158,12 +162,14 @@ export default {
       fbUrl: null,
       twUrl: null,
       wpUrl: null,
+      loading: true,
     };
   },
   methods: {
     loadAnimal() {
       const url = `/animaisDesaparecidos/${this.$route.params.id}`;
       api.get(url).then((res) => (this.animal = res.data));
+       this.loading = false;
     },
 
     loadSharingUrls() {
