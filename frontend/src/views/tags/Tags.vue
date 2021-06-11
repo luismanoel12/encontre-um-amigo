@@ -4,7 +4,11 @@
       <div class="cadastrar-tags-form">
         <div class="cadastrar-tags-titulo">
           <h1>Olá, {{ user.name }}.</h1>
-          <h2>Aqui se encontram todas as suas TAGs cadastrados!</h2>
+          <h2>Aqui se encontram todos os seus serviços cadastrados!</h2>
+          <small
+            >Cadastre serviços no qual sua ONG faz, para que os usuários possam
+            entrar em contato caso necessite de algum!</small
+          >
         </div>
 
         <v-row class="mt-5 mb-2">
@@ -12,27 +16,25 @@
             <template v-slot:activator="{ on, attrs }">
               <div class="novo-tag">
                 <v-btn color="#036564" dark v-bind="attrs" v-on="on">
-                  Nova TAG
+                  Novo Serviço
 
-                  <v-icon dark right> mdi-tag </v-icon>
+                  <v-icon dark right> mdi-paw </v-icon>
                 </v-btn>
               </div>
             </template>
             <v-card>
               <v-card-title>
-                <span
-                  class="headline excluir-tag"
-                  v-if="this.mode === 'remove'"
-                  >Excluir a TAG:
+                <span class="headline excluir-tag" v-if="this.mode === 'remove'"
+                  >Excluir o serviço:
                   <strong> {{ tag.nome_tag }} </strong>
                 </span>
                 <span class="headline salvar-tag" v-if="!tag.id"
-                  >Cadastrar Nova TAG</span
+                  >Cadastrar Novo Serviço</span
                 >
                 <span
                   class="headline atualizar-tag"
                   v-if="tag.id && this.mode != 'remove'"
-                  >Atualizar a TAG:
+                  >Atualizar o serviço:
                   <strong> {{ tag.nome_tag }} </strong>
                 </span>
               </v-card-title>
@@ -54,20 +56,20 @@
                   <v-row>
                     <v-col cols="12" sm="12" md="12">
                       <v-text-field
-                        label="Diga o nome da TAG"
+                        label="Diga o nome do serviço"
                         v-model="tag.nome_tag"
                         placeholder="Ex: Recolhimento de animais"
-                        prepend-inner-icon="mdi-tag"
+                        prepend-inner-icon="mdi-paw"
                         required
+                        maxlength="30"
+                        counter="30"
+                        hint="Máximo de 30 caracteres"
                         outlined
                         v-if="this.mode === 'save'"
                       ></v-text-field>
                     </v-col>
                   </v-row>
                 </v-container>
-                <small v-if="this.mode === 'save'"
-                  >*indicates required field</small
-                >
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>

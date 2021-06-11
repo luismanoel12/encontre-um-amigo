@@ -14,35 +14,45 @@
               </div>
               <div class="ong-left-card-content">
                 <h4>
-                  E-mail: <strong>{{ ong.email }}</strong>
+                <span class="mdi mdi-email mdi-18px icon-info"></span>
+                 E-mail: <strong>{{ ong.email }}</strong>
                 </h4>
                 <h4>
+                  <span class="mdi mdi-card-account-details mdi-18px icon-info"></span>
                   CNPJ: <strong>{{ ong.cnpj }}</strong>
                 </h4>
                 <h4>
+                  <span class="mdi mdi-phone mdi-18px icon-info"></span>
                   Telefone: <strong>{{ ong.telefone }}</strong>
                 </h4>
                 <v-divider></v-divider>
                 <h2 class="text-center mt-2 mb-2">Endereço</h2>
                 <h4>
+                  <span class="mdi mdi-map-marker mdi-18px icon-info"></span>
                   Endereço: <strong>{{ ong.endereco }}</strong>
                 </h4>
                 <h4>
+                  <span class="mdi mdi-numeric mdi-18px icon-info"></span>
                   Número: <strong>{{ ong.numero }}</strong>
                 </h4>
                 <h4>
+                  <span class="mdi mdi-routes mdi-18px icon-info"></span>
                   Bairro: <strong>{{ ong.bairro }}</strong>
                 </h4>
                 <h4>
+                  <span class="mdi mdi-routes mdi-18px icon-info"></span>
                   Complemento: <strong>{{ ong.complemento }}</strong>
                 </h4>
                 <h4>
+                  <span class="mdi mdi-sign-real-estate mdi-18px icon-info"></span>
                   Estado: <strong>{{ ong.estado }}</strong>
                 </h4>
                 <h4>
+                  <span class="mdi mdi-city mdi-18px icon-info"></span>
                   Cidade: <strong>{{ ong.cidade }}</strong>
                 </h4>
                 <h4>
+                  <span class="mdi mdi-numeric mdi-18px icon-info"></span>
                   CEP: <strong>{{ ong.cep }}</strong>
                 </h4>
               </div>
@@ -208,7 +218,7 @@
                 <v-col cols="12" v-for="doacao in doacoes" :key="doacao.id">
                   <div class="ong-doacoes-card">
                     <h3>{{ doacao.meio_pagamento }}</h3>
-                    <p>
+                    <p class="descricao-doacao-card">
                       {{ doacao.descricao }}
                     </p>
                     <v-btn
@@ -232,13 +242,13 @@
 
           <v-sheet rounded="lg" class="mt-3" min-height="268" elevation="10">
             <div class="ong-right-card-tag">
-              <h4 class="text-center">MINHAS TAGS:</h4>
+              <h4 class="text-center">MEUS SERVIÇOS:</h4>
               <v-divider class="publicacao-divider"></v-divider>
               <div class="ong-tags-card" v-for="tag in tags" :key="tag.id">
                 <v-chip class="ma-1" color="#036666" outlined small>
                   {{ tag.nome_tag }}
 
-                  <v-icon right x-small> mdi-tag </v-icon>
+                  <v-icon right x-small> mdi-paw </v-icon>
                 </v-chip>
               </div>
             </div>
@@ -404,5 +414,13 @@ export default {
 
 .ong-tags-card {
   display: inline-table;
+}
+
+.descricao-doacao-card{
+  word-break: break-all;
+}
+
+.icon-info{
+  color: #036564;
 }
 </style>

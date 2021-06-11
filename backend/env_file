@@ -1,18 +1,10 @@
 module.exports = {
-
-  client: 'postgresql',
-  connection: {
-    database: 'DATA_BASE_NAME',
-    host : '127.0.0.1',
-    port:   5432,
-    user:     'YOUR_USER',
-    password: 'YOUR_PASSWORD'
-  },
-  pool: {
-    min: 2,
-    max: 10
-  },
-  migrations: {
-    tableName: 'knex_migrations'
-  }
-};
+    authSecret: '$1564FgfDfgEaF4o&$#45h5@f654GFHHsfgg5s$fa4',
+    db: {
+        host : '127.0.0.1',
+        port: 5432,
+        database: 'auth',
+        user: 'postgres',
+        password: 'root'
+    }
+}

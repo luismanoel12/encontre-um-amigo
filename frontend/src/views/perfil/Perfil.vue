@@ -254,7 +254,7 @@
       <div class="ongBio-content">
         <v-row>
           <v-col cols="12" sm="12">
-            <VueEditor v-model="bio.descricao" placeholder="Descreva sua BIO" />
+            <VueEditor v-model="bio.descricao" placeholder="Nos conte sua história" />
           </v-col>
         </v-row>
 

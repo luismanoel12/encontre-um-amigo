@@ -164,7 +164,7 @@
 
         <v-list-item to="/doacoes">
           <v-list-item-icon>
-            <v-icon> mdi-cash-multiple </v-icon>
+            <v-icon> mdi-hand-heart </v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
@@ -172,13 +172,13 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item to="/tags">
+        <v-list-item to="/servicos">
           <v-list-item-icon>
-            <v-icon> mdi-tag </v-icon>
+            <v-icon> mdi-paw </v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>tags</v-list-item-title>
+            <v-list-item-title>Serviços</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 

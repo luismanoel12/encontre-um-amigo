@@ -14,7 +14,7 @@
                 <v-btn color="#036564" dark v-bind="attrs" v-on="on">
                   Cadastrar Novo Meio de Doação
 
-                  <v-icon dark right> mdi-paw </v-icon>
+                  <v-icon dark right> mdi-hand-heart </v-icon>
                 </v-btn>
               </div>
             </template>
@@ -57,9 +57,12 @@
                         label="Diga por onde irá receber esse pagamento"
                         v-model="doacao.meio_pagamento"
                         placeholder="Ex: Banco do Brasil"
-                        prepend-inner-icon="mdi-credit-card"
+                        prepend-inner-icon="mdi-hand-heart"
                         required
                         outlined
+                        maxlength="30"
+                        counter="30"
+                        hint="Máximo de 30 caracteres"
                         v-if="this.mode === 'save'"
                       ></v-text-field>
                     </v-col>
@@ -72,11 +75,14 @@
                         label="Descreva os dados para necessários para receber essa doação"
                         prepend-inner-icon="mdi-information-outline"
                         v-model="doacao.descricao"
+                        maxlength="250"
+                        counter="250"
+                        hint="Máximo de 250 caracteres"
                       ></v-textarea>
                     </v-col>
                     <v-col cols="12" sm="12" md="12">
                       <v-text-field
-                        label="Tem algum link para ajudar ou realizar o pagamento?"
+                        label="(Opcional) Tem algum link para ajudar ou realizar o pagamento?"
                         v-model="doacao.link"
                         placeholder="Ex: https://picpay/usuario"
                         prepend-inner-icon="mdi-link-variant"
@@ -87,9 +93,6 @@
                     </v-col>
                   </v-row>
                 </v-container>
-                <small v-if="this.mode === 'save'"
-                  >*indicates required field</small
-                >
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -143,7 +146,7 @@
             <div class="minhas-doacoes-card">
               <div class="minhas-doacoes-card-content">
                 <h2>{{ doacao.meio_pagamento }}</h2>
-                <p>
+                <p class="descricao-doacao-card">
                   {{ doacao.descricao }}
                 </p>
                 <div class="minhas-doacoes-card-link">
@@ -294,5 +297,9 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.descricao-doacao-card{
+  word-break: break-all;
 }
 </style>

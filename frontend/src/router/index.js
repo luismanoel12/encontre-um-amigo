@@ -162,7 +162,7 @@ const routes = [{
 },
 {
     name: 'tags',
-    path: '/tags',
+    path: '/servicos',
     component: Tags,
 },
 {
