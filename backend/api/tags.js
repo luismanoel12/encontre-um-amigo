@@ -13,37 +13,48 @@ module.exports = app => {
             res.status(400).send(msg)
         }
 
-        if (tag.id) {
-            app.db('ongs_tags')
-                .update(tag)
-                .where({ id: tag.id })
-                .then(_ => res.status(204).send())
-                .catch(err => res.status(500).send(err))
-        } else {
-
-            tag.userId = req.user.id;
-
-            app.db('ongs_tags')
-                .insert(tag)
-                .then(_ => res.status(204).send())
-                .catch(err => res.status(500).send(err))
+        if(req.user.ong){
+            if (tag.id && req.user.id == tag.userId) {
+                app.db('ongs_tags')
+                    .update(tag)
+                    .where({ id: tag.id })
+                    .then(_ => res.status(204).send())
+                    .catch(err => res.status(500).send(err))
+            } else {
+    
+                tag.userId = req.user.id;
+    
+                app.db('ongs_tags')
+                    .insert(tag)
+                    .then(_ => res.status(204).send())
+                    .catch(err => res.status(500).send(err))
+            }
+        }else{
+            res.status(401).send("Você não tem autorização! Não tente novamente!")
         }
     }
 
     const remove = async (req, res) => {
-        try {
-            const rowsDeleted = await app.db('ongs_tags')
-                .where({ id: req.params.id }).del()
+        const tagsFromDB = await app.db('ongs_tags')
+            .where({ id: req.params.id }).first()
 
+        if(req.user.id == tagsFromDB.userId){
             try {
-                existsOrError(rowsDeleted, 'Não foi possível encontrar a TAG informada')
+                const rowsDeleted = await app.db('ongs_tags')
+                    .where({ id: req.params.id }).del()
+    
+                try {
+                    existsOrError(rowsDeleted, 'Não foi possível encontrar a TAG informada')
+                } catch (msg) {
+                    return res.status(400).send(msg)
+                }
+    
+                res.status(204).send()
             } catch (msg) {
-                return res.status(400).send(msg)
+                res.status(500).send(msg)
             }
+        }else{
 
-            res.status(204).send()
-        } catch (msg) {
-            res.status(500).send(msg)
         }
     }
 

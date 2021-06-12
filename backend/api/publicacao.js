@@ -16,42 +16,51 @@ module.exports = app => {
         }
 
 
-        if (publicacao.id) {
-            app.db('publicacao')
-                .update({ titulo: publicacao.titulo, imageUrl: publicacao.imageUrl, chamada: publicacao.chamada, descricao: publicacao.descricao })
-                .where({ id: publicacao.id })
-                .then(_ => res.status(204).send())
-                .catch(err => res.status(500).send(err))
+        if (req.user.admin || req.user.ong) {
+            if (publicacao.id && publicacao.userId == req.user.id) {
+                app.db('publicacao')
+                    .update({ titulo: publicacao.titulo, imageUrl: publicacao.imageUrl, chamada: publicacao.chamada, descricao: publicacao.descricao })
+                    .where({ id: publicacao.id })
+                    .then(_ => res.status(204).send())
+                    .catch(err => res.status(500).send(err))
 
+            } else {
+
+                publicacao.userId = req.user.id;
+                publicacao.createdAt = new Date();
+                publicacao.dataPub = moment().locale('pt-br').format('LLLL');
+
+                app.db('publicacao')
+                    .insert(publicacao)
+                    .then(_ => res.status(204).send())
+                    .catch(err => res.status(500).send(err))
+            }
         } else {
-
-            publicacao.userId = req.user.id;
-
-            publicacao.createdAt = new Date();
-            publicacao.dataPub = moment().locale('pt-br').format('LLLL');
-
-
-            app.db('publicacao')
-                .insert(publicacao)
-                .then(_ => res.status(204).send())
-                .catch(err => res.status(500).send(err))
+            res.status(401).send("Você não tem autorização! Não tente novamente!")
         }
     }
 
     const remove = async (req, res) => {
-        try {
-            const rowsDeleted = await app.db('publicacao')
-                .where({ id: req.params.id }).del()
+        const publicacaoFromDB = await app.db('publicacao')
+            .where({ id: req.params.id }).first()
 
+        if (req.user.id == publicacaoFromDB.userId) {
             try {
-                existsOrError(rowsDeleted, 'Essa publicação não foi encontrado')
-            } catch (msg) {
-                return res.status(400).send(msg)
-            }
+                const rowsDeleted = await app.db('publicacao')
+                    .where({ id: req.params.id }).del()
 
-            res.status(204).send()
-        } catch (msg) {
-            res.status(500).send(msg)
+                try {
+                    existsOrError(rowsDeleted, 'Essa publicação não foi encontrado')
+                } catch (msg) {
+                    return res.status(400).send(msg)
+                }
+
+                res.status(204).send()
+            } catch (msg) {
+                res.status(500).send(msg)
+            }
+        } else {
+            res.status(401).send("Você não tem autorização! Não tente novamente!")
         }
     }
 
@@ -68,7 +77,7 @@ module.exports = app => {
         app.db('publicacao')
             .join('users', 'publicacao.userId', 'users.id')
             .select('publicacao.id', 'publicacao.titulo', 'publicacao.descricao', 'publicacao.chamada', 'publicacao.imageUrl',
-                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email', 'users.name', 'users.userImage',)
+                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email', 'users.name', 'users.userImage')
             .limit(5)
             .orderBy('id', 'desc')
             .where({ userId: req.params.id })
@@ -86,7 +95,7 @@ module.exports = app => {
         app.db('publicacao')
             .join('users', 'publicacao.userId', 'users.id')
             .select('publicacao.id', 'publicacao.titulo', 'publicacao.descricao', 'publicacao.chamada', 'publicacao.imageUrl',
-                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email', 'users.name', 'users.userImage',)
+                'publicacao.createdAt', 'publicacao.dataPub', 'publicacao.userId', 'users.email', 'users.name', 'users.userImage')
             .orderBy('id', 'desc')
             .limit(limit).offset(page * limit - limit)
             .then(publicacao => res.json({ data: publicacao, count, limit }))

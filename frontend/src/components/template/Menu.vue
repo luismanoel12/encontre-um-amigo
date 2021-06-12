@@ -162,7 +162,7 @@
           </v-list-item>
         </v-list-group>
 
-        <v-list-item to="/doacoes">
+        <v-list-item to="/doacoes" v-if="(user && user.admin) || user.ong">
           <v-list-item-icon>
             <v-icon> mdi-hand-heart </v-icon>
           </v-list-item-icon>
@@ -172,7 +172,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item to="/servicos">
+        <v-list-item to="/servicos" v-if="(user && user.admin) || user.ong">
           <v-list-item-icon>
             <v-icon> mdi-paw </v-icon>
           </v-list-item-icon>

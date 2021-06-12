@@ -73,7 +73,8 @@ module.exports = app => {
 
     app.route('/carousel')
         .all(app.config.passport.authenticate())
-        .post(app.api.carousel.save)
+        .put(admin(app.api.carousel.save))
+        .post(admin(app.api.carousel.save))
         .get(app.api.carousel.get)
 
     app.route('/carousel/:id')

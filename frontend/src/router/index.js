@@ -41,7 +41,7 @@ const routes = [{
     name: 'auth',
     path: '/auth',
     component: Auth,
-    // meta: { requiresOff: true }
+    meta: { requiresOff: true }
 },
 {
     name: 'signup',
@@ -81,25 +81,25 @@ const routes = [{
     name: 'metasList',
     path: '/metas',
     component: MetasList,
-    // meta: { allowGuest: true }
+    meta: { allowGuest: true }
 },
 {
     name: 'metasById',
     path: '/metas/:id',
     component: MetasById,
-    // meta: { allowGuest: true }
+    meta: { allowGuest: true }
 },
 {
     name: 'ongs',
     path: '/ongs',
     component: Ongs,
-    // meta: { allowGuest: true }
+    meta: { allowGuest: true }
 },
 {
     name: 'ongById',
     path: '/ongs/:id',
     component: OngById,
-    // meta: { allowGuest: true }
+    meta: { allowGuest: true }
 },
 {
     name: 'animais',
@@ -111,25 +111,25 @@ const routes = [{
     name: 'listaAnimais',
     path: '/animais/adocao',
     component: ListaAnimais,
-    // meta: { allowGuest: true }
+    meta: { allowGuest: true }
 },
 {
     name: 'listaAnimaisDesaparecidos',
     path: '/animais/desaparecidos',
     component: ListaAnimaisDesaparecidos,
-    // meta: { allowGuest: true }
+    meta: { allowGuest: true }
 },
 {
     name: 'AnimaisDesaparecidosById',
     path: '/animais/desaparecidos/:id',
     component: AnimaisDesaparecidosById,
-    // meta: { allowGuest: true }
+    meta: { allowGuest: true }
 },
 {
     name: 'animaisById',
     path: '/animais/:id',
     component: AnimaisById,
-    // meta: { allowGuest: true }
+    meta: { allowGuest: true }
 },
 {
     name: 'publicacoes',
@@ -141,35 +141,37 @@ const routes = [{
     name: 'listaPublicacoes',
     path: '/publicacoes',
     component: ListaPublicacoes,
-    // meta: { allowGuest: true }
+    meta: { allowGuest: true }
 },
 {
     name: 'publicacoesById',
     path: '/publicacao/:id',
     component: PublicacoesById,
-    // meta: { allowGuest: true }
+    meta: { allowGuest: true }
 },
 {
     name: 'denuncia',
     path: '/denuncia',
     component: Denuncia,
-    // meta: { requiresAdmin: true }
+    meta: { requiresAdmin: true }
 },
 {
     name: 'doacoes',
     path: '/doacoes',
     component: Doacoes,
+    meta: { requiresAuthorization: true }
 },
 {
     name: 'tags',
     path: '/servicos',
     component: Tags,
+    meta: { requiresAuthorization: true }
 },
 {
     name: 'home',
     path: '/',
     component: Home,
-    // meta: { allowGuest: true }
+    meta: { allowGuest: true }
 },
 {
     name: 'error404',

@@ -2,7 +2,7 @@
 module.exports = app => {
     const { existsOrError, notExistsOrError } = app.api.validation
 
-    const save = (req, res) => {
+    const save = async (req, res) => {
         const doacoes = { ...req.body }
         if (req.params.id) doacoes.id = req.params.id
 
@@ -14,37 +14,49 @@ module.exports = app => {
             res.status(400).send(msg)
         }
 
-        if (doacoes.id) {
-            app.db('doacoes')
-                .update(doacoes)
-                .where({ id: doacoes.id })
-                .then(_ => res.status(204).send())
-                .catch(err => res.status(500).send(err))
-        } else {
-
-            doacoes.userId = req.user.id;
-
-            app.db('doacoes')
-                .insert(doacoes)
-                .then(_ => res.status(204).send())
-                .catch(err => res.status(500).send(err))
+        if(req.user.ong){
+            if (doacoes.id && doacoes.userId == req.user.id) {
+                app.db('doacoes')
+                    .update(doacoes)
+                    .where({ id: doacoes.id })
+                    .then(_ => res.status(204).send())
+                    .catch(err => res.status(500).send(err))
+            } else {
+    
+                doacoes.userId = req.user.id;
+                app.db('doacoes')
+                    .insert(doacoes)
+                    .then(_ => res.status(204).send())
+                    .catch(err => res.status(500).send(err))
+            }
+        }else{
+            res.status(401).send("Você não tem autorização! Não tente novamente!")
         }
     }
 
     const remove = async (req, res) => {
-        try {
-            const rowsDeleted = await app.db('doacoes')
-                .where({ id: req.params.id }).del()
 
+        const doacaoFromDB = await app.db('doacoes')
+            .where({ id: req.params.id }).first()
+           
+
+        if(req.user.id == doacaoFromDB.userId){
             try {
-                existsOrError(rowsDeleted, 'Não foi possivel encontrar o meio de doação informado')
+                const rowsDeleted = await app.db('doacoes')
+                    .where({ id: req.params.id }).del()
+    
+                try {
+                    existsOrError(rowsDeleted, 'Não foi possivel encontrar o meio de doação informado')
+                } catch (msg) {
+                    return res.status(400).send(msg)
+                }
+    
+                res.status(204).send()
             } catch (msg) {
-                return res.status(400).send(msg)
+                res.status(500).send(msg)
             }
-
-            res.status(204).send()
-        } catch (msg) {
-            res.status(500).send(msg)
+        }else{
+            res.status(401).send("Você não tem autorização! Não tente novamente!")
         }
     }
 

@@ -1,7 +1,7 @@
 module.exports = app => {
     const { existsOrError, notExistsOrError } = app.api.validation
 
-    const save = (req, res) => {
+    const save = async (req, res) => {
         const bio = { ...req.body }
         if (req.params.id) bio.id = req.params.id
 
@@ -12,37 +12,23 @@ module.exports = app => {
             res.status(400).send(msg)
         }
 
+        if (req.user.ong) {
+            if (bio.id) {
 
-        bio.userId = req.user.id;
-
-        if (bio.id) {
-            app.db('ong_bio')
-                .update(bio)
-                .where({ id: bio.id })
-                .then(_ => res.status(204).send())
-                .catch(err => res.status(500).send(err))
-        } else {
-            app.db('ong_bio')
-                .insert(bio)
-                .then(_ => res.status(204).send())
-                .catch(err => res.status(500).send(err))
-        }
-    }
-
-    const remove = async (req, res) => {
-        try {
-            const rowsDeleted = await app.db('ong_bio')
-                .where({ id: req.params.id }).del()
-
-            try {
-                existsOrError(rowsDeleted, 'Essa Bio não foi encontrado')
-            } catch (msg) {
-                return res.status(400).send(msg)
+                app.db('ong_bio')
+                    .update(bio)
+                    .where({ id: bio.id })
+                    .then(_ => res.status(204).send())
+                    .catch(err => res.status(500).send(err))
+            } else {
+                bio.userId = req.user.id;
+                app.db('ong_bio')
+                    .insert(bio)
+                    .then(_ => res.status(204).send())
+                    .catch(err => res.status(500).send(err))
             }
-
-            res.status(204).send()
-        } catch (msg) {
-            res.status(500).send(msg)
+        } else {
+            res.status(401).send("Você não tem autorização! Não tente novamente!")
         }
     }
 
@@ -59,13 +45,6 @@ module.exports = app => {
     }
 
 
-    const get = (req, res) => {
-        app.db('denuncia')
-            .then(denuncia => res.json(denuncia))
-            .catch(err => res.status(500).send(err))
-    }
-
-
     const getById = (req, res) => {
         app.db('ong_bio')
             .where({ userId: req.params.id })
@@ -78,5 +57,5 @@ module.exports = app => {
     }
 
 
-    return { save, remove, getById, get, getByUser }
+    return { save, getById, getByUser }
 }
