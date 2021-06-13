@@ -183,10 +183,6 @@
                     <v-icon x-large color="#3B5998">mdi-facebook</v-icon>
                   </v-btn>
 
-                  <!-- <v-btn>
-                    <v-icon x-large color="#8134AF">mdi-instagram</v-icon>
-                  </v-btn> -->
-
                   <v-btn :href="this.twUrl" target="_blank">
                     <v-icon x-large color="#08a0e9">mdi-twitter</v-icon>
                   </v-btn>

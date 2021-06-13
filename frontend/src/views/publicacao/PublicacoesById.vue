@@ -6,18 +6,7 @@
 
     <v-container v-else>
       <v-row>
-        <v-col cols="12" sm="3">
-          <v-sheet rounded="lg" min-height="268" elevation="10">
-            <div class="publicacao-left-card">
-              <div class="publicacao-left-card-header">
-                <h2 class="text-center">Compartilhar</h2>
-              </div>
-              <div class="publicacao-left-card-content"></div>
-            </div>
-          </v-sheet>
-        </v-col>
-
-        <v-col cols="12" sm="6">
+        <v-col cols="12" lg="9" md="9" sm="12">
           <v-sheet min-height="70vh" rounded="lg" elevation="10">
             <div class="publicacao-page-header">
               <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
@@ -76,13 +65,67 @@
           </v-sheet>
         </v-col>
 
-        <v-col cols="12" sm="3">
+        <v-col cols="12" lg="3" md="3" sm="4">
+          <v-sheet rounded="lg" min-height="268" elevation="10">
+            <div class="publicacao-left-card">
+              <div class="publicacao-left-card-header">
+                <h2 class="text-center">COMPARTILHAR</h2>
+                <v-divider></v-divider>
+              </div>
+              <div class="publicacao-left-card-content">
+                <v-row>
+                  <v-col cols="12">
+                    <v-btn
+                      :href="this.fbUrl"
+                      target="_blank"
+                      class="mx-2"
+                      block
+                      dark
+                      color="#1877F2"
+                    >
+                      <v-icon dark> mdi-facebook </v-icon>
+                    </v-btn>
+                  </v-col>
+
+                  <v-col cols="12">
+                    <v-btn
+                      :href="this.twUrl"
+                      target="_blank"
+                      class="mx-2"
+                      block
+                      dark
+                      color="#08a0e9"
+                    >
+                      <v-icon dark> mdi-twitter </v-icon>
+                    </v-btn>
+                  </v-col>
+
+                  <v-col cols="12">
+                    <v-btn
+                      :href="this.wpUrl"
+                      target="_blank"
+                      data-action="share/whatsapp/share"
+                      class="mx-2"
+                      block
+                      dark
+                      color="#25D366"
+                    >
+                      <v-icon dark> mdi-whatsapp </v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </div>
+            </div>
+          </v-sheet>
+        </v-col>
+
+        <!-- <v-col cols="12" sm="3">
           <v-sheet rounded="lg" min-height="268" elevation="10">
             <div class="animal-right-card">
               <h4 class="text-center">ÚLTIMOS ANIMAIS CADASTRADOS</h4>
             </div>
           </v-sheet>
-        </v-col>
+        </v-col> -->
       </v-row>
     </v-container>
   </div>
@@ -100,7 +143,11 @@ export default {
   data: function () {
     return {
       publicacao: {},
-       loading: true,
+      loading: true,
+      atualUrl: null,
+      fbUrl: null,
+      twUrl: null,
+      wpUrl: null,
       pageConfig: {
         identifier: this.$route.params.id,
       },
@@ -110,11 +157,20 @@ export default {
     async loadPublicacao() {
       const url = `/publicacaoPublic/${this.$route.params.id}`;
       await api.get(url).then((res) => (this.publicacao = res.data));
-       this.loading = false;
+      this.loading = false;
+    },
+
+    loadSharingUrls() {
+      this.atualUrl = document.location.href;
+
+      this.fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${this.atualUrl}`;
+      this.twUrl = `https://twitter.com/intent/tweet?text=${this.atualUrl}`;
+      this.wpUrl = `https://api.whatsapp.com/send?text=${this.atualUrl}`;
     },
   },
   mounted() {
     this.loadPublicacao();
+    this.loadSharingUrls();
     this.$root.$once("animal-by-id", () => {
       this.loadPublicacao();
     });
@@ -162,6 +218,7 @@ export default {
 
 .publicacao-left-card-header {
   padding-bottom: 10px;
+  word-break: break-all;
 }
 
 .publicacao-left-card-content {
