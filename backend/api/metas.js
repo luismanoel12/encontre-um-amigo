@@ -10,9 +10,10 @@ module.exports = app => {
         try {
             existsOrError(metas.titulo, 'Título não informado')
             existsOrError(metas.valorEsperado, 'Valor esperado não informado')
+            existsOrError(metas.descricao, 'Descrição não informado')
 
         } catch (msg) {
-            res.status(400).send(msg)
+           return res.status(400).send(msg)
         }
 
         if (req.user.ong) {
