@@ -161,7 +161,7 @@ module.exports = app => {
 
         app.db('users')
             .join('endereco', 'users.id', 'endereco.userId')
-            .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.userImage', 'users.cnpj', 'users.ong',
+            .select('users.id', 'users.name', 'users.email', 'users.telefone', 'users.userImage', 'users.cnpj', 'users.ong', 'users.createdAt',
                 'endereco.endereco', 'endereco.numero', 'endereco.complemento', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
             .limit(limit).offset(page * limit - limit)
             .where({ 'users.ong': true })

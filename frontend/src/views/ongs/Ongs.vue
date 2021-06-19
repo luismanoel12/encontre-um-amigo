@@ -29,10 +29,17 @@
                           {{ ong.name }}
                         </v-card-title>
 
-                        <div class="card-content">
+                        <div class="card-ongs-content">
                           <span
-                            >Estado: <strong>{{ ong.estado }}</strong>
+                            ><strong
+                              >{{ ong.cidade }} - {{ ong.estado }}
+                            </strong>
                           </span>
+                          <small
+                            ><strong
+                              >Membro desde: {{  new Date( ong.createdAt).toLocaleDateString("pt-br") }}
+                            </strong>
+                          </small>
                         </div>
 
                         <v-card-actions> </v-card-actions>
@@ -61,9 +68,11 @@
                           {{ ong.name }}
                         </v-card-title>
 
-                        <div class="card-content">
+                        <div class="card-ongs-content">
                           <span
-                            >Estado: <strong>{{ ong.estado }}</strong>
+                            ><strong
+                              >{{ ong.cidade }} - {{ ong.estado }}
+                            </strong>
                           </span>
                         </div>
 
@@ -74,7 +83,6 @@
                 </router-link>
               </v-col>
             </v-row>
-
           </v-sheet>
         </v-col>
 
@@ -278,8 +286,10 @@ export default {
   background-color: #52b69a;
 }
 
-.card-content {
+.card-ongs-content {
   padding: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .ong-card {

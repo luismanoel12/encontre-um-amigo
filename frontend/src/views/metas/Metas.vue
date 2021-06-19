@@ -1,7 +1,7 @@
 <template>
-    <v-container v-if="loading">
-      <v-progress-circular indeterminate color="primary"></v-progress-circular>
-    </v-container>
+  <v-container v-if="loading">
+    <v-progress-circular indeterminate color="primary"></v-progress-circular>
+  </v-container>
 
   <v-container v-else>
     <div class="metas-page">
@@ -38,9 +38,19 @@
                   </template>
                   <v-card>
                     <v-card-title>
-                      <span class="headline excluir-animal" v-if="this.mode === 'remove'">Excluir a Meta: <strong> {{ meta.titulo }} </strong> </span>
-                      <span class="headline salvar-animal " v-if="!meta.id">Cadastrar Metas</span>
-                      <span class="headline atualizar-animal" v-if="meta.id && this.mode != 'remove' ">Atualizar a Meta: <strong> {{ meta.titulo }} </strong> </span>
+                      <span
+                        class="headline excluir-animal"
+                        v-if="this.mode === 'remove'"
+                        >Excluir a Meta: <strong> {{ meta.titulo }} </strong>
+                      </span>
+                      <span class="headline salvar-animal" v-if="!meta.id"
+                        >Cadastrar Metas</span
+                      >
+                      <span
+                        class="headline atualizar-animal"
+                        v-if="meta.id && this.mode != 'remove'"
+                        >Atualizar a Meta: <strong> {{ meta.titulo }} </strong>
+                      </span>
                     </v-card-title>
                     <v-card-text>
                       <v-container>
@@ -81,7 +91,7 @@
                               label="URL da imagem"
                               v-model="meta.imageUrl"
                               :readonly="mode === 'remove'"
-                               prepend-inner-icon="mdi-image"
+                              prepend-inner-icon="mdi-image"
                               required
                               outlined
                             ></v-text-field>
@@ -140,32 +150,49 @@
               <v-data-table
                 :items="metas"
                 :headers="headers"
-                class="elevation-10"
+                class="elevation-0"
               >
                 <template v-slot:[`item.actions`]="{ item }">
-                  <v-btn
-                    class="bt-actions"
-                    color="primary"
-                    fab
-                    elevation="0"
-                    small
-                    @click="loadMeta(item)"
-                    dark
-                  >
-                    <v-icon>mdi-pencil</v-icon>
-                  </v-btn>
+                  <v-menu offset-y>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn icon color="#036564" dark v-bind="attrs" v-on="on">
+                        <v-icon>mdi-dots-vertical</v-icon>
+                      </v-btn>
+                    </template>
+                    <v-list>
+                      <v-list-item>
+                        <v-list-item-title>
+                          <v-btn
+                            class="bt-actions"
+                            color="warning"
+                            text
+                            elevation="0"
+                            small
+                            @click="loadMeta(item)"
+                            dark
+                          >
+                          Editar
+                          </v-btn>
+                        </v-list-item-title>
+                      </v-list-item>
 
-                  <v-btn
-                    class="bt-actions"
-                    color="error"
-                    fab
-                    elevation="0"
-                    small
-                    @click="loadMeta(item, 'remove')"
-                    dark
-                  >
-                    <v-icon>mdi-delete</v-icon>
-                  </v-btn>
+                      <v-list-item>
+                        <v-list-item-title>
+                          <v-btn
+                            class="bt-actions"
+                            color="error"
+                            text
+                            elevation="0"
+                            small
+                            @click="loadMeta(item, 'remove')"
+                            dark
+                          >
+                          Deletar
+                          </v-btn>
+                        </v-list-item-title>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
                 </template>
               </v-data-table>
             </v-card>
@@ -187,10 +214,22 @@
                     </div>
                   </template>
                   <v-card>
-                    <v-card-title>                
-                      <span class="headline excluir-animal" v-if="this.mode === 'remove'">Excluir o Objetivo: <strong> {{ objetivo.titulo }} </strong> </span>
-                      <span class="headline salvar-animal " v-if="!objetivo.id">Cadastrar Objetivos</span>
-                      <span class="headline atualizar-animal" v-if="objetivo.id && this.mode != 'remove' ">Atualizar o Objetivo: <strong> {{ objetivo.titulo }} </strong> </span>
+                    <v-card-title>
+                      <span
+                        class="headline excluir-animal"
+                        v-if="this.mode === 'remove'"
+                        >Excluir o Objetivo:
+                        <strong> {{ objetivo.titulo }} </strong>
+                      </span>
+                      <span class="headline salvar-animal" v-if="!objetivo.id"
+                        >Cadastrar Objetivos</span
+                      >
+                      <span
+                        class="headline atualizar-animal"
+                        v-if="objetivo.id && this.mode != 'remove'"
+                        >Atualizar o Objetivo:
+                        <strong> {{ objetivo.titulo }} </strong>
+                      </span>
                     </v-card-title>
                     <v-card-text>
                       <v-container>
@@ -285,32 +324,49 @@
               <v-data-table
                 :items="objetivos"
                 :headers="headers2"
-                class="elevation-10"
+                class="elevation-0"
               >
                 <template v-slot:[`item.actions`]="{ item }">
-                  <v-btn
-                    class="bt-actions"
-                    color="primary"
-                    fab
-                    elevation="0"
-                    small
-                    @click="loadObjetivo(item)"
-                    dark
-                  >
-                    <v-icon>mdi-pencil</v-icon>
-                  </v-btn>
+                  <v-menu offset-x offset-y>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn icon color="#036564" dark v-bind="attrs" v-on="on">
+                        <v-icon>mdi-dots-vertical</v-icon>
+                      </v-btn>
+                    </template>
+                    <v-list>
+                      <v-list-item>
+                        <v-list-item-title>
+                          <v-btn
+                            class="bt-actions"
+                            color="warning"
+                            text
+                            elevation="0"
+                            small
+                            @click="loadObjetivo(item)"
+                            dark
+                          >
+                          Editar
+                          </v-btn>
+                        </v-list-item-title>
+                      </v-list-item>
 
-                  <v-btn
-                    class="bt-actions"
-                    color="error"
-                    fab
-                    elevation="0"
-                    small
-                    @click="loadObjetivo(item, 'remove')"
-                    dark
-                  >
-                    <v-icon>mdi-delete</v-icon>
-                  </v-btn>
+                      <v-list-item>
+                        <v-list-item-title>
+                          <v-btn
+                            class="bt-actions"
+                            color="error"
+                            text
+                            elevation="0"
+                            small
+                            @click="loadObjetivo(item, 'remove')"
+                            dark
+                          >
+                          Deletar
+                          </v-btn>
+                        </v-list-item-title>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
                 </template>
               </v-data-table>
             </v-card>
@@ -342,7 +398,7 @@ export default {
       objetivos: [],
       dialog1: false,
       dialog2: false,
-       loading: true,
+      loading: true,
       headers: [
         {
           align: "start",
@@ -373,7 +429,7 @@ export default {
       const url = `/metasUsuario`;
       api.get(url).then((res) => {
         this.metas = res.data;
-         this.loading = false;
+        this.loading = false;
       });
     },
     reset() {
@@ -452,7 +508,7 @@ export default {
       api
         .get(`/objetivos/${objetivo.id}`)
         .then((res) => (this.objetivo = res.data));
-        this.dialog2 = true;
+      this.dialog2 = true;
     },
 
     loadMetasList() {
