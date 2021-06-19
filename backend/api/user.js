@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt-nodejs')
-var moment = require('moment');
 
 
 module.exports = app => {

@@ -15,7 +15,7 @@
           <v-dialog v-model="dialog" persistent max-width="800px">
             <template v-slot:activator="{ on, attrs }">
               <div class="novo-animal">
-                <v-btn color="#036564" dark v-bind="attrs" v-on="on">
+                <v-btn color="#f7893b" dark v-bind="attrs" v-on="on">
                   Cadastrar novo Animal
 
                   <v-icon dark right> mdi-paw </v-icon>
@@ -197,9 +197,6 @@
                     </v-col>
                   </v-row>
                 </v-container>
-                <small v-if="this.mode === 'save'"
-                  >*indicates required field</small
-                >
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -208,7 +205,7 @@
                     depressed
                     v-if="mode === 'save'"
                     @click="save"
-                    color="#036564"
+                    color="#f7893b"
                     dark
                   >
                     Salvar
@@ -251,7 +248,7 @@
         >
           <v-card class="mx-auto my-12 animal-card" max-width="374">
             <v-badge
-              color="#036564"
+              color="#f7893b"
               icon="mdi-dog-side"
               offset-x="78"
               offset-y="20"
@@ -276,7 +273,7 @@
               </div>
             </v-badge>
 
-            <v-card-title> {{ animal.nome }}</v-card-title>
+            <v-card-title class="main-title-color"> {{ animal.nome }}</v-card-title>
 
             <v-divider></v-divider>
 
@@ -500,6 +497,11 @@ export default {
 
 .cadastrar-animais-titulo {
   text-align: center;
+  color: #f7893b;
+}
+
+.cadastrar-animais-titulo >h1, h2 {
+  font-weight: 400;
 }
 
 .excluir-animal {
@@ -547,5 +549,9 @@ export default {
 
 .novo-animal {
   margin: auto;
+}
+
+.main-title-color{
+  color: #f7893b;
 }
 </style>

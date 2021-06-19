@@ -113,7 +113,7 @@
     <div class="text-center pagination">
       <v-btn
         depressed
-        class="bt-carregar-mais"
+        color="#f7893b"
         elevation="24"
         dark
         v-if="loadMore"

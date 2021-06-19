@@ -19,7 +19,7 @@
           <v-dialog v-model="dialog" persistent max-width="800px">
             <template v-slot:activator="{ on, attrs }">
               <div class="novo-tag">
-                <v-btn color="#036564" dark v-bind="attrs" v-on="on">
+                <v-btn color="#f7893b" dark v-bind="attrs" v-on="on">
                   Novo Serviço
 
                   <v-icon dark right> mdi-paw </v-icon>
@@ -82,7 +82,7 @@
                     depressed
                     v-if="mode === 'save'"
                     @click="save"
-                    color="#036564"
+                    color="#f7893b"
                     dark
                   >
                     Salvar
@@ -262,6 +262,12 @@ export default {
   border-left: 3px solid #036564;
   border-radius: 5px;
   padding: 10px;
+  transition: ease-out 0.3s;
+}
+
+.minhas-tags-card:hover {
+  border-left: 3px solid #f7893b;
+  color: #f7893b;
 }
 
 .minhas-tags-card-actions {
@@ -277,5 +283,9 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.cadastrar-tags-titulo{
+  color: #f7893b;
 }
 </style>

@@ -23,7 +23,7 @@
                 >
                   <v-card class="mx-auto my-12 animal-card" max-width="374">
                     <v-badge
-                      color="#036564"
+                      color="#f7893b"
                       icon="mdi-dog-side"
                       offset-x="78"
                       offset-y="20"
@@ -48,7 +48,7 @@
                       </div>
                     </v-badge>
 
-                    <v-card-title> {{ animal.nome }}</v-card-title>
+                    <v-card-title class="main-color-animais-list"> {{ animal.nome }}</v-card-title>
 
                     <v-card-text class="text-center">
                       <v-row>
@@ -141,7 +141,7 @@
                       </div>
                     </v-badge>
 
-                    <v-card-title> {{ animal.nome }}</v-card-title>
+                    <v-card-title  class="main-color-animais-list"> {{ animal.nome }}</v-card-title>
 
                     <v-card-text class="text-center">
                       <v-row>
@@ -199,7 +199,7 @@
         <v-col cols="12" sm="3">
           <v-sheet rounded="lg" min-height="268">
             <div class="search">
-              <h2 class="text-center mb-5">PESQUISAR</h2>
+              <h2 class="text-center mb-5 main-color-animais-list">PESQUISAR</h2>
               <v-row>
                 <!-- <v-col cols="12" sm="12">
                   <v-text-field
@@ -228,7 +228,7 @@
               </v-row>
 
               <div class="search-buttons">
-                <v-btn depressed block @click="procurar" color="success">
+                <v-btn depressed block @click="procurar" dark color="#f7893b">
                   Pesquisar
                   <v-icon dark right> mdi-magnify </v-icon>
                 </v-btn>
@@ -246,7 +246,7 @@
     <div class="text-center pagination">
       <v-btn
         depressed
-        class="bt-carregar-mais"
+        color="#f7893b"
         elevation="24"
         dark
         v-if="loadMore && !isSearch"
@@ -259,7 +259,7 @@
 
       <v-btn
         depressed
-        class="bt-carregar-mais"
+         color="#f7893b"
         elevation="24"
         dark
         v-if="loadMoreSearch && isSearch"
@@ -450,6 +450,10 @@ export default {
 
 .divider-animal-specs {
   margin-bottom: 10px;
+}
+
+.main-color-animais-list{
+  color: #f7893b;
 }
 
 @media only screen and (max-width: 600px) {

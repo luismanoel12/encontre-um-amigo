@@ -8,14 +8,14 @@
       <div class="cadastrar-doacoes-form">
         <div class="cadastrar-doacoes-titulo">
           <h1>Olá, {{ user.name }}.</h1>
-          <h2>Aqui se encontram todos os meios em que você aceita doações!</h2>
+          <h2>Aqui você pode cadastrar todos os meios em que você aceita doações!</h2>
         </div>
 
         <v-row class="mt-5 mb-2">
           <v-dialog v-model="dialog" persistent max-width="800px">
             <template v-slot:activator="{ on, attrs }">
               <div class="novo-doacao">
-                <v-btn color="#036564" dark v-bind="attrs" v-on="on">
+                <v-btn color="#f7893b" dark v-bind="attrs" v-on="on">
                   Cadastrar Novo Meio de Doação
 
                   <v-icon dark right> mdi-hand-heart </v-icon>
@@ -105,7 +105,7 @@
                     depressed
                     v-if="mode === 'save'"
                     @click="save"
-                    color="#036564"
+                    color="#f7893b"
                     dark
                   >
                     Salvar
@@ -288,6 +288,12 @@ export default {
   border-left: 3px solid #036564;
   border-radius: 5px;
   padding: 10px;
+  transition: ease-out 0.3s;
+}
+
+.minhas-doacoes-card:hover{
+   border-left: 3px solid #f7893b;
+   color: #f7893b;
 }
 
 .minhas-doacoes-card-actions {
@@ -303,6 +309,10 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.cadastrar-doacoes-titulo{
+  color: #f7893b;
 }
 
 .descricao-doacao-card {

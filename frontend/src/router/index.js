@@ -32,11 +32,7 @@ import { userKey } from "@/global"
 
 Vue.use(VueRouter)
 
-const routes = [{
-    name: 'home',
-    path: '/home',
-    component: Home
-},
+const routes = [
 {
     name: 'auth',
     path: '/auth',
@@ -190,37 +186,35 @@ router.beforeEach((to, from, next) => {
 
     if(to.matched.some(record => record.meta.requiresAdmin)){
         const user = JSON.parse(json)
-        user && user.admin ? next() : next({ path: '/home' })
+        user && user.admin ? next() : next({ path: '/' })
     } else {
         next()
     }
 
     if(to.matched.some(record => record.meta.requiresAuthorization)){
         const user = JSON.parse(json)
-        user && user.admin || user.ong ? next() : next({ path: '/home' })
+        user && user.admin || user.ong ? next() : next({ path: '/' })
     } else {
         next()
     }
 
-    // if(to.matched.some(record => record.meta.requiresOff)){
-    //     if(json){
-    //         const user = JSON.parse(json)
-    //         console.log(user)
-    //         !user ? next() : next({ path: '/home' })
-    //     }else{
-    //         console.log("Não existe")
-    //     }
+    if(to.matched.some(record => record.meta.requiresOff)){
+        if(json){
+            const user = JSON.parse(json)
+            !user ? next() : next({ path: '/' })
+        }
+    } else {
+        next()
+    }
 
-    // } else {
-    //     next()
-    // }
-
-    // if(to.matched.some(record => record.meta.allowGuest)){
-    //     const user = JSON.parse(json)
-    //     !user || user ? next() : next({ path: '/home' })
-    // } else {
-    //     next()
-    // }
+    if(to.matched.some(record => record.meta.allowGuest)){
+       if(json){
+        const user = JSON.parse(json)
+        !user || user ? next() : next({ path: '/' })
+       }
+    } else {
+        next()
+    }
 
     
 })

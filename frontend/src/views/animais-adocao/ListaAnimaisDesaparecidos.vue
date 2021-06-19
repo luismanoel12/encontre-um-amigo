@@ -37,7 +37,7 @@
                       <img v-else src="@/assets/article.png" alt="Animais" />
                     </div>
 
-                    <v-card-title> {{ animal.nome }}</v-card-title>
+                    <v-card-title class="desaparecidos-color"> {{ animal.nome }}</v-card-title>
 
                     <v-card-text class="text-center">
                       <v-row>
@@ -119,7 +119,7 @@
                       <img v-else src="@/assets/article.png" alt="Animais" />
                     </div>
 
-                    <v-card-title> {{ animal.nome }}</v-card-title>
+                    <v-card-title class="desaparecidos-color"> {{ animal.nome }}</v-card-title>
 
                     <v-card-text class="text-center">
                       <v-row>
@@ -177,15 +177,8 @@
         <v-col cols="12" sm="3">
           <v-sheet rounded="lg" min-height="268">
             <div class="search">
-              <h2 class="text-center mb-5">PESQUISAR</h2>
+              <h2 class="text-center mb-5 desaparecidos-color">PESQUISAR</h2>
               <v-row>
-                <!-- <v-col cols="12" sm="12">
-                  <v-text-field
-                    label="Nome da Ong"
-                    prepend-inner-icon="mdi-account-group"
-                    outlined
-                  ></v-text-field>
-                </v-col> -->
                 <v-col cols="12" sm="12">
                   <v-select
                     :items="estados"
@@ -206,7 +199,7 @@
               </v-row>
 
               <div class="search-buttons">
-                <v-btn depressed block @click="procurar" color="success">
+                <v-btn depressed block @click="procurar" dark color="#f7893b">
                   Pesquisar
                   <v-icon dark right> mdi-magnify </v-icon>
                 </v-btn>
@@ -224,7 +217,7 @@
     <div class="text-center pagination">
       <v-btn
         depressed
-        class="bt-carregar-mais"
+        color="#f7893b"
         elevation="24"
         dark
         v-if="loadMore && !isSearch"
@@ -237,7 +230,7 @@
 
       <v-btn
         depressed
-        class="bt-carregar-mais"
+        color="#f7893b"
         elevation="24"
         dark
         v-if="loadMoreSearch && isSearch"
@@ -444,5 +437,9 @@ export default {
   .img-card-animal > img {
     width: 100%;
   }
+}
+
+.desaparecidos-color{
+  color: #f7893b;
 }
 </style>

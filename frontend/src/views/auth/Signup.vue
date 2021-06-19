@@ -38,7 +38,7 @@
               </v-card>
 
               <div class="stepper-actions">
-                <v-btn color="#036564" dark @click="e1 = 2">
+                <v-btn color="#f7893b" dark @click="e1 = 2">
                   Continuar
                   <v-icon class="ml-2" dark> mdi-chevron-right </v-icon>
                 </v-btn>
@@ -133,7 +133,7 @@
               </v-card>
 
               <div class="stepper-actions">
-                <v-btn color="#036564" dark @click="e1 = 3">
+                <v-btn color="#f7893b" dark @click="e1 = 3">
                   Continuar
                   <v-icon class="ml-2" dark> mdi-chevron-right </v-icon>
                 </v-btn>
@@ -198,7 +198,7 @@
               </v-card>
 
               <div class="stepper-actions">
-                <v-btn color="#036564" dark @click="signup">
+                <v-btn color="#f7893b" dark @click="signup">
                   Registrar-se
                   <v-icon class="ml-2" dark> mdi-check </v-icon>
                 </v-btn>

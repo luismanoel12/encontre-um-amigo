@@ -25,7 +25,7 @@
         </v-row>
 
         <div class="buttons">
-          <v-btn depressed v-if="mode === 'save'" @click="save"  color="success">
+          <v-btn depressed v-if="mode === 'save'" @click="save" dark color="#f7893b">
             Salvar
             <v-icon dark right> mdi-content-save </v-icon>
           </v-btn>
@@ -54,30 +54,46 @@
         
       >
         <template v-slot:[`item.actions`]="{ item }">
-           <v-btn
-              class="bt-actions"
-              color="primary"
-              fab
-              elevation="0"
-              small
-              @click="loadCarousel(item)"
-              dark
-            >
-              <v-icon>mdi-pencil</v-icon>
-            </v-btn>
+                    <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon color="#f7893b" dark v-bind="attrs" v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item>
+                <v-list-item-title>
+                  <v-btn
+                    class="bt-actions"
+                    color="warning"
+                    text
+                    elevation="0"
+                    small
+                    @click="loadCarousel(item)"
+                    dark
+                  >
+                    Editar
+                  </v-btn>
+                </v-list-item-title>
+              </v-list-item>
 
-           <v-btn
-              class="bt-actions"
-              color="error"
-              fab
-              elevation="0"
-              small
-              @click="loadCarousel(item, 'remove')"
-              dark
-            >
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          
+              <v-list-item>
+                <v-list-item-title>
+                  <v-btn
+                    class="bt-actions"
+                    color="error"
+                    text
+                    elevation="0"
+                    small
+                    @click="loadCarousel(item, 'remove')"
+                    dark
+                  >
+                    Deletar
+                  </v-btn>
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </template>
       </v-data-table>
     </v-container>

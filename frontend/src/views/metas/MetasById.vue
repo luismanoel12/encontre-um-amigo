@@ -254,7 +254,7 @@ export default {
 
 .meta-title {
   padding-top: 30px;
-  color: #1e1e1e;
+  color: #f7893b;
 }
 
 .card-metas-user {

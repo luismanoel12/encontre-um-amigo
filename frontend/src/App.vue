@@ -48,8 +48,6 @@ export default {
         this.userData
       );
 
-      console.log(res.userData)
-
       if (res.data) {
         this.$store.commit("setUser", this.userData);
         this.$root.$emit("user-updated");

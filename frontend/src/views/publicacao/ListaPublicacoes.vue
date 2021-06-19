@@ -72,7 +72,7 @@
         </v-col>
 
         <v-col cols="12" sm="4">
-          <v-sheet rounded="lg" min-height="268" elevation="5">
+          <v-sheet class="left-card-publicacao" rounded="lg" min-height="268" elevation="5">
             <!--  -->
           </v-sheet>
         </v-col>
@@ -80,7 +80,7 @@
     </div>
 
     <div class="text-center pagination">
-      <v-btn depressed class="bt-carregar-mais" elevation="24" dark v-if="loadMore" @click="getPublicacoes">
+      <v-btn depressed color="#f7893b" elevation="24" dark v-if="loadMore" @click="getPublicacoes">
         Carregar Mais
 
         <v-icon dark right> mdi-reload </v-icon>
@@ -154,8 +154,12 @@ export default {
   margin-top: 20px;
   margin: auto;
   border-radius: 5px;
-  border-left: 5px solid #57cc99;
+  border-left: 5px solid #2a9d8f;
   box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+.card-publicacao:hover{
+   border-left: 5px solid #f7893b;
 }
 
 .card-publicacao-content {
@@ -163,12 +167,12 @@ export default {
 }
 
 .pub-titulo {
-  color: #212121;
+  color: #2a9d8f;
   margin-bottom: 10px;
 }
 
 .pub-titulo:hover {
-  color: #023e8a;
+  color: #f7893b;
 }
 
 .router-link {
@@ -194,6 +198,10 @@ export default {
   .img-publicacao > img {
     width: 100%;
     object-fit: cover;
+  }
+
+  .left-card-publicacao{
+    margin-left: 30px;
   }
 }
 </style>

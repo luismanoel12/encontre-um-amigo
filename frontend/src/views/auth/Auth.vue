@@ -31,7 +31,7 @@
         </div>
       </v-form>
 
-      <v-btn color="#036564" dark @click="signin">
+      <v-btn color="#f7893b" dark @click="signin">
         <v-icon left> mdi-login </v-icon>
         Entrar
       </v-btn>
@@ -68,7 +68,7 @@ export default {
         .then((res) => {
           this.$store.commit("setUser", res.data);
           localStorage.setItem(userKey, JSON.stringify(res.data));
-          this.$router.push({ path: "/home" });
+          this.$router.push({ path: "/" });
         })
         .catch(showError);
     },

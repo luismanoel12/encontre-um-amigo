@@ -7,7 +7,7 @@
     <div class="metas-page">
       <v-card color="#2a9d8f">
         <v-card-title class="text-center justify-center py-6">
-          <h1 class="display-3">Minhas Metas</h1>
+          <h1 class="display-3 metas-main-color">Minhas Metas</h1>
         </v-card-title>
 
         <v-tabs v-model="tab" background-color="#287271" color="white" grow>
@@ -29,7 +29,7 @@
                 <v-dialog v-model="dialog1" persistent max-width="1000px">
                   <template v-slot:activator="{ on, attrs }">
                     <div class="nova-meta">
-                      <v-btn color="#036564" dark v-bind="attrs" v-on="on">
+                      <v-btn color="#f7893b" dark v-bind="attrs" v-on="on">
                         Cadastrar nova meta
 
                         <v-icon dark right> mdi-plus </v-icon>
@@ -55,7 +55,7 @@
                     <v-card-text>
                       <v-container>
                         <v-row>
-                          <v-col cols="12" sm="6">
+                          <v-col cols="12">
                             <v-text-field
                               label="Título"
                               v-model="meta.titulo"
@@ -86,7 +86,7 @@
                               outlined
                             ></v-text-field>
                           </v-col>
-                          <v-col cols="12" sm="6">
+                          <v-col cols="12">
                             <v-text-field
                               label="URL da imagem"
                               v-model="meta.imageUrl"
@@ -115,7 +115,7 @@
                           depressed
                           v-if="mode === 'save'"
                           @click="save"
-                          color="#036564"
+                          color="#f7893b"
                           dark
                         >
                           Salvar
@@ -155,7 +155,7 @@
                 <template v-slot:[`item.actions`]="{ item }">
                   <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn icon color="#036564" dark v-bind="attrs" v-on="on">
+                      <v-btn icon color="#f7893b" dark v-bind="attrs" v-on="on">
                         <v-icon>mdi-dots-vertical</v-icon>
                       </v-btn>
                     </template>
@@ -206,7 +206,7 @@
                 <v-dialog v-model="dialog2" persistent max-width="800px">
                   <template v-slot:activator="{ on, attrs }">
                     <div class="novo-objetivo">
-                      <v-btn color="#036564" dark v-bind="attrs" v-on="on">
+                      <v-btn color="#f7893b" dark v-bind="attrs" v-on="on">
                         Cadastrar novo objetivo
 
                         <v-icon dark right> mdi-plus </v-icon>
@@ -234,17 +234,20 @@
                     <v-card-text>
                       <v-container>
                         <v-row>
-                          <v-col cols="12" sm="4">
+                          <v-col cols="12" sm="12">
                             <v-text-field
                               label="Título"
                               v-model="objetivo.titulo"
                               prepend-inner-icon="mdi-format-title"
                               :readonly="mode === 'remove'"
+                               maxlength="60"
+                              counter="60"
+                              hint="Máximo de 60 caracteres"
                               required
                               outlined
                             ></v-text-field>
                           </v-col>
-                          <v-col cols="12" sm="4">
+                          <v-col cols="12" sm="6">
                             <v-text-field
                               label="Valor"
                               v-model="objetivo.valor"
@@ -255,7 +258,7 @@
                               outlined
                             ></v-text-field>
                           </v-col>
-                          <v-col cols="12" sm="4">
+                          <v-col cols="12" sm="6">
                             <v-select
                               :items="metasSelect"
                               v-model="objetivo.metasId"
@@ -289,7 +292,7 @@
                           depressed
                           v-if="mode === 'save'"
                           @click="saveObjetivos"
-                          color="#036564"
+                          color="#f7893b"
                           dark
                         >
                           Salvar
@@ -329,7 +332,7 @@
                 <template v-slot:[`item.actions`]="{ item }">
                   <v-menu offset-x offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn icon color="#036564" dark v-bind="attrs" v-on="on">
+                      <v-btn icon color="#f7893b" dark v-bind="attrs" v-on="on">
                         <v-icon>mdi-dots-vertical</v-icon>
                       </v-btn>
                     </template>
@@ -405,7 +408,6 @@ export default {
           sortable: false,
           value: "name",
         },
-        { text: "Código", value: "id" },
         { text: "Título", value: "titulo" },
         { text: "Valor Esperado", value: "valorEsperado" },
         { text: "Valor Atual", value: "valorAtual" },
@@ -417,7 +419,6 @@ export default {
           sortable: false,
           value: "name",
         },
-        { text: "Código", value: "id" },
         { text: "Título", value: "titulo" },
         { text: "Valor", value: "valor" },
         { text: "Ações", value: "actions" },
@@ -582,4 +583,11 @@ export default {
 .novo-objetivo {
   padding: 20px;
 }
+
+.metas-main-color{
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
 </style>

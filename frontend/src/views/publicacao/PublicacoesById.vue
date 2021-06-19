@@ -268,6 +268,6 @@ export default {
 }
 
 .pub-router-link:hover {
-  color: #264653 !important;
+  color: #f7893b !important;
 }
 </style>

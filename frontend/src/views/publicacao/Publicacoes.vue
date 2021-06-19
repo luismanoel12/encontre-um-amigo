@@ -14,7 +14,7 @@
         <v-dialog v-model="dialog" max-width="100vh">
           <template v-slot:activator="{ on, attrs }">
             <div class="nova-publicacao-header">
-              <v-btn color="#036564" dark v-bind="attrs" v-on="on">
+              <v-btn color="#f7893b" dark v-bind="attrs" v-on="on">
                 Nova publicação
 
                 <v-icon dark right> mdi-newspaper-plus </v-icon>
@@ -42,30 +42,33 @@
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col cols="12" sm="6">
+                  <v-col cols="12">
                     <v-text-field
                       label="Título"
                       v-model="publicacao.titulo"
                       :readonly="mode === 'remove'"
+                       prepend-inner-icon="mdi-text"
                       required
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6">
+                  <v-col cols="12">
                     <v-text-field
                       label="URL da imagem"
                       v-model="publicacao.imageUrl"
                       :readonly="mode === 'remove'"
+                       prepend-inner-icon="mdi-image"
                       required
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="12">
+                  <v-col cols="12">
                     <v-textarea
                       outlined
                       name="input-7-4"
                       v-model="publicacao.chamada"
                       :readonly="mode === 'remove'"
+                       prepend-inner-icon="mdi-cursor-text"
                       label="Chamada"
                       maxlength="500"
                       counter="500"
@@ -132,7 +135,7 @@
         <template v-slot:[`item.actions`]="{ item }">
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn icon color="#036564" dark v-bind="attrs" v-on="on">
+              <v-btn icon color="#f7893b" dark v-bind="attrs" v-on="on">
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
             </template>

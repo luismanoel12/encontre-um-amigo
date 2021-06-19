@@ -3,7 +3,7 @@
     <v-navigation-drawer v-model="drawer" app color="#00171f" v-if="user">
       <v-list-item v-if="user">
         <v-list-item-content>
-          <v-avatar class="ma-2 perfil-avatar-img" size="84" tile>
+          <v-avatar class="ma-2 perfil-avatar-img" size="120" tile>
             <img :src="user.userImage" alt="" v-if="user.userImage" />
             <Gravatar :email="user.email" alt="User" v-else />
           </v-avatar>
@@ -21,13 +21,14 @@
               ></v-badge>
             </h3>
           </v-list-item-subtitle>
+          <small class="menu-date"> {{ new Date().toLocaleDateString("pt-br") }} </small>
         </v-list-item-content>
       </v-list-item>
 
       <v-divider class="divider-menu"></v-divider>
 
       <v-list dense nav dark>
-        <v-list-item to="/home">
+        <v-list-item to="/">
           <v-list-item-icon>
             <v-icon> mdi-home </v-icon>
           </v-list-item-icon>
@@ -235,10 +236,10 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app dark class="menu-bg" v-if="!user || user">
+    <v-app-bar app dark color="#00171f" v-if="!user || user">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <router-link to="/home" class="home-router">
+      <router-link to="/" class="home-router">
         <v-toolbar-title class="logo-title">
           <img
             src="@/assets/logo.png"
@@ -254,7 +255,7 @@
         v-if="user"
         fixed
         outlined
-        color="#fffff"
+        color="#fff"
         class="logout-button"
         @click.prevent="logout"
       >
@@ -391,5 +392,15 @@ export default {
   .logo {
     display: none;
   }
+}
+
+.v-list .v-list-item--active {
+    color: #f7893b!important;
+}
+
+.menu-date{
+  color: #fff;
+  text-align: center;
+  margin-top: 20px;
 }
 </style>

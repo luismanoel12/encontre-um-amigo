@@ -18,7 +18,7 @@
             </v-col>
           </v-row>
 
-          <v-btn depressed @click="searchUsers" color="success">
+          <v-btn depressed @click="searchUsers" dark color="#f7893b">
             Pesquisar
             <v-icon dark right> mdi-account-search </v-icon>
           </v-btn>
@@ -34,7 +34,7 @@
           <v-dialog v-model="dialog" persistent max-width="600px">
             <v-card>
               <v-card-title>
-                <span class="text-h5">User Profile</span>
+                <span class="text-h5">{{ user.name }}</span>
               </v-card-title>
               <v-card-text>
                 <v-container>
@@ -81,7 +81,6 @@
                     </v-row>
                   </v-form>
                 </v-container>
-                <small>*indicates required field</small>
               </v-card-text>
               <div class="buttons">
                 <v-btn
@@ -132,29 +131,46 @@
 
       <v-data-table :items="users" :headers="headers" class="elevation-10">
         <template v-slot:[`item.actions`]="{ item }">
-          <v-btn
-            class="bt-actions"
-            color="green"
-            fab
-            elevation="0"
-            small
-            @click="loadUser(item)"
-            dark
-          >
-            <v-icon>mdi-pencil</v-icon>
-          </v-btn>
+                    <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon color="#f7893b" dark v-bind="attrs" v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item>
+                <v-list-item-title>
+                  <v-btn
+                    class="bt-actions"
+                    color="warning"
+                    text
+                    elevation="0"
+                    small
+                    @click="loadUser(item)"
+                    dark
+                  >
+                    Editar
+                  </v-btn>
+                </v-list-item-title>
+              </v-list-item>
 
-          <v-btn
-            class="bt-actions"
-            color="error"
-            fab
-            elevation="0"
-            small
-            @click="loadUser(item, 'remove')"
-            dark
-          >
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
+              <v-list-item>
+                <v-list-item-title>
+                  <v-btn
+                    class="bt-actions"
+                    color="error"
+                    text
+                    elevation="0"
+                    small
+                    @click="loadUser(item, 'remove')"
+                    dark
+                  >
+                    Deletar
+                  </v-btn>
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </template>
       </v-data-table>
     </v-container>
@@ -266,5 +282,6 @@ export default {
   width: 600px;
   margin: auto;
   text-align: center;
+  color: #f7893b;
 }
 </style>

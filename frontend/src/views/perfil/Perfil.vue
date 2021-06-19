@@ -167,7 +167,7 @@
             ></v-text-field>
           </v-col>
         </v-row>
-        <v-btn color="#036564" dark @click="update">
+        <v-btn color="#f7893b" dark @click="update">
           <v-icon left> mdi-account-edit </v-icon>
           Atualizar
         </v-btn>
@@ -175,7 +175,7 @@
         <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn
-              color="primary"
+              color="#f7893b"
               class="btn-new-password"
               dark
               v-bind="attrs"
@@ -259,7 +259,7 @@
         </v-row>
 
         <div class="ongBio-actions">
-          <v-btn color="#036564" dark @click="bioSave">
+          <v-btn color="#f7893b" dark @click="bioSave">
             <v-icon left> mdi-account-edit </v-icon>
             Salvar
           </v-btn>

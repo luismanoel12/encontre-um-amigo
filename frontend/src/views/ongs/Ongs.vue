@@ -5,7 +5,7 @@
 
   <v-container v-else>
     <div class="ongs-page">
-      <h1 class="text-center">ONGs Cadastradas no sistema</h1>
+      <h1 class="ongs-page-title">ONG'S CADASTRADAS NO SISTEMAS</h1>
       <v-divider class="mb-5"></v-divider>
 
       <v-row>
@@ -99,27 +99,10 @@
                     outlined
                   ></v-text-field>
                 </v-col>
-                <!-- <v-col cols="12" sm="12">
-                  <v-select
-                    :items="estados"
-                    prepend-inner-icon="mdi-google-maps"
-                    v-model="search.estado"
-                    label="Estado"
-                    outlined
-                  ></v-select>
-                </v-col>
-                <v-col cols="12" sm="12">
-                  <v-text-field
-                    label="Cidade"
-                    prepend-inner-icon="mdi-city"
-                    v-model="search.cidade"
-                    outlined
-                  ></v-text-field>
-                </v-col> -->
               </v-row>
 
               <div class="search-buttons">
-                <v-btn depressed block @click="procurar" color="success">
+                <v-btn depressed block @click="procurar" dark color="#f7893b">
                   Pesquisar
                   <v-icon dark right> mdi-magnify </v-icon>
                 </v-btn>
@@ -286,6 +269,7 @@ export default {
   background-color: #52b69a;
 }
 
+
 .card-ongs-content {
   padding: 10px;
   display: flex;
@@ -301,6 +285,12 @@ export default {
 
 .ong-card:hover {
   transform: scale(1.03);
+  color: #f7893b;
+   border-left: 0.25rem solid #f7893b !important;
+}
+
+.divider-avatar:hover {
+  background-color: #f7893b!important;
 }
 
 .avatar-img-ongs > img {
@@ -309,5 +299,11 @@ export default {
 
 .search {
   padding: 20px;
+}
+
+.ongs-page-title{
+  /* text-align: center; */
+  color: #f7893b;
+  font-weight: 400;
 }
 </style>

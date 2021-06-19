@@ -67,11 +67,11 @@
                 <img :src="ong.userImage" alt="" v-if="ong.userImage" />
                 <Gravatar :email="ong.email" :alt="ong.name" v-else />
               </v-avatar>
-              <h1>{{ ong.name }}</h1>
+              <h1 class="ong-user-title">{{ ong.name }}</h1>
             </div>
             <v-divider></v-divider>
             <div class="ong-page-content">
-              <h1 class="text-center">BIO</h1>
+              <h1 class="text-center ong-user-title">Biografia</h1>
               <div class="publicacao-content" v-html="bio.descricao"></div>
             </div>
             <v-divider></v-divider>
@@ -413,6 +413,9 @@ export default {
 .ong-doacoes-card:hover {
   transform: scale(1.02);
   transition: ease-out 0.3s;
+  color: #f7893b;
+  border-left: 3px solid #f7893b;
+  cursor: default;
 }
 
 .ong-right-card-tag {
@@ -429,5 +432,10 @@ export default {
 
 .icon-info{
   color: #036564;
+}
+
+.ong-user-title{
+  color: #f7893b;
+  font-weight: 400;
 }
 </style>
