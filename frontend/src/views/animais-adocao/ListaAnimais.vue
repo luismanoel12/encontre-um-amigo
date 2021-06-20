@@ -5,6 +5,12 @@
 
   <v-container v-else>
     <div class="lista-animais-page">
+
+      <div class="lista-animais-page-header">
+        <h1>Animais Cadastrados no sistema</h1>
+        <v-divider></v-divider>
+      </div>
+
       <v-row>
         <v-col cols="12" sm="9">
           <v-sheet min-height="70vh" color="transparent" rounded="lg">
@@ -201,13 +207,6 @@
             <div class="search">
               <h2 class="text-center mb-5 main-color-animais-list">PESQUISAR</h2>
               <v-row>
-                <!-- <v-col cols="12" sm="12">
-                  <v-text-field
-                    label="Nome da Ong"
-                    prepend-inner-icon="mdi-account-group"
-                    outlined
-                  ></v-text-field>
-                </v-col> -->
                 <v-col cols="12" sm="12">
                   <v-select
                     :items="estados"
@@ -215,6 +214,7 @@
                     v-model="search.estado"
                     label="Estado"
                     outlined
+                    color="#f7893b"
                   ></v-select>
                 </v-col>
                 <v-col cols="12" sm="12">
@@ -223,6 +223,7 @@
                     prepend-inner-icon="mdi-city"
                     v-model="search.cidade"
                     outlined
+                    color="#f7893b"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -454,6 +455,12 @@ export default {
 
 .main-color-animais-list{
   color: #f7893b;
+}
+
+.lista-animais-page-header > h1{
+  color: #f7893b;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 @media only screen and (max-width: 600px) {

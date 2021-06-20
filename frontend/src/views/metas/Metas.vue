@@ -60,6 +60,7 @@
                               label="Título"
                               v-model="meta.titulo"
                               :readonly="mode === 'remove'"
+                              color="#f7893b"
                               prepend-inner-icon="mdi-format-title"
                               required
                               outlined
@@ -71,6 +72,7 @@
                               v-model="meta.valorEsperado"
                               :readonly="mode === 'remove'"
                               required
+                              color="#f7893b"
                               type="number"
                               prefix="R$"
                               outlined
@@ -83,6 +85,7 @@
                               type="number"
                               prefix="R$"
                               :readonly="mode === 'remove'"
+                              color="#f7893b"
                               outlined
                             ></v-text-field>
                           </v-col>
@@ -93,6 +96,7 @@
                               :readonly="mode === 'remove'"
                               prepend-inner-icon="mdi-image"
                               required
+                              color="#f7893b"
                               outlined
                             ></v-text-field>
                           </v-col>
@@ -245,6 +249,7 @@
                               hint="Máximo de 60 caracteres"
                               required
                               outlined
+                              color="#f7893b"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6">
@@ -256,6 +261,7 @@
                               type="number"
                               prefix="R$"
                               outlined
+                              color="#f7893b"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6">
@@ -265,6 +271,7 @@
                               prepend-inner-icon="mdi-bullseye-arrow"
                               label="Selecione a Meta"
                               outlined
+                              color="#f7893b"
                             ></v-select>
                           </v-col>
 
@@ -279,6 +286,7 @@
                               hint="Máximo de 250 caracteres"
                               name="input-7-4"
                               label="Descrição"
+                              color="#f7893b"
                             ></v-textarea>
                           </v-col>
                         </v-row>
@@ -590,4 +598,7 @@ export default {
   font-weight: 300;
 }
 
+.v-tab--active {
+    color: #f7893b!important;
+}
 </style>

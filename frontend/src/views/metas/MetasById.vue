@@ -80,9 +80,9 @@
                     Math.ceil((meta.valorAtual * 100) / meta.valorEsperado)
                   "
                   rounded
-                  background-color="green"
+                  background-color="#078881"
                   background-opacity="0.3"
-                  color="green"
+                  color="#078881"
                   height="25"
                 >
                   <strong
@@ -95,7 +95,7 @@
               <v-divider style="padding-bottom: 10px"></v-divider>
               <p v-for="objetivo in objetivos" :key="objetivo.id">
                 <v-card
-                  color="#4DA545"
+                  color="#078881"
                   dark
                   v-if="Math.ceil(objetivo.valor <= meta.valorAtual)"
                 >
@@ -258,7 +258,7 @@ export default {
 }
 
 .card-metas-user {
-  background-color: #1c8073;
+  background-color: #078881;
   padding: 20px;
   display: flex;
   flex-direction: row;

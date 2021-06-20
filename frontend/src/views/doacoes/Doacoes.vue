@@ -65,6 +65,7 @@
                         required
                         outlined
                         maxlength="30"
+                        color="#f7893b"
                         counter="30"
                         hint="Máximo de 30 caracteres"
                         v-if="this.mode === 'save'"
@@ -80,6 +81,7 @@
                         prepend-inner-icon="mdi-information-outline"
                         v-model="doacao.descricao"
                         maxlength="250"
+                        color="#f7893b"
                         counter="250"
                         hint="Máximo de 250 caracteres"
                       ></v-textarea>
@@ -91,6 +93,7 @@
                         placeholder="Ex: https://picpay/usuario"
                         prepend-inner-icon="mdi-link-variant"
                         required
+                        color="#f7893b"
                         outlined
                         v-if="this.mode === 'save'"
                       ></v-text-field>

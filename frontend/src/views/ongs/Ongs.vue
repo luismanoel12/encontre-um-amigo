@@ -97,6 +97,7 @@
                     prepend-inner-icon="mdi-account-group"
                     v-model="search.name"
                     outlined
+                    color="#f7893b"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -120,7 +121,7 @@
     <div class="text-center pagination">
       <v-btn
         depressed
-        class="bt-carregar-mais"
+        color="#f7893b"
         elevation="24"
         dark
         v-if="loadMore && !isSearch"
@@ -133,7 +134,7 @@
 
       <v-btn
         depressed
-        class="bt-carregar-mais"
+         color="#f7893b"
         elevation="24"
         dark
         v-if="loadMoreSearch && isSearch"
@@ -302,8 +303,8 @@ export default {
 }
 
 .ongs-page-title{
-  /* text-align: center; */
   color: #f7893b;
-  font-weight: 400;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 </style>

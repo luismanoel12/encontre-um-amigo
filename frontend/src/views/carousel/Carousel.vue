@@ -10,6 +10,7 @@
               v-model="carousel.author"
               :readonly="mode === 'remove'"
               required
+              color="#f7893b"
               outlined
             ></v-text-field>
           </v-col>
@@ -17,6 +18,7 @@
             <v-text-field
               label="Link"
               v-model="carousel.link"
+              color="#f7893b"
               :readonly="mode === 'remove'"
               required
               outlined

@@ -48,6 +48,7 @@
                       v-model="publicacao.titulo"
                       :readonly="mode === 'remove'"
                        prepend-inner-icon="mdi-text"
+                       color="#f7893b"
                       required
                       outlined
                     ></v-text-field>
@@ -57,6 +58,7 @@
                       label="URL da imagem"
                       v-model="publicacao.imageUrl"
                       :readonly="mode === 'remove'"
+                      color="#f7893b"
                        prepend-inner-icon="mdi-image"
                       required
                       outlined
@@ -73,6 +75,7 @@
                       maxlength="500"
                       counter="500"
                       hint="Máximo de 500 caracteres"
+                      color="#f7893b"
                       required
                       placeholder="Digite a chamada para sua publicação."
                     ></v-textarea>

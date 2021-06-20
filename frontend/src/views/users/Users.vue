@@ -13,6 +13,7 @@
               <v-text-field
                 label="Nome"
                 v-model="search.name"
+                color="#f7893b"
                 outlined
               ></v-text-field>
             </v-col>
@@ -142,14 +143,14 @@
                 <v-list-item-title>
                   <v-btn
                     class="bt-actions"
-                    color="warning"
+                    color="primary"
                     text
                     elevation="0"
                     small
                     @click="loadUser(item)"
                     dark
                   >
-                    Editar
+                    Visualizar
                   </v-btn>
                 </v-list-item-title>
               </v-list-item>

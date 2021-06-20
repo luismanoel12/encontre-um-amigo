@@ -5,6 +5,12 @@
 
   <v-container v-else>
     <div class="metas-page">
+
+      <div class="metas-page-title">
+        <h1>Metas de doações cadastradas no sistema</h1>
+        <v-divider></v-divider>
+      </div>
+
       <v-row>
         <v-col cols="12" sm="3" v-for="meta in metas" :key="meta.id">
           <router-link
@@ -243,5 +249,14 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.metas-page-title{
+  color: #f7893b;
+}
+
+.metas-page-title > h1{
+  text-transform: uppercase;
+  font-weight: 900;
 }
 </style>

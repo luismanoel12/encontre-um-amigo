@@ -66,6 +66,7 @@
                         prepend-inner-icon="mdi-paw"
                         required
                         maxlength="30"
+                        color="#f7893b"
                         counter="30"
                         hint="Máximo de 30 caracteres"
                         outlined

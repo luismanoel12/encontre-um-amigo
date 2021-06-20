@@ -5,6 +5,12 @@
 
   <v-container v-else>
     <div class="lista-animais-page">
+
+      <div class="lista-animais-page-desaparecidos-title">
+        <h1>Animais desaparecidos cadastrados no sistema</h1>
+        <v-divider></v-divider>
+      </div>
+
       <v-row>
         <v-col cols="12" sm="9">
           <v-sheet min-height="70vh" color="transparent" rounded="lg">
@@ -185,6 +191,7 @@
                     prepend-inner-icon="mdi-google-maps"
                     v-model="search.estado"
                     label="Estado"
+                    color="#f7893b"
                     outlined
                   ></v-select>
                 </v-col>
@@ -193,6 +200,7 @@
                     label="Cidade"
                     prepend-inner-icon="mdi-city"
                     v-model="search.cidade"
+                    color="#f7893b"
                     outlined
                   ></v-text-field>
                 </v-col>
@@ -441,5 +449,16 @@ export default {
 
 .desaparecidos-color{
   color: #f7893b;
+}
+
+.lista-animais-page-desaparecidos-title{
+  color: #f7893b;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.lista-animais-page-desaparecidos-title > h1{
+  font-weight: 900;
+
 }
 </style>

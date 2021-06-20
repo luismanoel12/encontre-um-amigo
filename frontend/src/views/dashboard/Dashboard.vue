@@ -11,7 +11,7 @@
       <div class="dashboard-card">
         <div class="dashboard-card-header">
           <h2 class="card-title-v1">Usuários Cadastrados</h2>
-          <span class="mdi mdi-account-multiple mdi-48px"></span>
+          <span class="icon-dash mdi mdi-account-multiple mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -22,7 +22,7 @@
       <div class="dashboard-card">
         <div class="dashboard-card-header">
           <h2 class="card-title-v1">Publicações</h2>
-          <span class="mdi mdi-newspaper-variant-outline mdi-48px"></span>
+          <span class="icon-dash mdi mdi-newspaper-variant-outline mdi-48px"></span>
         </div>
         <v-divider></v-divider>
         <div class="dashboard-card-content">
@@ -642,7 +642,7 @@ export default {
 }
 
 .dashboard-page-title {
-  background: linear-gradient(110deg, #036564 65%, #00171f 35%);
+  background: linear-gradient(110deg, #078881  65%, #078881 35%);
   padding: 10px;
   border-radius: 5px;
   text-align: center;

@@ -63,6 +63,7 @@
                         maxlength="20"
                         counter="20"
                         hint="Máximo de 20 caracteres"
+                        color="#f7893b"
                         v-if="this.mode === 'save'"
                       ></v-text-field>
                     </v-col>
@@ -72,6 +73,7 @@
                         v-if="this.mode === 'save'"
                         prepend-inner-icon="mdi-paw"
                         v-model="animal.tipo"
+                        color="#f7893b"
                         label="Tipo"
                         outlined
                       ></v-select>
@@ -82,6 +84,7 @@
                         v-if="this.mode === 'save'"
                         prepend-inner-icon="mdi-gender-male-female"
                         v-model="animal.sexo"
+                        color="#f7893b"
                         label="Sexo"
                         outlined
                       ></v-select>
@@ -94,6 +97,7 @@
                         prepend-inner-icon="mdi-arrow-expand"
                         v-model="animal.porte"
                         label="Porte"
+                        color="#f7893b"
                         outlined
                       ></v-select>
                     </v-col>
@@ -104,13 +108,14 @@
                         v-if="this.mode === 'save'"
                         prepend-inner-icon="mdi-link-variant"
                         required
+                        color="#f7893b"
                         outlined
                       ></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="3">
                       <v-checkbox
-                        color="green"
+                        color="#f7893b"
                         v-model="animal.deficiente"
                         v-if="this.mode === 'save'"
                         :label="'Deficiente'"
@@ -118,7 +123,7 @@
                     </v-col>
                     <v-col cols="12" sm="3">
                       <v-checkbox
-                        color="green"
+                        color="#f7893b"
                         v-model="animal.vermifugado"
                         v-if="this.mode === 'save'"
                         :label="'Vermifugado'"
@@ -126,7 +131,7 @@
                     </v-col>
                     <v-col cols="12" sm="3">
                       <v-checkbox
-                        color="green"
+                        color="#f7893b"
                         v-model="animal.vacinado"
                         v-if="this.mode === 'save'"
                         :label="'Vacinado'"
@@ -134,7 +139,7 @@
                     </v-col>
                     <v-col cols="12" sm="3">
                       <v-checkbox
-                        color="green"
+                        color="#f7893b"
                         v-model="animal.castrado"
                         v-if="this.mode === 'save'"
                         :label="'Castrado'"
@@ -143,7 +148,7 @@
 
                     <v-col cols="12" sm="12">
                       <v-checkbox
-                        color="green"
+                        color="#f7893b"
                         v-model="animal.desaparecido"
                         v-if="this.mode === 'save'"
                         :label="'Desaparecido'"
@@ -159,6 +164,7 @@
                         prepend-inner-icon="mdi-numeric"
                         required
                         outlined
+                        color="#f7893b"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="4">
@@ -169,6 +175,7 @@
                         v-model="animal.estado"
                         label="Estado"
                         outlined
+                        color="#f7893b"
                       ></v-select>
                     </v-col>
                     <v-col cols="12" sm="4">
@@ -179,6 +186,7 @@
                         prepend-inner-icon="mdi-city"
                         required
                         outlined
+                        color="#f7893b"
                       ></v-text-field>
                     </v-col>
 
@@ -192,6 +200,7 @@
                         label="Descrição"
                         maxlength="250"
                         counter="250"
+                        color="#f7893b"
                         hint="Máximo de 250 caracteres"
                       ></v-textarea>
                     </v-col>

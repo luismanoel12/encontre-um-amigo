@@ -26,7 +26,9 @@
             <v-text-field
               label="Nome"
               v-model="userData.name"
+              color="#f7893b"
               prepend-inner-icon="mdi-account"
+              class="input-orange"
               outlined
             ></v-text-field>
           </v-col>
@@ -37,6 +39,7 @@
               prepend-inner-icon="mdi-email"
               disabled
               outlined
+              color="#f7893b"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="3" sm="12">
@@ -47,14 +50,17 @@
               v-mask="'##.###.###/####-##'"
               prepend-inner-icon="mdi-card-account-details-outline"
               outlined
+              color="#f7893b"
             ></v-text-field>
             <v-text-field
               v-else
               label="CPF"
               v-model="userData.cpf"
               v-mask="'###.###.###-##'"
+              masked="false"
               prepend-inner-icon="mdi-card-account-details-outline"
               outlined
+              color="#f7893b"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="3" sm="12">
@@ -64,6 +70,7 @@
               prepend-inner-icon="mdi-phone"
               v-mask="'(##) #####-####'"
               outlined
+              color="#f7893b"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -76,6 +83,7 @@
               prepend-inner-icon="mdi-image"
               type="imagem"
               outlined
+              color="#f7893b"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -88,6 +96,7 @@
               prepend-inner-icon="mdi-form-textbox-password"
               type="password"
               outlined
+              color="#f7893b"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6" sm="12">
@@ -97,6 +106,7 @@
               prepend-inner-icon="mdi-form-textbox-password"
               type="password"
               outlined
+              color="#f7893b"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -110,6 +120,7 @@
               v-model="userData.endereco"
               prepend-inner-icon="mdi-map-marker-outline"
               outlined
+              color="#f7893b"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="3" sm="12">
@@ -118,6 +129,7 @@
               v-model="userData.bairro"
               prepend-inner-icon="mdi-home-map-marker"
               outlined
+              color="#f7893b"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="3" sm="12">
@@ -127,6 +139,7 @@
               prepend-inner-icon="mdi-counter"
               type="number"
               outlined
+              color="#f7893b"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="3" sm="12">
@@ -135,6 +148,7 @@
               v-model="userData.complemento"
               prepend-inner-icon="mdi-map-marker-outline"
               outlined
+              color="#f7893b"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -147,6 +161,7 @@
               v-model="userData.estado"
               label="Estado"
               outlined
+              color="#f7893b"
             ></v-select>
           </v-col>
           <v-col cols="12" md="4" sm="12">
@@ -155,6 +170,7 @@
               v-model="userData.cidade"
               prepend-inner-icon="mdi-city"
               outlined
+              color="#f7893b"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="4" sm="12">
@@ -164,6 +180,7 @@
               prepend-inner-icon="mdi-map-marker-outline"
               v-mask="'#####-###'"
               outlined
+              color="#f7893b"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -202,6 +219,7 @@
                       v-model="userPassword.password"
                       counter
                       @click:append="show1 = !show1"
+                      color="#f7893b"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -214,6 +232,7 @@
                       v-model="userPassword.newPassword"
                       counter
                       @click:append="show2 = !show2"
+                      color="#f7893b"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -226,6 +245,7 @@
                       v-model="userPassword.confirmPassword"
                       counter
                       @click:append="show3 = !show3"
+                      color="#f7893b"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -441,7 +461,6 @@ export default {
   margin-top: 20px;
 }
 
-.bt-carregar-mais {
-  background: linear-gradient(110deg, #036564 55%, #00171f 45%);
-}
+
+
 </style>

@@ -211,6 +211,8 @@ export default {
 
 .home-2-card:hover {
   transform: scale(1.05);
+  border-left: 3px solid #f7893b;
+  color: #f7893b;
 }
 
 .home-2-card-header {
@@ -228,8 +230,9 @@ export default {
 
 .home-2-title h1 {
   text-align: center;
-  color: #212121;
-  font-weight: 1;
+  color: #f7893b;
+  font-weight: 900;
+  text-transform: uppercase;
   padding-bottom: 20px;
 }
 
@@ -289,6 +292,21 @@ export default {
   padding: 10px;
   color: #fff;
   border-radius: 50px;
+}
+
+.home-avatar-img > img:hover {
+
+  border: 3px solid #f7893b;
+}
+
+.animal-nome-badge:hover {
+  background-color: #f7893b;
+}
+
+.home-4-title > h1{
+  color: #f7893b;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 @media only screen and (max-width: 600px) {
