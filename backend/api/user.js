@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
-
+const { cnpj } = require('cpf-cnpj-validator');
+const { cpf } = require('cpf-cnpj-validator');
 
 module.exports = app => {
     const { existsOrError, notExistsOrError, equalsOrError } = app.api.validation
@@ -17,11 +18,26 @@ module.exports = app => {
         if (!req.originalUrl.startsWith('/users')) user.admin = false
         if (!req.user || !req.user.admin) user.admin = false
 
+        if (user.cpf == null) {
+            user.ong = true;
+            user.cpf = user.cnpj;
+        } else if (user.cnpj == null) {
+            user.ong = false;
+            user.cnpj = user.cpf;
+        }
+
+        user.cnpj = user.cnpj.replace(/\D/g, "")
+        const validatedCnpj = cnpj.isValid((user.cnpj))
+
+        user.cpf = user.cpf.replace(/\D/g, "")
+        const validatedCpf = cpf.isValid((user.cpf))
+
+
+
         try {
             existsOrError(user.name, 'Nome não informado')
             existsOrError(user.email, 'E-mail não informado')
             existsOrError(user.telefone, 'Telefone não informado')
-            // existsOrError(user.cpf, 'CPF não informado')
             existsOrError(user.password, 'Senha não informada')
             existsOrError(user.confirmPassword, 'Confirmação da senha inválida')
             equalsOrError(user.password, user.confirmPassword,
@@ -34,6 +50,11 @@ module.exports = app => {
             existsOrError(endereco.estado, 'Estado não informado')
             existsOrError(endereco.cidade, 'Cidade não informado')
             existsOrError(endereco.cep, 'CEP não informado')
+
+            if (user.ong && !validatedCnpj) res.status(400).send("Insira um CNPJ valído")
+
+            if (!user.ong && !validatedCpf) res.status(400).send("Insira um CPF valído")
+
 
             if (user.cpf == null) {
                 const userFromDB = await app.db('users')
@@ -57,46 +78,41 @@ module.exports = app => {
         user.password = ecryptPassword(user.password)
         delete user.confirmPassword
 
-        if (user.cpf == null) {
-            user.ong = true;
-            user.cpf = user.cnpj;
-        } else if (user.cnpj == null) {
-            user.ong = false;
-            user.cnpj = user.cpf;
-        }
-
         if (user.id) {
-            app.db('users')
-                .update({
-                    name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj:
-                        user.cnpj, password: user.password, userImage: user.userImage
-                })
-                .where({ id: user.id })
-                .whereNull('deletedAt')
-                .then(function (response) {
-                    app.db('endereco')
-                        .update({
-                            endereco: user.endereco, numero: user.numero, complemento: user.complemento, bairro: user.bairro,
-                            estado: user.estado, cidade: user.cidade, cep: user.cep, userId: response[0]
-                        })
-                        .where({ userId: user.id })
-                        .then(_ => res.status(204).send())
-                        .catch(err => res.status(500).send(err))
-                });
+            if (validatedCnpj == true || validatedCpf == true) {
+                app.db('users')
+                    .update({
+                        name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj:
+                            user.cnpj, password: user.password, userImage: user.userImage
+                    })
+                    .where({ id: user.id })
+                    .whereNull('deletedAt')
+                    .then(function (response) {
+                        app.db('endereco')
+                            .update({
+                                endereco: user.endereco, numero: user.numero, complemento: user.complemento, bairro: user.bairro,
+                                estado: user.estado, cidade: user.cidade, cep: user.cep, userId: response[0]
+                            })
+                            .where({ userId: user.id })
+                            .then(_ => res.status(204).send())
+                            .catch(err => res.status(500).send(err))
+                    });
+            }
         } else {
-            app.db("users")
-                .insert({
-                    name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password,
-                    ong: user.ong, admin: user.admin, createdAt: new Date(), userImage: user.userImage
-                })
-                .returning('id')
-                .then(function (response) {
-                    app.db('endereco')
-                        .insert({ endereco: user.endereco, numero: user.numero, complemento: user.complemento, bairro: user.bairro, estado: user.estado, cidade: user.cidade, cep: user.cep, userId: response[0] })
-                        .then(_ => res.status(204).send())
-                        .catch(err => res.status(500).send(err))
-                });
-
+            if (validatedCnpj === true || validatedCpf === true) {
+                app.db("users")
+                    .insert({
+                        name: user.name, email: user.email, telefone: user.telefone, cpf: user.cpf, cnpj: user.cnpj, password: user.password,
+                        ong: user.ong, admin: user.admin, createdAt: new Date(), userImage: user.userImage
+                    })
+                    .returning('id')
+                    .then(function (response) {
+                        app.db('endereco')
+                            .insert({ endereco: user.endereco, numero: user.numero, complemento: user.complemento, bairro: user.bairro, estado: user.estado, cidade: user.cidade, cep: user.cep, userId: response[0] })
+                            .then(_ => res.status(204).send())
+                            .catch(err => res.status(500).send(err))
+                    });
+            }
         }
     }
 
