@@ -46,9 +46,9 @@
                     <v-text-field
                       label="Título"
                       v-model="publicacao.titulo"
-                      :readonly="mode === 'remove'"
-                       prepend-inner-icon="mdi-text"
-                       color="#f7893b"
+                      v-if="mode != 'remove'"
+                      prepend-inner-icon="mdi-text"
+                      color="#f7893b"
                       required
                       outlined
                     ></v-text-field>
@@ -57,9 +57,9 @@
                     <v-text-field
                       label="URL da imagem"
                       v-model="publicacao.imageUrl"
-                      :readonly="mode === 'remove'"
+                      v-if="mode != 'remove'"
                       color="#f7893b"
-                       prepend-inner-icon="mdi-image"
+                      prepend-inner-icon="mdi-image"
                       required
                       outlined
                     ></v-text-field>
@@ -69,8 +69,8 @@
                       outlined
                       name="input-7-4"
                       v-model="publicacao.chamada"
-                      :readonly="mode === 'remove'"
-                       prepend-inner-icon="mdi-cursor-text"
+                      v-if="mode != 'remove'"
+                      prepend-inner-icon="mdi-cursor-text"
                       label="Chamada"
                       maxlength="500"
                       counter="500"
@@ -85,12 +85,11 @@
                     <VueEditor
                       v-model="publicacao.descricao"
                       placeholder="Informe o conteúdo da publicação"
-                      :readonly="mode === 'remove'"
+                      v-if="mode != 'remove'"
                     />
                   </v-col>
                 </v-row>
               </v-container>
-              <small>*indicates required field</small>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -206,8 +205,8 @@ export default {
           sortable: false,
           value: "name",
         },
-        { text: "Código", value: "id" },
         { text: "Título", value: "titulo" },
+        { text: "Publicado em", value: "createdAt  " },
         { text: "Ações", value: "actions" },
       ],
     };

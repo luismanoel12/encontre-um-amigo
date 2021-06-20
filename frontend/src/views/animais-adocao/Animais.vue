@@ -24,11 +24,6 @@
             </template>
             <v-card>
               <v-card-title>
-                <span
-                  class="headline excluir-animal"
-                  v-if="this.mode === 'remove'"
-                  >Excluir o Animal: <strong> {{ animal.nome }} </strong>
-                </span>
                 <span class="headline salvar-animal" v-if="!animal.id"
                   >Cadastrar Novo Animal</span
                 >
@@ -40,18 +35,21 @@
               </v-card-title>
               <v-card-text>
                 <v-container>
-                  <h1
-                    v-if="this.mode === 'remove'"
-                    class="text-center excluir-animal"
-                  >
-                    Tem certeza que deseja excluir o animal: {{ animal.nome }}
-                  </h1>
-                  <h2
-                    v-if="this.mode === 'remove'"
-                    class="text-center excluir-animal"
-                  >
-                    Essa ação não poderá ser desfeita!
-                  </h2>
+                  <div class="delete-animal-modal">
+                    <h1
+                      v-if="this.mode === 'remove'"
+                      class="text-center excluir-animal"
+                    >
+                      Tem certeza que deseja excluir o animal: {{ animal.nome }}
+                    </h1>
+                    <h2
+                      v-if="this.mode === 'remove'"
+                      class="text-center excluir-animal mt-5"
+                    >
+                      Essa ação não poderá ser desfeita!
+                    </h2>
+                  </div>
+
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
@@ -282,7 +280,9 @@
               </div>
             </v-badge>
 
-            <v-card-title class="main-title-color"> {{ animal.nome }}</v-card-title>
+            <v-card-title class="main-title-color">
+              {{ animal.nome }}</v-card-title
+            >
 
             <v-divider></v-divider>
 
@@ -509,7 +509,8 @@ export default {
   color: #f7893b;
 }
 
-.cadastrar-animais-titulo >h1, h2 {
+.cadastrar-animais-titulo > h1,
+h2 {
   font-weight: 400;
 }
 
@@ -560,7 +561,13 @@ export default {
   margin: auto;
 }
 
-.main-title-color{
+.main-title-color {
   color: #f7893b;
+}
+
+@media only screen and (max-width: 600px) {
+  .delete-animal-modal {
+    font-size: 12px;
+  }
 }
 </style>

@@ -10,12 +10,15 @@ import VueTheMask from 'vue-the-mask'
 import VueDisqus from 'vue-disqus'
 import VueInstagram from 'vue-instagram'
 import VueApexCharts from 'vue-apexcharts'
+import money from 'v-money'
 
  
 Vue.config.productionTip = false
 
 Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
+
+Vue.use(money, {precision: 2})
 
 Vue.use(VueInstagram)
 Vue.use(VueTheMask)

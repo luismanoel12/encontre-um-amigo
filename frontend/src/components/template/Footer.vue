@@ -14,7 +14,7 @@
           </v-btn>
         </v-card-title>
 
-        <v-divider>ss</v-divider>
+        <v-divider vertical class="divider-footer"></v-divider>
 
         <v-card-title class="footer-bg">
           
@@ -22,7 +22,7 @@
 
           <v-spacer></v-spacer>
 
-          <span>encontreumamigo@hotmail.com</span>
+          <span>encontreumamigo.suporte@gmail.com</span>
         </v-card-title>
       </div>
 
@@ -55,7 +55,8 @@ export default {
   display: flex;
   flex: row;
   justify-content: center;
-  justify-items: center;
+  align-items: center;
+
 }
 
 .theme--dark.v-card {
@@ -63,6 +64,8 @@ export default {
 }
 
 .divider-footer{
-  color: #fff!important;
+  background-color: #fff !important;
+  width: 1px;
+  padding: 1px;
 }
 </style>

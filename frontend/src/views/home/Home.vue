@@ -108,16 +108,18 @@
           <v-row>
             <v-col cols="12" sm="6">
               <div class="page-3-card">
-                <h1>Adote</h1>
+                <h1>Nosso projeto</h1>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-                  mi purus, ornare ac mi et, ultricies condimentum lacus. Etiam
-                  massa sapien, tempor et sodales sed, congue vitae ipsum. Ut
-                  vitae eros arcu. Sed sed hendrerit metus, et placerat lacus.
-                  Duis fermentum eros eget risus lacinia lacinia. Donec
-                  hendrerit nibh lectus, at mollis risus pellentesque id Lorem
-                  ipsum dolor sit amet, consectetur adipiscing elit. Proin mi
-                  purus, ornare ac mi et, ultricies condimentum lacus. Etiam
+                  Segundo a Organização Mundial da Saúde estima-se que existam
+                  mais de 30 milhões de animais abandonados no Brasil, este fato
+                  repercute negativamente como um problema social e de saúde
+                  pública. Os casos crescentes de abandono de animais e os casos
+                  de contaminações de doenças relacionadas aos animais de rua
+                  contribuem para o agravamento deste quadro para o futuro. Este
+                  projeto tem como principal motivação a intenção de conectar
+                  ONG’s e pessoas interessadas para salvar os animais das
+                  situações de risco nas ruas e auxiliar no controle da
+                  população destes, nos estados e municípios.
                 </p>
               </div>
             </v-col>
@@ -125,14 +127,14 @@
               <div class="page-3-card">
                 <h1>Faça uma Doação</h1>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-                  mi purus, ornare ac mi et, ultricies condimentum lacus. Etiam
-                  massa sapien, tempor et sodales sed, congue vitae ipsum. Ut
-                  vitae eros arcu. Sed sed hendrerit metus, et placerat lacus.
-                  Duis fermentum eros eget risus lacinia lacinia. Donec
-                  hendrerit nibh lectus, at mollis risus pellentesque id Lorem
-                  ipsum dolor sit amet, consectetur adipiscing elit. Proin mi
-                  purus, ornare ac mi et, ultricies condimentum lacus. Etiam
+                  O projeto foi feito com custo zero por tratar-se de um
+                  projeto de utilidade pública sem fins lucrativos, visando
+                  unicamente retirar animais das situação de rua e auxiliar as
+                  organizações não-governamentais no controle deste grave
+                  problema. Por tanto este projeto não dispõe de patrocinadores
+                  ou qualquer tipo de auxílio financeiro. Contamos com sua ajuda
+                  para juntos somarmos força a esta causa e fazermos a
+                  diferença.
                 </p>
               </div>
             </v-col>
@@ -194,7 +196,7 @@ export default {
 
 .home-3 {
   padding-top: 50px;
-  background-color: #212121;
+  background-color: #033a37;
   height: 100%;
 }
 
@@ -295,7 +297,6 @@ export default {
 }
 
 .home-avatar-img > img:hover {
-
   border: 3px solid #f7893b;
 }
 
@@ -303,7 +304,7 @@ export default {
   background-color: #f7893b;
 }
 
-.home-4-title > h1{
+.home-4-title > h1 {
   color: #f7893b;
   font-weight: 900;
   text-transform: uppercase;

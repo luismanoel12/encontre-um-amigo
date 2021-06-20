@@ -6,9 +6,9 @@
   <v-container v-else>
     <div class="metas-page">
       <v-card color="#2a9d8f">
-        <v-card-title class="text-center justify-center py-6">
-          <h1 class="display-3 metas-main-color">Minhas Metas</h1>
-        </v-card-title>
+          <div class="metas-title">
+            <h1 class="display-3 metas-main-color">Minhas Metas</h1>
+          </div>
 
         <v-tabs v-model="tab" background-color="#287271" color="white" grow>
           <v-tab>
@@ -59,7 +59,7 @@
                             <v-text-field
                               label="Título"
                               v-model="meta.titulo"
-                              :readonly="mode === 'remove'"
+                              v-if="mode != 'remove'"
                               color="#f7893b"
                               prepend-inner-icon="mdi-format-title"
                               required
@@ -70,7 +70,7 @@
                             <v-text-field
                               label="Valor Esperado"
                               v-model="meta.valorEsperado"
-                              :readonly="mode === 'remove'"
+                              v-if="mode != 'remove'"
                               required
                               color="#f7893b"
                               type="number"
@@ -84,7 +84,7 @@
                               v-model="meta.valorAtual"
                               type="number"
                               prefix="R$"
-                              :readonly="mode === 'remove'"
+                              v-if="mode != 'remove'"
                               color="#f7893b"
                               outlined
                             ></v-text-field>
@@ -93,7 +93,7 @@
                             <v-text-field
                               label="URL da imagem"
                               v-model="meta.imageUrl"
-                              :readonly="mode === 'remove'"
+                              v-if="mode != 'remove'"
                               prepend-inner-icon="mdi-image"
                               required
                               color="#f7893b"
@@ -105,12 +105,11 @@
                               v-model="meta.descricao"
                               prepend-inner-icon="mdi-card-text-outline"
                               placeholder="Informe o que vai acontecer quando as metas forem atingidas."
-                              :readonly="mode === 'remove'"
+                              v-if="mode != 'remove'"
                             />
                           </v-col>
                         </v-row>
                       </v-container>
-                      <small>*indicates required field</small>
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
@@ -175,7 +174,7 @@
                             @click="loadMeta(item)"
                             dark
                           >
-                          Editar
+                            Editar
                           </v-btn>
                         </v-list-item-title>
                       </v-list-item>
@@ -191,7 +190,7 @@
                             @click="loadMeta(item, 'remove')"
                             dark
                           >
-                          Deletar
+                            Deletar
                           </v-btn>
                         </v-list-item-title>
                       </v-list-item>
@@ -244,7 +243,7 @@
                               v-model="objetivo.titulo"
                               prepend-inner-icon="mdi-format-title"
                               :readonly="mode === 'remove'"
-                               maxlength="60"
+                              maxlength="60"
                               counter="60"
                               hint="Máximo de 60 caracteres"
                               required
@@ -356,7 +355,7 @@
                             @click="loadObjetivo(item)"
                             dark
                           >
-                          Editar
+                            Editar
                           </v-btn>
                         </v-list-item-title>
                       </v-list-item>
@@ -372,7 +371,7 @@
                             @click="loadObjetivo(item, 'remove')"
                             dark
                           >
-                          Deletar
+                            Deletar
                           </v-btn>
                         </v-list-item-title>
                       </v-list-item>
@@ -592,13 +591,19 @@ export default {
   padding: 20px;
 }
 
-.metas-main-color{
+.metas-main-color {
   color: #fff;
   text-transform: uppercase;
   font-weight: 300;
 }
 
 .v-tab--active {
-    color: #f7893b!important;
+  color: #f7893b !important;
 }
+
+.metas-title {
+  text-align: center;
+  padding: 20px;
+}
+
 </style>

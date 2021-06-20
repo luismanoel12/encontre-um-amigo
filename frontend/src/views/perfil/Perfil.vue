@@ -184,85 +184,88 @@
             ></v-text-field>
           </v-col>
         </v-row>
-        <v-btn color="#f7893b" dark @click="update">
-          <v-icon left> mdi-account-edit </v-icon>
-          Atualizar
-        </v-btn>
 
-        <v-dialog v-model="dialog" persistent max-width="600px">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="#f7893b"
-              class="btn-new-password"
-              dark
-              v-bind="attrs"
-              v-on="on"
-            >
-              <v-icon left> mdi-form-textbox-password </v-icon>
-              Atualizar senha
-            </v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline">Alterar Senha</span>
-            </v-card-title>
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12">
-                    <v-text-field
-                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                      :rules="[rules.required]"
-                      :type="show1 ? 'text' : 'password'"
-                      name="input-10-1"
-                      label="Senha Atual*"
-                      v-model="userPassword.password"
-                      counter
-                      @click:append="show1 = !show1"
-                      color="#f7893b"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                      :rules="[rules.required]"
-                      :type="show2 ? 'text' : 'password'"
-                      name="input-10-1"
-                      label="Nova Senha*"
-                      v-model="userPassword.newPassword"
-                      counter
-                      @click:append="show2 = !show2"
-                      color="#f7893b"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
-                      :rules="[rules.required]"
-                      :type="show3 ? 'text' : 'password'"
-                      name="input-10-1"
-                      label="Confirmar Nova Senha*"
-                      v-model="userPassword.confirmPassword"
-                      counter
-                      @click:append="show3 = !show3"
-                      color="#f7893b"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
-              <small>* indica campo necessário</small>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="red darken-1" text @click="dialog = false">
-                Cancelar
+        <div class="perfil-actions">
+          <v-btn color="#f7893b" class="perfil-buttons" dark @click="update">
+            <v-icon left> mdi-account-edit </v-icon>
+            Atualizar
+          </v-btn>
+
+          <v-dialog v-model="dialog" persistent max-width="600px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="#f7893b"
+                class="btn-new-password perfil-buttons"
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon left> mdi-form-textbox-password </v-icon>
+                Atualizar senha
               </v-btn>
-              <v-btn color="green darken-1" text @click="newUserPassword">
-                Salvar
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline">Alterar Senha</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-text-field
+                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :rules="[rules.required]"
+                        :type="show1 ? 'text' : 'password'"
+                        name="input-10-1"
+                        label="Senha Atual*"
+                        v-model="userPassword.password"
+                        counter
+                        @click:append="show1 = !show1"
+                        color="#f7893b"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :rules="[rules.required]"
+                        :type="show2 ? 'text' : 'password'"
+                        name="input-10-1"
+                        label="Nova Senha*"
+                        v-model="userPassword.newPassword"
+                        counter
+                        @click:append="show2 = !show2"
+                        color="#f7893b"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :rules="[rules.required]"
+                        :type="show3 ? 'text' : 'password'"
+                        name="input-10-1"
+                        label="Confirmar Nova Senha*"
+                        v-model="userPassword.confirmPassword"
+                        counter
+                        @click:append="show3 = !show3"
+                        color="#f7893b"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <small>* indica campo necessário</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="red darken-1" text @click="dialog = false">
+                  Cancelar
+                </v-btn>
+                <v-btn color="green darken-1" text @click="newUserPassword">
+                  Salvar
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
       </div>
     </div>
 
@@ -274,7 +277,10 @@
       <div class="ongBio-content">
         <v-row>
           <v-col cols="12" sm="12">
-            <VueEditor v-model="bio.descricao" placeholder="Nos conte sua história" />
+            <VueEditor
+              v-model="bio.descricao"
+              placeholder="Nos conte sua história"
+            />
           </v-col>
         </v-row>
 
@@ -367,7 +373,7 @@ export default {
         .catch(showError);
     },
     async newUserPassword() {
-     await api
+      await api
         .put(`/newPassword`, this.userPassword)
         .then(() => {
           this.$toasted.global.defaultSuccess();
@@ -461,6 +467,17 @@ export default {
   margin-top: 20px;
 }
 
+@media only screen and (max-width: 600px) {
+  .perfil-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
 
-
+  .perfil-buttons{
+    margin-top: 10px;
+    width: auto;
+  }
+}
 </style>

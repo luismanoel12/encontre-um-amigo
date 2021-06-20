@@ -14,6 +14,7 @@
     "highlightjs": "9.10.0",
     "liquor-tree": "0.2.32",
     "moment": "^2.29.1",
+    "v-money": "^0.8.1",
     "vue": "^2.6.11",
     "vue-apexcharts": "^1.6.1",
     "vue-disqus": "^4.0.1",

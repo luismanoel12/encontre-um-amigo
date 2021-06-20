@@ -84,7 +84,7 @@
                   <v-text-field
                     label="CPF"
                     prepend-inner-icon="mdi-card-account-details"
-                    v-mask="'###########'"
+                    v-mask="'###.###.###-##'"
                     outlined
                     v-if="!isOng"
                     v-model="user.cpf"
@@ -92,7 +92,7 @@
                   <v-text-field
                     label="CNPJ"
                     prepend-inner-icon="mdi-card-account-details"
-                    v-mask="'##############'"
+                    v-mask="'##.###.###/####-##'"
                     outlined
                     v-if="isOng"
                     v-model="user.cnpj"

@@ -131,7 +131,7 @@ module.exports = app => {
     const get = (req, res) => {
         app.db('users')
             .join('endereco', 'users.id', 'endereco.userId')
-            .select('users.id', 'users.name', 'users.userImage', 'users.email', 'users.telefone', 'users.cpf', 'users.cnpj', 'users.ong', 'users.admin',
+            .select('users.id', 'users.name', 'users.userImage', 'users.email', 'users.telefone', 'users.cpf', 'users.cnpj', 'users.ong', 'users.admin', 'users.createdAt',
                 'endereco.endereco', 'endereco.numero', 'endereco.bairro', 'endereco.estado', 'endereco.cidade', 'endereco.cep')
             .whereNull('users.deletedAt')
             .then(users => res.json(users))

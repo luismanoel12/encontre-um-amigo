@@ -21,7 +21,9 @@
               ></v-badge>
             </h3>
           </v-list-item-subtitle>
-          <small class="menu-date"> {{ new Date().toLocaleDateString("pt-br") }} </small>
+          <small class="menu-date">
+            {{ new Date().toLocaleDateString("pt-br") }}
+          </small>
         </v-list-item-content>
       </v-list-item>
 
@@ -259,7 +261,7 @@
         class="logout-button"
         @click.prevent="logout"
       >
-        <v-icon>mdi-logout</v-icon>
+        <v-icon class="mr-1">mdi-logout</v-icon>
         Sair
       </v-btn>
 
@@ -350,6 +352,12 @@ export default {
   margin-right: 30px;
 }
 
+@media only screen and (max-width: 370px) {
+  .logout-button {
+    width: 80px;
+  }
+}
+
 .v-application--is-ltr
   .v-list--dense.v-list--nav
   .v-list-group--no-action
@@ -395,10 +403,10 @@ export default {
 }
 
 .v-list .v-list-item--active {
-    color: #f7893b!important;
+  color: #f7893b !important;
 }
 
-.menu-date{
+.menu-date {
   color: #fff;
   text-align: center;
   margin-top: 20px;

@@ -131,8 +131,24 @@
       </div>
 
       <v-data-table :items="users" :headers="headers" class="elevation-10">
+        <template v-slot:[`item.admin`]="{ item }">
+          <v-chip v-if="item.admin" color="#2dc653" dark> Sim </v-chip>
+
+          <v-chip v-else color="#ef233c" dark> Não </v-chip>
+        </template>
+
+        <template v-slot:[`item.ong`]="{ item }">
+          <v-chip v-if="item.ong" color="#2dc653" dark> Sim </v-chip>
+
+          <v-chip v-else color="#ef233c" dark> Não </v-chip>
+        </template>
+
+        <template v-slot:[`item.createdAt`]="{ item }">
+          {{ new Date( item.createdAt).toLocaleDateString("pt-br") }}
+        </template>
+
         <template v-slot:[`item.actions`]="{ item }">
-                    <v-menu offset-y>
+          <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon color="#f7893b" dark v-bind="attrs" v-on="on">
                 <v-icon>mdi-dots-vertical</v-icon>
@@ -202,7 +218,8 @@ export default {
         { text: "E-mail", value: "email" },
         { text: "Estado", value: "estado" },
         { text: "Admin", value: "admin" },
-        { text: "Deletado em", value: "deletedAt" },
+        { text: "ONG", value: "ong" },
+        { text: "Membro desde", value: "createdAt" },
         { text: "Ações", value: "actions" },
       ],
     };
