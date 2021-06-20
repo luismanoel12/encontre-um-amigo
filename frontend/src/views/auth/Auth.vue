@@ -1,7 +1,7 @@
 <template>
   <div class="auth">
     <div class="auth-header">
-      <img src="@/assets/logo.png" width="200" alt="Logo" />
+      <img src="@/assets/logo.png" width="300" alt="Logo" />
       <hr />
       <h2> Login </h2>
     </div>

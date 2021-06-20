@@ -246,7 +246,7 @@
           <img
             src="@/assets/logo.png"
             class="logo mr-4"
-            width="40px"
+            width="80px"
             alt="Logo"
           />
           Encontre um amigo</v-toolbar-title
