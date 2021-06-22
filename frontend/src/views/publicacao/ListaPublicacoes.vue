@@ -1,9 +1,14 @@
 <template>
-    <v-container v-if="loading">
-      <v-progress-circular indeterminate color="primary"></v-progress-circular>
-    </v-container>
+  <v-container v-if="loading">
+    <v-progress-circular indeterminate color="primary"></v-progress-circular>
+  </v-container>
 
   <v-container v-else>
+    <div class="pub-titles">
+      <h1>Publicações</h1>
+      <hr>
+    </div>
+
     <div class="publicacao-page">
       <v-row>
         <v-col cols="12" sm="8">
@@ -17,7 +22,11 @@
               <div class="card-publicacao">
                 <div class="card-publicacao-user">
                   <v-avatar class="ma-2 pub-avatar-img" size="64" tile>
-                    <img :src="publicacao.userImage" alt="" v-if="publicacao.userImage">
+                    <img
+                      :src="publicacao.userImage"
+                      alt=""
+                      v-if="publicacao.userImage"
+                    />
                     <Gravatar
                       :email="publicacao.email"
                       :alt="publicacao.userName"
@@ -32,7 +41,10 @@
                     }"
                   >
                     <h3>{{ publicacao.name }}</h3>
-                    <h5>{{ publicacao.dataPub }} <span class="mdi mdi-earth"></span></h5>
+                    <h5>
+                      {{ publicacao.dataPub }}
+                      <span class="mdi mdi-earth"></span>
+                    </h5>
                   </router-link>
                 </div>
                 <div class="card-publicacao-header">
@@ -70,17 +82,18 @@
             </v-col>
           </v-row>
         </v-col>
-
-        <v-col cols="12" sm="4">
-          <v-sheet class="left-card-publicacao" rounded="lg" min-height="268" elevation="5">
-            <!--  -->
-          </v-sheet>
-        </v-col>
       </v-row>
     </div>
 
     <div class="text-center pagination">
-      <v-btn depressed color="#f7893b" elevation="24" dark v-if="loadMore" @click="getPublicacoes">
+      <v-btn
+        depressed
+        color="#f7893b"
+        elevation="24"
+        dark
+        v-if="loadMore"
+        @click="getPublicacoes"
+      >
         Carregar Mais
 
         <v-icon dark right> mdi-reload </v-icon>
@@ -101,7 +114,7 @@ export default {
       publicacoes: [],
       page: 1,
       loadMore: true,
-       loading: true,
+      loading: true,
     };
   },
 
@@ -158,8 +171,8 @@ export default {
   box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
 }
 
-.card-publicacao:hover{
-   border-left: 5px solid #f7893b;
+.card-publicacao:hover {
+  border-left: 5px solid #f7893b;
 }
 
 .card-publicacao-content {
@@ -200,8 +213,18 @@ export default {
     object-fit: cover;
   }
 
-  .left-card-publicacao{
+  .left-card-publicacao {
     margin-left: 30px;
   }
+}
+
+.pub-titles {
+  text-align: left;
+  text-transform: uppercase;
+  color: #f7893b;
+}
+
+.pub-titles > h1 {
+  font-weight: 900;
 }
 </style>
