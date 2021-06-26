@@ -239,7 +239,14 @@
     </v-navigation-drawer>
 
     <v-app-bar app dark color="#00171f" v-if="!user || user">
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        v-if="user"
+        @click="drawer = !drawer"
+      ></v-app-bar-nav-icon>
+
+      <v-btn  x-large v-else icon color="#fff" to="/">
+        <v-icon>mdi-home</v-icon>
+      </v-btn>
 
       <router-link to="/" class="home-router">
         <v-toolbar-title class="logo-title">
@@ -399,6 +406,10 @@ export default {
 @media (max-width: 600px) {
   .logo {
     display: none;
+  }
+
+  .btn-home-b {
+    visibility: hidden;
   }
 }
 

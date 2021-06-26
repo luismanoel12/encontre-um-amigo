@@ -57,6 +57,7 @@
               label="CPF"
               v-model="userData.cpf"
               v-mask="'###.###.###-##'"
+              disabled
               masked="false"
               prepend-inner-icon="mdi-card-account-details-outline"
               outlined
